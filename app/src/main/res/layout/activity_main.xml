@@ -18,7 +18,8 @@
         android:layout_marginTop="64dp"
         android:id="@+id/textView"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="@string/start_game" />
+        android:text="@string/start_game"
+        android:padding="10dp" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -31,7 +32,7 @@
             android:text="@string/singles_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_single_player" />
+            android:id="@+id/button_singles" />
 
         <Button
             android:text="@string/doubles_label"
