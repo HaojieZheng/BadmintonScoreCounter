@@ -11,14 +11,14 @@
     tools:context="com.haojie.badmintonscorecounter.MainActivity">
 
     <TextView
-        android:text="Start Game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="64dp"
         android:id="@+id/textView"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:text="@string/start_game" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,13 +28,13 @@
         android:layout_centerHorizontal="true">
 
         <Button
-            android:text="Singles"
+            android:text="@string/singles_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button_single_player" />
 
         <Button
-            android:text="Doubles"
+            android:text="@string/doubles_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button_doubles" />
