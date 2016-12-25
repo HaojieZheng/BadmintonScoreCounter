@@ -18,7 +18,7 @@
         android:layout_marginTop="64dp"
         android:id="@+id/textView"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="@string/start_game"
+        android:text="@string/new_game"
         android:padding="10dp" />
 
     <LinearLayout
