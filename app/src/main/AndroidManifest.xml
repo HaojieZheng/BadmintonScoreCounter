@@ -15,11 +15,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EnterSinglesPlayersNames"
-            android:label="@string/enter_players_names"/>
-        <activity android:name=".EnterDoublesPlayersNames"
-            android:label="@string/enter_players_names"
-            ></activity>
+        <activity
+            android:name=".EnterSinglesPlayersNames"
+            android:label="@string/enter_players_names" />
+        <activity
+            android:name=".EnterDoublesPlayersNames"
+            android:label="@string/enter_players_names" />
+        <activity
+            android:name=".GameSessionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_game_session"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
 package com.haojie.badmintonscorecounter;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
     ImageButton mSwapButton;
     EditText mEditPlayer1Name;
     EditText mEditPlayer2Name;
+    Button mStartGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
         mSwapButton = (ImageButton)findViewById(R.id.swap_button);
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
+        mStartGameButton = (Button)findViewById(R.id.button_start);
 
         mSwapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,5 +34,27 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
                 mEditPlayer2Name.setText(temp, TextView.BufferType.EDITABLE);
             }
         });
+
+
+        mStartGameButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                startGameSessionActivity();
+            }
+        });
+
+    }
+
+
+    private void startGameSessionActivity()
+    {
+        Intent intent = new Intent(this, GameSessionActivity.class);
+        intent.putExtra(GameSessionActivity.EXTRA_GAME_TYPE, false);
+        intent.putExtra(GameSessionActivity.EXTRA_PLAYER_1_NAME, mEditPlayer1Name.getText().toString());
+        intent.putExtra(GameSessionActivity.EXTRA_PLAYER_2_NAME, mEditPlayer2Name.getText().toString());
+
+        startActivity(intent);
+        finish();
     }
 }
