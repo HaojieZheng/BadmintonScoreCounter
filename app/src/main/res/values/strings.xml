@@ -4,4 +4,5 @@
     <string name="singles_label">Singles</string>
     <string name="doubles_label">Doubles</string>
     <string name="title_activity_enter_single_players_name">EnterSinglePlayersNameActivity</string>
+    <string name="enter_players_names">Enter Players Name</string>
 </resources>

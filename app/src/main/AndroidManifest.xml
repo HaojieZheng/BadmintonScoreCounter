@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EnterSinglesPlayersNames"
+            android:label="@string/enter_players_names"/>
+        <activity android:name=".EnterDoublesPlayersNames"
+            android:label="@string/enter_players_names"
+            ></activity>
     </application>
 
 </manifest>

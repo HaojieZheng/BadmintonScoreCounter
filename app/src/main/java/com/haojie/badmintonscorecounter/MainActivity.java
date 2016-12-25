@@ -25,7 +25,21 @@ public class MainActivity extends AppCompatActivity {
            @Override
             public void onClick(View v)
            {
+               Intent intent = new Intent(MainActivity.this, EnterSinglesPlayersNames.class);
+               startActivity(intent);
            }
         });
+
+        mStartDoublesButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this, EnterDoublesPlayersNames.class);
+                startActivity(intent);
+            }
+        }
+        );
+
     }
 }
