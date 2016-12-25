@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_enter_singles_players_names"
     android:layout_width="match_parent"
@@ -12,53 +13,64 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="top"
-            android:layout_marginLeft="18dp"
-            android:layout_marginStart="18dp">
-
-            <TextView
-                android:text="@string/player1_label"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/swapbutton"
+                android:id="@+id/swap_button"
+                android:contentDescription="@string/swap_name_access" />
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="@string/player1_default"
-                android:ems="10"
-                android:id="@+id/editText" />
+                <TextView
+                    android:text="@string/player1_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="@string/player1_default"
+                    android:ems="10"
+                    android:id="@+id/editPlayer1Name" />
 
-            <TextView
-                android:text="@string/player2_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="@string/player2_default"
-                android:ems="10"
-                android:id="@+id/editText2" />
+                <TextView
+                    android:text="@string/player2_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="@string/player2_default"
+                    android:ems="10"
+                    android:id="@+id/editPlayer2Name" />
 
 
+            </LinearLayout>
         </LinearLayout>
         <Button
             android:text="@string/start_game_label"
