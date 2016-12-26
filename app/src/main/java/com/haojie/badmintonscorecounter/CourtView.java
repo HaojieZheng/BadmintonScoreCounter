@@ -5,7 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Haojie on 12/25/2016.
@@ -13,6 +17,13 @@ import android.view.View;
 
 public class CourtView extends View {
 
+    
+    public interface CourtViewTouchListener
+    {
+        void onTeam1Score();
+        void onTeam2Score();
+    }
+    
     public CourtView(Context context)
     {
         super(context);
@@ -27,11 +38,20 @@ public class CourtView extends View {
     {
         super(context, attributeSet, defStyle);
     }
+    
+    public void registerListener(CourtViewTouchListener listener)
+    {
+        mListeners.add(listener);
+    }
+    
+    private ArrayList<CourtViewTouchListener> mListeners = new ArrayList<CourtViewTouchListener>();
 
     static final double courtRatio =  13.4 / 6.1;
     static final double longServiceLine = 0.8 / 13.4;
     static final double shortServiceLine = 4.68 / 13.4;
     static final double singlesSideLine = 0.46 / 6.1;
+
+
 
     @Override
     protected void onDraw(Canvas canvas)
@@ -77,6 +97,66 @@ public class CourtView extends View {
         float singlesSideLinesX = (float)(singlesSideLine * x);
         canvas.drawLine(singlesSideLinesX, 0, singlesSideLinesX, (float)y, paint);
         canvas.drawLine((float)x - singlesSideLinesX, 0, (float)x - singlesSideLinesX, (float)y, paint);
+    }
+
+
+    float touched_x, touched_y;
+    boolean touched = false;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        touched_x = event.getX();
+        touched_y = event.getY();
+
+        double y = getHeight();
+        double x = getWidth();
+        if (y < courtRatio * x)
+        {
+            x = y / courtRatio;
+        }
+        else
+        {
+            y = courtRatio * x;
+        }
+
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                touched = true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                touched = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                if (touched)
+                {
+                    Boolean team1Score = true;
+                    if (touched_y >  y / 2)
+                        team1Score = false;
+
+                    for (CourtViewTouchListener listener: mListeners
+                         ) {
+                        if (team1Score)
+                            listener.onTeam1Score();
+                        else
+                            listener.onTeam2Score();
+                    }
+                }
+                touched = false;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                touched = false;
+                break;
+            case MotionEvent.ACTION_OUTSIDE:
+                touched = false;
+                break;
+            default:
+        }
+
+
+
+        return true; // processed
     }
 
 }

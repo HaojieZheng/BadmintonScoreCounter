@@ -20,8 +20,9 @@
             <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_weight="0.7">
                 <com.haojie.badmintonscorecounter.CourtView
+                    android:id="@+id/court_view"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent">
                 </com.haojie.badmintonscorecounter.CourtView>
@@ -29,13 +30,14 @@
             <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_weight="0.3">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:minWidth="180dp"
                     android:paddingLeft="5dp"
+                    android:paddingTop="40dp"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
@@ -53,7 +55,7 @@
                         android:paddingBottom="20dp"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/player1_score"
+                        android:id="@+id/team1_score"
                         android:text="0" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -71,7 +73,7 @@
                         android:paddingBottom="20dp"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/player2_score"
+                        android:id="@+id/team2_score"
                         android:text="0" />
                     <Button
                         android:layout_width="wrap_content"

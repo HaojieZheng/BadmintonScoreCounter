@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -18,6 +19,9 @@ public class GameSessionActivity extends AppCompatActivity {
     public final static String EXTRA_PLAYER_1_NAME = "com.Haojie.BadmintonScoreCounter.Player1Name";
     public final static String EXTRA_PLAYER_2_NAME = "com.Haojie.BadmintonScoreCounter.Player2Name";
 
+    private CourtView mCourtView;
+    private TextView mTeam1ScoreLabel;
+    private TextView mTeam2ScoreLabel;
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -99,7 +103,42 @@ public class GameSessionActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        mCourtView = (CourtView)findViewById(R.id.court_view);
+        mCourtView.registerListener(new CourtView.CourtViewTouchListener()
+        {
+            @Override
+            public void onTeam1Score() {
+                team1Score();
+            }
+
+            @Override
+            public void onTeam2Score()
+            {
+                team2Score();
+            }
+        });
+
+        mTeam1ScoreLabel = (TextView)findViewById(R.id.team1_score);
+        mTeam2ScoreLabel = (TextView)findViewById(R.id.team2_score);
     }
+
+    private void team1Score()
+    {
+        mTeam1Score++;
+        mTeam1ScoreLabel.setText(Integer.toString(mTeam1Score), TextView.BufferType.EDITABLE);
+
+    }
+
+    private void team2Score()
+    {
+        mTeam2Score++;
+        mTeam2ScoreLabel.setText(Integer.toString(mTeam2Score), TextView.BufferType.EDITABLE);
+    }
+
+    private int mTeam1Score = 0;
+    private int mTeam2Score = 0;
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
