@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -15,20 +16,33 @@ import android.widget.TextView;
  */
 public class GameSessionActivity extends AppCompatActivity {
 
+    // Controls
+    private CourtView mCourtView;
+    private View mControlsView;
+    private TextView mTeam1ScoreLabel;
+    private TextView mTeam2ScoreLabel;
+    private View mContentView;
+    private Button mUndoButton;
+
+    private Game mGame;
+
+
+    private boolean mVisible;
+    private final Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hide();
+        }
+    };
+
+    // static final variables
     public final static String EXTRA_GAME_TYPE = "com.Haojie.BadmintonScoreCounter.GameType";
     public final static String EXTRA_PLAYER_1_NAME = "com.Haojie.BadmintonScoreCounter.Player1Name";
     public final static String EXTRA_PLAYER_2_NAME = "com.Haojie.BadmintonScoreCounter.Player2Name";
-
-    private CourtView mCourtView;
-    private TextView mTeam1ScoreLabel;
-    private TextView mTeam2ScoreLabel;
-
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
-    private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -46,7 +60,7 @@ public class GameSessionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -56,13 +70,6 @@ public class GameSessionActivity extends AppCompatActivity {
                 actionBar.show();
             }
             //mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
         }
     };
     /**
@@ -80,9 +87,24 @@ public class GameSessionActivity extends AppCompatActivity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Boolean isSingles = true;
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras != null)
+                isSingles= extras.getBoolean(EXTRA_GAME_TYPE);
+        }
+        else {
+            isSingles = (Boolean) savedInstanceState.getSerializable(EXTRA_GAME_TYPE);
+        }
+
+        mGame = new Game(isSingles);
 
         setContentView(R.layout.activity_game_session);
 
@@ -109,35 +131,32 @@ public class GameSessionActivity extends AppCompatActivity {
         {
             @Override
             public void onTeam1Score() {
-                team1Score();
+                mGame.onTeam1Score();
+                refreshScores();
             }
 
             @Override
             public void onTeam2Score()
             {
-                team2Score();
+                mGame.onTeam2Score();
+                refreshScores();
             }
         });
 
         mTeam1ScoreLabel = (TextView)findViewById(R.id.team1_score);
         mTeam2ScoreLabel = (TextView)findViewById(R.id.team2_score);
+
+        mUndoButton = (Button)findViewById(R.id.undo_button);
+        mUndoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGame.undo();
+                refreshScores();
+            }
+        });
+
+        refreshScores();
     }
-
-    private void team1Score()
-    {
-        mTeam1Score++;
-        mTeam1ScoreLabel.setText(Integer.toString(mTeam1Score), TextView.BufferType.EDITABLE);
-
-    }
-
-    private void team2Score()
-    {
-        mTeam2Score++;
-        mTeam2ScoreLabel.setText(Integer.toString(mTeam2Score), TextView.BufferType.EDITABLE);
-    }
-
-    private int mTeam1Score = 0;
-    private int mTeam2Score = 0;
 
 
     @Override
@@ -192,4 +211,12 @@ public class GameSessionActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    private void refreshScores()
+    {
+        mTeam1ScoreLabel.setText(Integer.toString(mGame.getTeam1Score()), TextView.BufferType.EDITABLE);
+        mTeam2ScoreLabel.setText(Integer.toString(mGame.getTeam2Score()), TextView.BufferType.EDITABLE);
+        mUndoButton.setEnabled(mGame.isUndoable());
+    }
+
 }
