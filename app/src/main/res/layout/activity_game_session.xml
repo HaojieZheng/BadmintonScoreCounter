@@ -5,42 +5,84 @@
     android:background="#0099cc"
     tools:context="com.haojie.badmintonscorecounter.GameSessionActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <com.haojie.badmintonscorecounter.CourtView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true" />
-
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
+        android:id = "@+id/fullscreen_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:layout_gravity="top"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7">
+                <com.haojie.badmintonscorecounter.CourtView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                </com.haojie.badmintonscorecounter.CourtView>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:paddingLeft="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score_label"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Large"
+                        tools:textStyle="normal|bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/player1_score"
+                        android:text="0" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:text="@string/vs_label"
+                        android:textStyle="normal|bold"
+                        android:layout_gravity="center_horizontal" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/player2_score"
+                        android:text="0" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Undo"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </RelativeLayout>
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
 
         </LinearLayout>
-    </FrameLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

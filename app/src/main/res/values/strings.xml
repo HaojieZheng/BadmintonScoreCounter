@@ -13,6 +13,7 @@
     <string name="swap_name_access">Swap player names</string>
 
     <string name="title_activity_game_session">Badminton Game Session</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="score_label">Score</string>
+    <string name="vs_label">VS</string>
+
 </resources>
