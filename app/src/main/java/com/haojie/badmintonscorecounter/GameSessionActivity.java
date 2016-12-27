@@ -1,6 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -248,6 +249,16 @@ public class GameSessionActivity extends AppCompatActivity {
     {
         mTeam1ScoreLabel.setText(Integer.toString(mGame.getTeam1Score()), TextView.BufferType.EDITABLE);
         mTeam2ScoreLabel.setText(Integer.toString(mGame.getTeam2Score()), TextView.BufferType.EDITABLE);
+        if (mGame.getTeam1Score() > mGame.getTeam2Score())
+            mTeam1ScoreLabel.setTypeface(null, Typeface.BOLD);
+        else
+            mTeam1ScoreLabel.setTypeface(null, Typeface.NORMAL);
+
+        if (mGame.getTeam1Score() < mGame.getTeam2Score())
+            mTeam2ScoreLabel.setTypeface(null, Typeface.BOLD);
+        else
+            mTeam2ScoreLabel.setTypeface(null, Typeface.NORMAL);
+
         mUndoButton.setEnabled(mGame.isUndoable());
 
         mCourtView.setTopLeftName(mGame.getPlayerName(Game.PlayerPosition.Team1Right));
