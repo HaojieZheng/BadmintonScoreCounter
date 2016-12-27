@@ -143,8 +143,13 @@ public class CourtView extends View {
             y = courtRatio * x;
         }
 
+        paint.setColor(Color.parseColor("#368F10"));
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRect(0, 0, (float)x, (float)y, paint);
+
+
         // draw the borders
-        paint.setColor(Color.DKGRAY);
+        paint.setColor(Color.parseColor("#DDDDDD"));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth((float)5.0);
         canvas.drawRect(0, 0, (float)x, (float)y, paint);
@@ -172,13 +177,13 @@ public class CourtView extends View {
         canvas.drawLine((float)x - singlesSideLinesX, 0, (float)x - singlesSideLinesX, (float)y, paint);
 
         TextPaint textPaint = new TextPaint();
-        textPaint.setTextSize(40);
+        textPaint.setTextSize(50);
         textPaint.setColor(Color.BLACK);
         textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
 
         TextPaint servicePositionPaint = new TextPaint();
-        servicePositionPaint.setTextSize(40);
-        servicePositionPaint.setColor(Color.RED);
+        servicePositionPaint.setTextSize(60);
+        servicePositionPaint.setColor(Color.parseColor("#FFD800"));
         servicePositionPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
         int maxWidth = (int)(x/2 - singlesSideLinesX);
