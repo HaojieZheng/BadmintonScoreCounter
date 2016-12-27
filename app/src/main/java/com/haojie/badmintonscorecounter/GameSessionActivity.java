@@ -37,8 +37,11 @@ public class GameSessionActivity extends AppCompatActivity {
 
     // static final variables
     public final static String EXTRA_GAME_TYPE = "com.Haojie.BadmintonScoreCounter.GameType";
-    public final static String EXTRA_PLAYER_1_NAME = "com.Haojie.BadmintonScoreCounter.Player1Name";
-    public final static String EXTRA_PLAYER_2_NAME = "com.Haojie.BadmintonScoreCounter.Player2Name";
+    public final static String EXTRA_TEAM1_RIGHT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team1RightPlayerName";
+    public final static String EXTRA_TEAM2_RIGHT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team2RightPlayerName";
+    public final static String EXTRA_TEAM1_LEFT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team1LeftPlayerName";
+    public final static String EXTRA_TEAM2_LEFT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team2LeftPlayerName";
+
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
     private static final int UI_ANIMATION_DELAY = 300;
@@ -94,17 +97,46 @@ public class GameSessionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Boolean isSingles = true;
+        String team1RightPlayer = "";
+        String team2RightPlayer = "";
+        String team1LeftPlayer = "";
+        String team2LeftPlayer = "";
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras != null)
-                isSingles= extras.getBoolean(EXTRA_GAME_TYPE);
+            {
+                isSingles = extras.getBoolean(EXTRA_GAME_TYPE);
+                team1RightPlayer = extras.getString(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
+                team2RightPlayer = extras.getString(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
+
+                if (!isSingles)
+                {
+                    team1LeftPlayer = extras.getString(EXTRA_TEAM1_LEFT_PLAYER_NAME);
+                    team2LeftPlayer = extras.getString(EXTRA_TEAM2_LEFT_PLAYER_NAME);
+                }
+            }
         }
         else {
             isSingles = (Boolean) savedInstanceState.getSerializable(EXTRA_GAME_TYPE);
+            team1RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
+            team2RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
+
+            if (!isSingles)
+            {
+                team1LeftPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM1_LEFT_PLAYER_NAME);
+                team2LeftPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM2_LEFT_PLAYER_NAME);
+            }
         }
 
-        mGame = new Game(isSingles);
+        mGame = new Game(isSingles ? Game.GameType.Singles : Game.GameType.Doubles, 1);
+        mGame.setPlayerName(Game.PlayerPosition.Team1Right, team1RightPlayer);
+        mGame.setPlayerName(Game.PlayerPosition.Team2Right, team2RightPlayer);
+        if (!isSingles)
+        {
+            mGame.setPlayerName(Game.PlayerPosition.Team1Left, team1LeftPlayer);
+            mGame.setPlayerName(Game.PlayerPosition.Team2Left, team2LeftPlayer);
+        }
 
         setContentView(R.layout.activity_game_session);
 
@@ -217,6 +249,32 @@ public class GameSessionActivity extends AppCompatActivity {
         mTeam1ScoreLabel.setText(Integer.toString(mGame.getTeam1Score()), TextView.BufferType.EDITABLE);
         mTeam2ScoreLabel.setText(Integer.toString(mGame.getTeam2Score()), TextView.BufferType.EDITABLE);
         mUndoButton.setEnabled(mGame.isUndoable());
+
+        mCourtView.setTopLeftName(mGame.getPlayerName(Game.PlayerPosition.Team1Right));
+        mCourtView.setTopRightName(mGame.getPlayerName(Game.PlayerPosition.Team1Left));
+        mCourtView.setBottomLeftName(mGame.getPlayerName(Game.PlayerPosition.Team2Left));
+        mCourtView.setBottomRightName(mGame.getPlayerName(Game.PlayerPosition.Team2Right));
+
+        mCourtView.setServicePosition(PlayerPositionToPosition(mGame.getCurrentServer()));
+
+        mCourtView.invalidate();
+    }
+
+    private static CourtView.Position PlayerPositionToPosition(Game.PlayerPosition p)
+    {
+        switch (p)
+        {
+            case Team1Left:
+                return CourtView.Position.TopRight;
+            case Team1Right:
+                return CourtView.Position.TopLeft;
+            case Team2Left:
+                return CourtView.Position.BottomLeft;
+            case Team2Right:
+                return CourtView.Position.BottomRight;
+        }
+
+        return CourtView.Position.None;
     }
 
 }

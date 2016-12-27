@@ -177,9 +177,9 @@ public class CourtView extends View {
         textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
 
         TextPaint servicePositionPaint = new TextPaint();
-        textPaint.setTextSize(40);
-        textPaint.setColor(Color.RED);
-        textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        servicePositionPaint.setTextSize(40);
+        servicePositionPaint.setColor(Color.RED);
+        servicePositionPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
         int maxWidth = (int)(x/2 - singlesSideLinesX);
         drawPlayerNames(getTopLeftName(), singlesSideLinesX, longServiceY, maxWidth, canvas, mServicePosition == Position.TopLeft ? servicePositionPaint : textPaint);

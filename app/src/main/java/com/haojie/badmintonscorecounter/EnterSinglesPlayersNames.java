@@ -50,9 +50,9 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
     private void startGameSessionActivity()
     {
         Intent intent = new Intent(this, GameSessionActivity.class);
-        intent.putExtra(GameSessionActivity.EXTRA_GAME_TYPE, false);
-        intent.putExtra(GameSessionActivity.EXTRA_PLAYER_1_NAME, mEditPlayer1Name.getText().toString());
-        intent.putExtra(GameSessionActivity.EXTRA_PLAYER_2_NAME, mEditPlayer2Name.getText().toString());
+        intent.putExtra(GameSessionActivity.EXTRA_GAME_TYPE, true);
+        intent.putExtra(GameSessionActivity.EXTRA_TEAM1_RIGHT_PLAYER_NAME, mEditPlayer1Name.getText().toString());
+        intent.putExtra(GameSessionActivity.EXTRA_TEAM2_RIGHT_PLAYER_NAME, mEditPlayer2Name.getText().toString());
 
         startActivity(intent);
         finish();
