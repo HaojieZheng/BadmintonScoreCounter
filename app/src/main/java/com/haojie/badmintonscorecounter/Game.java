@@ -233,7 +233,7 @@ public class Game {
 
     public void setPlayerName(PlayerPosition position, String name)
     {
-        if (mGameType != mGameType.Doubles && position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left)
+        if (mGameType != mGameType.Doubles && (position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left))
             throw new InvalidParameterException();
 
         mPlayerNames[position.getValue()] = name;
