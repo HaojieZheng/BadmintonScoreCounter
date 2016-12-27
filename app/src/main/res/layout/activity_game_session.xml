@@ -17,6 +17,9 @@
             android:paddingTop="50dp"
             android:paddingBottom="50dp"
             android:orientation="horizontal">
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
             <RelativeLayout
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
