@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -91,7 +93,23 @@ public class GameSessionActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        Database database = new Database();
+        try {
+            database.Deserialize(this);
+            database.addGame(mGame);
+
+            database.Serialize(this);
+        }
+        catch (IOException e)
+        {
+
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,6 +287,7 @@ public class GameSessionActivity extends AppCompatActivity {
         mCourtView.setServicePosition(PlayerPositionToPosition(mGame.getCurrentServer()));
 
         mCourtView.invalidate();
+
     }
 
     private static CourtView.Position PlayerPositionToPosition(Game.PlayerPosition p)
