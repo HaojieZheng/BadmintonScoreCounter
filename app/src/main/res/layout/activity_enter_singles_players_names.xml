@@ -41,13 +41,22 @@
                     android:id="@+id/textView2"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="@string/player1_default"
-                    android:ems="10"
-                    android:id="@+id/editPlayer1Name" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:text="@string/player1_default"
+                        android:ems="10"
+                        android:id="@+id/editPlayer1Name" />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/addressbook1"
+                        app:srcCompat="@drawable/ic_action_name"/>
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
@@ -61,6 +70,9 @@
                     android:id="@+id/textView3"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,6 +80,12 @@
                     android:text="@string/player2_default"
                     android:ems="10"
                     android:id="@+id/editPlayer2Name" />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/addressbook2"
+                        app:srcCompat="@drawable/ic_action_name"/>
+                </LinearLayout>
 
 
             </LinearLayout>

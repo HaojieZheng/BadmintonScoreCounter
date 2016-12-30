@@ -12,9 +12,12 @@ import android.widget.TextView;
 public class EnterSinglesPlayersNames extends AppCompatActivity {
 
     ImageButton mSwapButton;
+    ImageButton mAddress1;
+    ImageButton mAddress2;
     EditText mEditPlayer1Name;
     EditText mEditPlayer2Name;
     Button mStartGameButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,9 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
         mStartGameButton = (Button)findViewById(R.id.button_start);
+        mAddress1 = (ImageButton)findViewById(R.id.addressbook1);
+        mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
+
 
         mSwapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +50,13 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
             }
         });
 
+        mAddress1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSelectPlayerFromListActivity();
+            }
+        });
+
     }
 
 
@@ -57,4 +70,13 @@ public class EnterSinglesPlayersNames extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void startSelectPlayerFromListActivity()
+    {
+        Intent intent = new Intent(this, SelectPlayerNameActivity.class);
+        startActivity(intent);
+
+
+    }
+
 }
