@@ -27,7 +27,7 @@
             android:label="@string/title_activity_game_session"
             android:theme="@style/FullscreenTheme"/>
 
-        <activity android:name=".SelectPlayerNameActivity"
+        <activity android:name=".SelectPlayerNameDialogFragment"
                   android:theme="@style/Theme.AppCompat.Dialog"
                   android:label="@string/SelectPlayerTitle">
 

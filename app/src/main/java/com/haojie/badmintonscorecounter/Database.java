@@ -1,6 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
 import android.content.Context;
+import android.os.Debug;
 
 import com.google.gson.Gson;
 
@@ -47,26 +48,36 @@ public class Database {
             if (player.getName().compareToIgnoreCase(name) == 0)
                 return player;
         }
-        Player p = new Player(name);
-        mPlayers.add(p);
-
-        return p;
+        return null;
     }
 
-    public void Deserialize(Context context) throws IOException
+    public void addPlayer(Player player)
     {
-        FileInputStream stream = context.openFileInput("persist.db");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder out = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-        }
-        Database db =  new Gson().fromJson(out.toString(), Database.class);
-        mPlayers = db.mPlayers;
-        mGames = db.mGames;
+        if (getPlayerWithName(player.getName()) != null)
+            throw new IllegalArgumentException("Player already exists");
 
-        stream.close();
+        mPlayers.add(player);
+    }
+
+    public void Deserialize(Context context)
+    {
+        try {
+            FileInputStream stream = context.openFileInput("persist.db");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            StringBuilder out = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                out.append(line);
+            }
+            Database db = new Gson().fromJson(out.toString(), Database.class);
+            mPlayers = db.mPlayers;
+            mGames = db.mGames;
+
+            stream.close();
+        }
+        catch (IOException e)
+        {
+        }
     }
 
 
