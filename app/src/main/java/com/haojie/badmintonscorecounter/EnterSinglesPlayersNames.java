@@ -114,7 +114,7 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
     private void startSelectPlayerFromListActivity()
     {
         SelectPlayerNameDialogFragment dialogFrag = new SelectPlayerNameDialogFragment();
-        dialogFrag.show(getFragmentManager(), "TEST");
+        dialogFrag.show(getFragmentManager(), "Select single player name");
     }
 
     @Override

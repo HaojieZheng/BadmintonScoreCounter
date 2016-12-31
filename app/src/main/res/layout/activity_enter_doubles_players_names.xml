@@ -52,14 +52,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-                    <EditText
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:text="@string/player1_default"
-                        android:ems="10"
-                        android:id="@+id/editTeam1Player1Name" />
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="@string/player1_default"
+                            android:ems="10"
+                            android:id="@+id/editTeam1Player1Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook1"
+                            app:srcCompat="@drawable/ic_action_name"/>
+                    </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
@@ -71,14 +80,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-                    <EditText
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:text="@string/player2_default"
-                        android:ems="10"
-                        android:id="@+id/editTeam1Player2Name" />
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="@string/player2_default"
+                            android:ems="10"
+                            android:id="@+id/editTeam1Player2Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook2"
+                            app:srcCompat="@drawable/ic_action_name"/>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -130,13 +148,23 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-                    <EditText
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:text="@string/player3_default"
-                        android:ems="10"
-                        android:id="@+id/editTeam2Player1Name" />
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="@string/player3_default"
+                            android:ems="10"
+                            android:id="@+id/editTeam2Player1Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook3"
+                            app:srcCompat="@drawable/ic_action_name"/>
+                    </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
@@ -148,16 +176,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-                    <EditText
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:text="@string/player4_default"
-                        android:ems="10"
-                        android:id="@+id/editTeam2Player2Name" />
-
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:text="@string/player4_default"
+                            android:ems="10"
+                            android:id="@+id/editTeam2Player2Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook4"
+                            app:srcCompat="@drawable/ic_action_name"/>
                 </LinearLayout>
+
+            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

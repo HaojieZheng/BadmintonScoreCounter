@@ -9,17 +9,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class EnterDoublesPlayersNames extends AppCompatActivity {
+public class EnterDoublesPlayersNames extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler{
 
     ImageButton mSwapTeam1Button;
     ImageButton mSwapTeam2Button;
     ImageButton mSwapTeamsButton;
+    ImageButton mAddress1;
+    ImageButton mAddress2;
+    ImageButton mAddress3;
+    ImageButton mAddress4;
     EditText mEditTeam1Player1Name;
     EditText mEditTeam1Player2Name;
     EditText mEditTeam2Player1Name;
     EditText mEditTeam2Player2Name;
-
     Button mStartGameButton;
+
+    int mPlayerSelectionShown = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,11 @@ public class EnterDoublesPlayersNames extends AppCompatActivity {
         mSwapTeam1Button = (ImageButton)findViewById(R.id.swapteam1_button);
         mSwapTeam2Button = (ImageButton)findViewById(R.id.swapteam2_button);
         mSwapTeamsButton = (ImageButton)findViewById(R.id.swapteams_button);
+
+        mAddress1 = (ImageButton)findViewById(R.id.addressbook1);
+        mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
+        mAddress3 = (ImageButton)findViewById(R.id.addressbook3);
+        mAddress4 = (ImageButton)findViewById(R.id.addressbook4);
 
         mEditTeam1Player1Name = (EditText)findViewById(R.id.editTeam1Player1Name);
         mEditTeam1Player2Name = (EditText)findViewById(R.id.editTeam1Player2Name);
@@ -67,6 +77,38 @@ public class EnterDoublesPlayersNames extends AppCompatActivity {
             }
         });
 
+        mAddress1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPlayerSelectionShown = 1;
+                startSelectPlayerFromListActivity();
+            }
+        });
+
+        mAddress2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPlayerSelectionShown = 2;
+                startSelectPlayerFromListActivity();
+            }
+        });
+
+        mAddress3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPlayerSelectionShown = 3;
+                startSelectPlayerFromListActivity();
+            }
+        });
+
+        mAddress4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPlayerSelectionShown = 4;
+                startSelectPlayerFromListActivity();
+            }
+        });
+
     }
 
 
@@ -98,6 +140,13 @@ public class EnterDoublesPlayersNames extends AppCompatActivity {
     }
 
 
+    private void startSelectPlayerFromListActivity()
+    {
+        SelectPlayerNameDialogFragment dialogFrag = new SelectPlayerNameDialogFragment();
+        dialogFrag.show(getFragmentManager(), "Select double player names");
+    }
+
+
     private void startGameSessionActivity()
     {
         Intent intent = new Intent(this, GameSessionActivity.class);
@@ -109,6 +158,26 @@ public class EnterDoublesPlayersNames extends AppCompatActivity {
 
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName) {
+        if (mPlayerSelectionShown == 1)
+        {
+            mEditTeam1Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
+        }
+        else if (mPlayerSelectionShown == 2)
+        {
+            mEditTeam1Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
+        }
+        if (mPlayerSelectionShown == 3)
+        {
+            mEditTeam2Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
+        }
+        else if (mPlayerSelectionShown == 4)
+        {
+            mEditTeam2Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
+        }
     }
 
 }
