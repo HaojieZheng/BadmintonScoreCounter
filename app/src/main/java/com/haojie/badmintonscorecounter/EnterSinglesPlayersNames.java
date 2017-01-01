@@ -1,6 +1,8 @@
 package com.haojie.badmintonscorecounter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +18,14 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
     ImageButton mSwapButton;
     ImageButton mAddress1;
     ImageButton mAddress2;
+    ImageButton mTakePhotoButton1;
+    ImageButton mTakePhotoButton2;
     EditText mEditPlayer1Name;
     EditText mEditPlayer2Name;
     Button mStartGameButton;
     int mPlayerSelectionShown = 0;
+    static final int REQUEST_IMAGE_CAPTURE_1 = 1;
+    static final int REQUEST_IMAGE_CAPTURE_2 = 2;
 
 
     @Override
@@ -28,6 +34,8 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
         setContentView(R.layout.activity_enter_singles_players_names);
 
         mSwapButton = (ImageButton)findViewById(R.id.swap_button);
+        mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
+        mTakePhotoButton2 = (ImageButton)findViewById(R.id.takephoto2);
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
         mStartGameButton = (Button)findViewById(R.id.button_start);
@@ -69,6 +77,40 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
             }
         });
 
+        mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_1);
+                }
+            }
+        });
+
+        mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_2);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE_1 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mTakePhotoButton1.setImageBitmap(imageBitmap);
+        }
+        else if (requestCode == REQUEST_IMAGE_CAPTURE_2 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mTakePhotoButton2.setImageBitmap(imageBitmap);
+        }
     }
 
 
@@ -115,6 +157,11 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
     {
         SelectPlayerNameDialogFragment dialogFrag = new SelectPlayerNameDialogFragment();
         dialogFrag.show(getFragmentManager(), "Select single player name");
+    }
+
+    private void takePlayerPhoto(int player)
+    {
+
     }
 
     @Override
