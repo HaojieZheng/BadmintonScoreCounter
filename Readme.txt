@@ -7,6 +7,7 @@ This is a simple project for me to get hands on with Android application program
 
 == Change Log ==
  1.1    Added player names to persistance storage
+        Allow user to store photograph of player
  1.0    Published into Play Store with only score counting capability
 
 
