@@ -40,6 +40,13 @@ public class CourtView extends View {
         BottomRight
     }
 
+    public enum Orientation
+    {
+        None,
+        Protrait,
+        Landscape
+    }
+
     // Constructors
     public CourtView(Context context)
     {
@@ -129,6 +136,7 @@ public class CourtView extends View {
     private Bitmap mTopRightPic;
     private Bitmap mBottomLeftPic;
     private Bitmap mBottomRightPic;
+    private Orientation mOrientation = Orientation.None;
 
     public Bitmap getTopLeftPic() {
         return mTopLeftPic;
@@ -163,10 +171,11 @@ public class CourtView extends View {
     }
 
 
-    @Override
-    protected void onDraw(Canvas canvas)
+
+    private void drawProtrait(Canvas canvas)
     {
-        super.onDraw(canvas);
+        mOrientation = Orientation.Protrait;
+
         double x = getWidth();
         double y = getHeight();
 
@@ -230,6 +239,89 @@ public class CourtView extends View {
         drawPlayerNames(getBottomRightName(), getBottomRightPic (), (float)x/2, (float)y - shortServiceY, maxWidth, canvas, mServicePosition == Position.BottomRight ? servicePositionPaint : textPaint);
     }
 
+    private void drawLandScape(Canvas canvas)
+    {
+        mOrientation = Orientation.Landscape;
+
+        double x = getWidth();
+        double y = getHeight();
+
+        Paint paint = new Paint();
+        if (x < courtRatio * y)
+        {
+            y = x / courtRatio;
+        }
+        else
+        {
+            x = courtRatio * y;
+        }
+
+        paint.setColor(Color.parseColor("#368F10"));
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRect(0, 0, (float)x, (float)y, paint);
+
+
+        // draw the borders
+        paint.setColor(Color.parseColor("#DDDDDD"));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float)5.0);
+        canvas.drawRect(0, 0, (float)x, (float)y, paint);
+
+        // center line
+        canvas.drawLine((float)x/2, 0, (float)x/2, (float)y, paint);
+
+        // long service line
+        float longServiceX = (float)(longServiceLine * x);
+        canvas.drawLine(longServiceX, 0, longServiceX, (float)y, paint);
+        canvas.drawLine((float)x - longServiceX, 0, (float)x - longServiceX, (float)y, paint);
+
+        // short service line
+        float shortServiceX = (float)(shortServiceLine * x);
+        canvas.drawLine(shortServiceX, 0, shortServiceX, (float)y, paint);
+        canvas.drawLine((float)x - shortServiceX, 0, (float)x - shortServiceX, (float)y, paint);
+
+        // players center line
+        canvas.drawLine(0, (float)y / 2, shortServiceX, (float)y / 2, paint);
+        canvas.drawLine((float)x - shortServiceX, (float)y / 2, (float)x, (float)y/2, paint);
+
+        // singles side line
+        float singlesSideLinesY = (float)(singlesSideLine * y);
+        canvas.drawLine(0, singlesSideLinesY, (float)x, singlesSideLinesY, paint);
+        canvas.drawLine(0, (float)y - singlesSideLinesY, (float)x, (float)y - singlesSideLinesY, paint);
+
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(50);
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+
+        TextPaint servicePositionPaint = new TextPaint();
+        servicePositionPaint.setTextSize(60);
+        servicePositionPaint.setColor(Color.parseColor("#FFD800"));
+        servicePositionPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+        int maxWidth = (int)(shortServiceX - longServiceX);
+        drawPlayerNames(getTopRightName(), getTopRightPic(), longServiceX, singlesSideLinesY, maxWidth, canvas, mServicePosition == Position.TopRight ? servicePositionPaint : textPaint);
+        drawPlayerNames(getTopLeftName(), getTopLeftPic(), longServiceX , (float)y/2, maxWidth, canvas, mServicePosition == Position.TopLeft ? servicePositionPaint : textPaint);
+        drawPlayerNames(getBottomLeftName(), getBottomLeftPic(), (float)x - shortServiceX, (float)y/2, maxWidth, canvas, mServicePosition == Position.BottomLeft ? servicePositionPaint : textPaint);
+        drawPlayerNames(getBottomRightName(), getBottomRightPic (), (float)x - shortServiceX, singlesSideLinesY, maxWidth, canvas, mServicePosition == Position.BottomRight ? servicePositionPaint : textPaint);
+    }
+
+
+
+    @Override
+    protected void onDraw(Canvas canvas)
+    {
+        super.onDraw(canvas);
+        double x = getWidth();
+        double y = getHeight();
+
+        if (y >= x)
+            drawProtrait(canvas);
+        else
+            drawLandScape(canvas);
+
+    }
+
 
 
     private void drawPlayerNames(String text, Bitmap picture, float x, float y, int maxWidth, Canvas canvas, TextPaint textPaint)
@@ -255,22 +347,11 @@ public class CourtView extends View {
 
 
         if (picture != null) {
-            picture = Bitmap.createScaledBitmap(picture, (int)(maxWidth * 0.7), (int)(maxWidth * 0.7), true);
-            canvas.drawBitmap(picture, x + (int)(maxWidth * 0.15), y + sl.getHeight()+ 10, null);
+            picture = Bitmap.createScaledBitmap(picture, (int)(maxWidth * 0.4), (int)(maxWidth * 0.4), true);
+            canvas.drawBitmap(picture, x + (int)(maxWidth * 0.3), y + sl.getHeight()+ 10, null);
         }
 
     }
-
-    /**
-     * @return text height
-     */
-    private float getTextHeight(String text, Paint paint) {
-
-        Rect rect = new Rect();
-        paint.getTextBounds(text, 0, text.length(), rect);
-        return rect.height();
-    }
-
 
     float touched_x, touched_y;
     boolean touched = false;
@@ -283,13 +364,23 @@ public class CourtView extends View {
 
         double y = getHeight();
         double x = getWidth();
-        if (y < courtRatio * x)
-        {
-            x = y / courtRatio;
+        if (mOrientation == Orientation.Protrait) {
+            if (y < courtRatio * x) {
+                x = y / courtRatio;
+            } else {
+                y = courtRatio * x;
+            }
         }
         else
         {
-            y = courtRatio * x;
+            if (x < courtRatio * y)
+            {
+                y = x / courtRatio;
+            }
+            else
+            {
+                x = courtRatio * y;
+            }
         }
 
         int action = event.getAction();
@@ -304,17 +395,36 @@ public class CourtView extends View {
                 if (touched)
                 {
                     Boolean team1Score = true;
-                    if (touched_y >  y / 2)
-                        team1Score = false;
+                    if (mOrientation == Orientation.Protrait && touched_x <= x) {
+                        if (touched_y > y / 2)
+                            team1Score = false;
 
-                    for (CourtViewTouchListener listener: mListeners
-                         ) {
-                        if (team1Score)
-                            listener.onTeam1Score();
-                        else
-                            listener.onTeam2Score();
+
+                        for (CourtViewTouchListener listener: mListeners
+                                ) {
+                            if (team1Score)
+                                listener.onTeam1Score();
+                            else
+                                listener.onTeam2Score();
+                        }
                     }
+                    else if (mOrientation == Orientation.Landscape && touched_y <= y)
+                    {
+                        if (touched_x > x / 2)
+                            team1Score = false;
+
+
+                        for (CourtViewTouchListener listener: mListeners
+                                ) {
+                            if (team1Score)
+                                listener.onTeam1Score();
+                            else
+                                listener.onTeam2Score();
+                        }
+                    }
+
                 }
+
                 touched = false;
                 break;
             case MotionEvent.ACTION_CANCEL:
