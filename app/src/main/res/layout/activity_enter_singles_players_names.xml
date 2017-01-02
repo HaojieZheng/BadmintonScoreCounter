@@ -1,114 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_enter_singles_players_names"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.haojie.badmintonscorecounter.EnterSinglesPlayersNames">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_enter_singles_players_names"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/swapbutton"
-                android:id="@+id/swap_button"
-                android:contentDescription="@string/swap_name_access" />
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="com.haojie.badmintonscorecounter.EnterSinglesPlayersNames"
+            android:fillViewport="true">
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="18dp"
-                android:layout_marginStart="18dp">
-
-                <TextView
-                    android:text="@string/player1_label"
-                    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/swapbutton"
+                    android:id="@+id/swap_button"
+                    android:contentDescription="@string/swap_name_access" />
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:layout_width="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="18dp">
+
+                    <TextView
+                        android:text="@string/player1_label"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:inputType="textPersonName"
-                        android:text="@string/player1_default"
-                        android:ems="10"
-                        android:id="@+id/editPlayer1Name" />
-                    <ImageButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView2"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/takephoto1"
-                        app:srcCompat="@drawable/ic_take_photo"/>
-                    <ImageButton
-                        android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:inputType="textPersonName"
+                            android:text="@string/player1_default"
+                            android:ems="10"
+                            android:id="@+id/editPlayer1Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/takephoto1"
+                            app:srcCompat="@drawable/ic_take_photo"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook1"
+                            app:srcCompat="@drawable/ic_action_name"/>
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/addressbook1"
-                        app:srcCompat="@drawable/ic_action_name"/>
+                        android:minHeight="30dp" />
+
+                    <TextView
+                        android:text="@string/player2_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView3"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:inputType="textPersonName"
+                            android:text="@string/player2_default"
+                            android:ems="10"
+                            android:id="@+id/editPlayer2Name" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/takephoto2"
+                            app:srcCompat="@drawable/ic_take_photo"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addressbook2"
+                            app:srcCompat="@drawable/ic_action_name"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
-
-                <Space
+                <Button
+                    android:text="@string/start_game_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="30dp" />
-
-                <TextView
-                    android:text="@string/player2_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView3"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:inputType="textPersonName"
-                        android:text="@string/player2_default"
-                        android:ems="10"
-                        android:id="@+id/editPlayer2Name" />
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/takephoto2"
-                        app:srcCompat="@drawable/ic_take_photo"/>
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/addressbook2"
-                        app:srcCompat="@drawable/ic_action_name"/>
-                </LinearLayout>
-
-
+                    android:layout_gravity="bottom"
+                    android:id="@+id/button_start" />
             </LinearLayout>
-        </LinearLayout>
-        <Button
-            android:text="@string/start_game_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:id="@+id/button_start" />
-    </FrameLayout>
-</RelativeLayout>
+
+
+</ScrollView>
