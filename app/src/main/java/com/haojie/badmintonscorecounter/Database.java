@@ -1,11 +1,13 @@
 package com.haojie.badmintonscorecounter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Debug;
 
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,6 +29,16 @@ public class Database {
 
     public ArrayList<Player> getPlayers() {
         return mPlayers;
+    }
+
+    public ArrayList<Player> getPlayersWithoutDefault() {
+        ArrayList<Player> result = new ArrayList<>();
+        for (Player p : mPlayers)
+        {
+            if (!p.getName().startsWith("Player "))
+                result.add(p);
+        }
+        return result;
     }
 
 
@@ -94,6 +106,29 @@ public class Database {
         {
             // not possible, since it overwrites
         }
+    }
+
+    public static String writeBitmapToDisk(Bitmap bitmap)
+    {
+        FileOutputStream out = null;
+        String fileName = null;
+        try {
+            fileName = File.createTempFile("Pht","").getPath();
+            out = new FileOutputStream(fileName);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return fileName;
     }
 
     ArrayList<Game> mGames = new ArrayList<Game>();

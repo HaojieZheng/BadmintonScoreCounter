@@ -50,17 +50,17 @@ public class Game {
 
     class GameState
     {
-        public GameState(String [] playerNames, PlayerPosition currentServer, int team1Score, int team2Score)
+        public GameState(Player[] players, PlayerPosition currentServer, int team1Score, int team2Score)
         {
-            mPlayerNames = playerNames.clone();
+            mPlayers = players.clone();
             mCurrentServer = currentServer;
             mTeam1Score = team1Score;
             mTeam2Score = team2Score;
         }
 
-        public String[] getPlayerNames()
+        public Player[] getPlayers()
         {
-            return mPlayerNames;
+            return mPlayers;
         }
 
         public PlayerPosition getCurrentServer()
@@ -78,7 +78,7 @@ public class Game {
             return mTeam2Score;
         }
 
-        private String[] mPlayerNames;
+        private Player[] mPlayers;
         private PlayerPosition mCurrentServer;
         private int mTeam1Score, mTeam2Score;
 
@@ -127,7 +127,7 @@ public class Game {
             return; // no scoring after winning
 
         // clone the last game state
-        mPlays.push(new GameState(mPlayerNames, mCurrentServer, mTeam1Score, mTeam2Score));
+        mPlays.push(new GameState(mPlayers, mCurrentServer, mTeam1Score, mTeam2Score));
         mTeam1Score++;
 
 
@@ -159,7 +159,7 @@ public class Game {
     {
         if (getWinner() != 0)
             return; // no scoring after winning
-        mPlays.push(new GameState(mPlayerNames, mCurrentServer, mTeam1Score, mTeam2Score));
+        mPlays.push(new GameState(mPlayers, mCurrentServer, mTeam1Score, mTeam2Score));
         mTeam2Score++;
 
         if (mGameType == GameType.Doubles)
@@ -190,7 +190,7 @@ public class Game {
         GameState last = mPlays.pop();
         mTeam1Score = last.getTeam1Score();
         mTeam2Score = last.getTeam2Score();
-        mPlayerNames = last.getPlayerNames().clone();
+        mPlayers = last.getPlayers().clone();
         mCurrentServer = last.getCurrentServer();
     }
 
@@ -222,35 +222,33 @@ public class Game {
         return 0;
     }
 
-    public String getPlayerName(PlayerPosition position)
+    public Player getPlayer(PlayerPosition position)
     {
-        String result = mPlayerNames[position.getValue()];
-        if (result == null)
-            result = "";
+        Player result = mPlayers[position.getValue()];
 
         return result;
     }
 
-    public void setPlayerName(PlayerPosition position, String name)
+    public void setPlayer(PlayerPosition position, Player player)
     {
         if (mGameType != mGameType.Doubles && (position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left))
             throw new InvalidParameterException();
 
-        mPlayerNames[position.getValue()] = name;
+        mPlayers[position.getValue()] = player;
     }
 
     private void swapTeam1Position()
     {
-        String temp = mPlayerNames[0];
-        mPlayerNames[0] = mPlayerNames[1];
-        mPlayerNames[1] = temp;
+        Player temp = mPlayers[0];
+        mPlayers[0] = mPlayers[1];
+        mPlayers[1] = temp;
     }
 
     private void swapTeam2Position()
     {
-        String temp = mPlayerNames[2];
-        mPlayerNames[2] = mPlayerNames[3];
-        mPlayerNames[3] = temp;
+        Player temp = mPlayers[2];
+        mPlayers[2] = mPlayers[3];
+        mPlayers[3] = temp;
     }
 
     // member variables
@@ -258,7 +256,7 @@ public class Game {
     int mTeam1Score = 0;
     int mTeam2Score = 0;
     Stack<GameState> mPlays = new Stack<GameState>();
-    String [] mPlayerNames = new String[4];
+    Player [] mPlayers = new Player[4];
     PlayerPosition mCurrentServer;
 
 

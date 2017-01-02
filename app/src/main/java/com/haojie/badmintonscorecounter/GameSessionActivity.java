@@ -148,13 +148,16 @@ public class GameSessionActivity extends AppCompatActivity {
             }
         }
 
+        Database database = new Database();
+        database.Deserialize(this);
+
         mGame = new Game(isSingles ? Game.GameType.Singles : Game.GameType.Doubles, 1);
-        mGame.setPlayerName(Game.PlayerPosition.Team1Right, team1RightPlayer);
-        mGame.setPlayerName(Game.PlayerPosition.Team2Right, team2RightPlayer);
+        mGame.setPlayer(Game.PlayerPosition.Team1Right, database.getPlayerWithName(team1RightPlayer));
+        mGame.setPlayer(Game.PlayerPosition.Team2Right, database.getPlayerWithName(team2RightPlayer));
         if (!isSingles)
         {
-            mGame.setPlayerName(Game.PlayerPosition.Team1Left, team1LeftPlayer);
-            mGame.setPlayerName(Game.PlayerPosition.Team2Left, team2LeftPlayer);
+            mGame.setPlayer(Game.PlayerPosition.Team1Left, database.getPlayerWithName(team1LeftPlayer));
+            mGame.setPlayer(Game.PlayerPosition.Team2Left, database.getPlayerWithName(team2LeftPlayer));
         }
 
         setContentView(R.layout.activity_game_session);
@@ -279,10 +282,21 @@ public class GameSessionActivity extends AppCompatActivity {
 
         mUndoButton.setEnabled(mGame.isUndoable());
 
-        mCourtView.setTopLeftName(mGame.getPlayerName(Game.PlayerPosition.Team1Right));
-        mCourtView.setTopRightName(mGame.getPlayerName(Game.PlayerPosition.Team1Left));
-        mCourtView.setBottomLeftName(mGame.getPlayerName(Game.PlayerPosition.Team2Left));
-        mCourtView.setBottomRightName(mGame.getPlayerName(Game.PlayerPosition.Team2Right));
+        Player playerTopLeft = mGame.getPlayer(Game.PlayerPosition.Team1Right);
+        Player playerTopRight = mGame.getPlayer(Game.PlayerPosition.Team1Left);
+        Player playerBottomLeft = mGame.getPlayer(Game.PlayerPosition.Team2Left);
+        Player playerBottomRight = mGame.getPlayer(Game.PlayerPosition.Team2Right);
+
+        mCourtView.setTopLeftName(playerTopLeft != null ? playerTopLeft.getName() : "");
+        mCourtView.setTopRightName(playerTopRight != null ? playerTopRight.getName() : "");
+        mCourtView.setBottomLeftName(playerBottomLeft != null ? playerBottomLeft.getName() : "");
+        mCourtView.setBottomRightName(playerBottomRight != null ? playerBottomRight.getName() : "");
+
+        mCourtView.setTopLeftPic(playerTopLeft != null ? playerTopLeft.getImage() : null);
+        mCourtView.setTopRightPic(playerTopRight != null ? playerTopRight.getImage() : null);
+        mCourtView.setBottomLeftPic(playerBottomLeft != null ? playerBottomLeft.getImage() : null);
+        mCourtView.setBottomRightPic(playerBottomRight != null ? playerBottomRight.getImage() : null);
+
 
         mCourtView.setServicePosition(PlayerPositionToPosition(mGame.getCurrentServer()));
 

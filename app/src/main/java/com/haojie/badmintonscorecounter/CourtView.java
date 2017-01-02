@@ -1,6 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -124,6 +125,42 @@ public class CourtView extends View {
     static final double shortServiceLine = 4.68 / 13.4;
     static final double singlesSideLine = 0.46 / 6.1;
 
+    private Bitmap mTopLeftPic;
+    private Bitmap mTopRightPic;
+    private Bitmap mBottomLeftPic;
+    private Bitmap mBottomRightPic;
+
+    public Bitmap getTopLeftPic() {
+        return mTopLeftPic;
+    }
+
+    public void setTopLeftPic(Bitmap topLeftPic) {
+        mTopLeftPic = topLeftPic;
+    }
+
+    public Bitmap getTopRightPic() {
+        return mTopRightPic;
+    }
+
+    public void setTopRightPic(Bitmap topRightPic) {
+        mTopRightPic = topRightPic;
+    }
+
+    public Bitmap getBottomLeftPic() {
+        return mBottomLeftPic;
+    }
+
+    public void setBottomLeftPic(Bitmap bottomLeftPic) {
+        mBottomLeftPic = bottomLeftPic;
+    }
+
+    public Bitmap getBottomRightPic() {
+        return mBottomRightPic;
+    }
+
+    public void setBottomRightPic(Bitmap bottomRightPic) {
+        mBottomRightPic = bottomRightPic;
+    }
 
 
     @Override
@@ -187,15 +224,15 @@ public class CourtView extends View {
         servicePositionPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
         int maxWidth = (int)(x/2 - singlesSideLinesX);
-        drawPlayerNames(getTopLeftName(), singlesSideLinesX, longServiceY, maxWidth, canvas, mServicePosition == Position.TopLeft ? servicePositionPaint : textPaint);
-        drawPlayerNames(getTopRightName(), (float)x/2, longServiceY, maxWidth, canvas, mServicePosition == Position.TopRight ? servicePositionPaint : textPaint);
-        drawPlayerNames(getBottomLeftName(), singlesSideLinesX, (float)y - shortServiceY, maxWidth, canvas, mServicePosition == Position.BottomLeft ? servicePositionPaint : textPaint);
-        drawPlayerNames(getBottomRightName(), (float)x/2, (float)y - shortServiceY, maxWidth, canvas, mServicePosition == Position.BottomRight ? servicePositionPaint : textPaint);
+        drawPlayerNames(getTopLeftName(), getTopLeftPic(), singlesSideLinesX, longServiceY, maxWidth, canvas, mServicePosition == Position.TopLeft ? servicePositionPaint : textPaint);
+        drawPlayerNames(getTopRightName(), getTopRightPic (), (float)x/2, longServiceY, maxWidth, canvas, mServicePosition == Position.TopRight ? servicePositionPaint : textPaint);
+        drawPlayerNames(getBottomLeftName(), getBottomLeftPic(), singlesSideLinesX, (float)y - shortServiceY, maxWidth, canvas, mServicePosition == Position.BottomLeft ? servicePositionPaint : textPaint);
+        drawPlayerNames(getBottomRightName(), getBottomRightPic (), (float)x/2, (float)y - shortServiceY, maxWidth, canvas, mServicePosition == Position.BottomRight ? servicePositionPaint : textPaint);
     }
 
 
 
-    private void drawPlayerNames(String text, float x, float y, int maxWidth, Canvas canvas, TextPaint textPaint)
+    private void drawPlayerNames(String text, Bitmap picture, float x, float y, int maxWidth, Canvas canvas, TextPaint textPaint)
     {
         StaticLayout sl = new StaticLayout(text, textPaint, maxWidth,
                 Layout.Alignment.ALIGN_CENTER, 1, 1, true);
@@ -205,8 +242,6 @@ public class CourtView extends View {
         //calculate X and Y coordinates - In this case we want to draw the text in the
         //center of canvas so we calculate
         //text height and number of lines to move Y coordinate to center.
-        float textHeight = getTextHeight("test", textPaint);
-        int numberOfTextLines = sl.getLineCount();
         float textYCoordinate = y;
 
         //text will be drawn from left
@@ -217,6 +252,13 @@ public class CourtView extends View {
         //draws static layout on canvas
         sl.draw(canvas);
         canvas.restore();
+
+
+        if (picture != null) {
+            picture = Bitmap.createScaledBitmap(picture, (int)(maxWidth * 0.7), (int)(maxWidth * 0.7), true);
+            canvas.drawBitmap(picture, x + (int)(maxWidth * 0.15), y + sl.getHeight()+ 10, null);
+        }
+
     }
 
     /**

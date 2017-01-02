@@ -78,17 +78,17 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="textPersonName"
-                    android:text="@string/player2_default"
-                    android:ems="10"
-                    android:id="@+id/editPlayer2Name" />
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textPersonName"
+                        android:text="@string/player2_default"
+                        android:ems="10"
+                        android:id="@+id/editPlayer2Name" />
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

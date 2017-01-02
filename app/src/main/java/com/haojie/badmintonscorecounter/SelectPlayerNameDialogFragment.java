@@ -38,10 +38,10 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                HashMap<String, String> value = (HashMap<String, String>)adapter.getItemAtPosition(position);
-                String playerName = value.get(PLAYER_NAME_KEY);
+                Player value = (Player)adapter.getItemAtPosition(position);
+
                 SelectPlayerNameClickHandler handler = (SelectPlayerNameClickHandler)getActivity();
-                handler.onNameSelected(SelectPlayerNameDialogFragment.this, playerName);
+                handler.onNameSelected(SelectPlayerNameDialogFragment.this, value.getName());
                 dismiss();
             }
         });
@@ -58,21 +58,11 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
 
     private void populateList(View v)
     {
-        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
         Database database = new Database();
         database.Deserialize(v.getContext());
 
-        for (Player p : database.getPlayers())
-        {
-            HashMap<String, String> row = new HashMap<String, String>();
-            row.put("player_name", p.getName());
-            fillMaps.add(row);
-        }
+        PlayerArrayAdapter adapter = new PlayerArrayAdapter(v.getContext(), database.getPlayersWithoutDefault());
 
-        String[] from = new String[]{"player_name"};
-        int[] to = new int[]{R.id.player_name};
-
-        SimpleAdapter adapter = new SimpleAdapter(v.getContext(), fillMaps, R.layout.player_name_list_item, from, to);
         mListView.setAdapter(adapter);
     }
 
