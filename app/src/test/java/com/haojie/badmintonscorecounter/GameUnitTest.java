@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class BadmintonScoreCounterUnitTest {
+public class GameUnitTest {
     @Test
     public void Game_Init_ScoreZero() throws Exception {
         Game game = new Game(Game.GameType.Singles, 1);
