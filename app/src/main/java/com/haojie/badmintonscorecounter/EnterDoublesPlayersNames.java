@@ -304,7 +304,7 @@ public class EnterDoublesPlayersNames extends AppCompatActivity implements Selec
     // save the player names first
         Database database = new Database();
         try {
-            database.Deserialize(EnterDoublesPlayersNames.this);
+            database.deserialize(EnterDoublesPlayersNames.this);
 
             String player1Name = mEditTeam1Player1Name.getText().toString();
             updatePlayerInDatabase(database, player1Name, player1Picture);
@@ -318,7 +318,7 @@ public class EnterDoublesPlayersNames extends AppCompatActivity implements Selec
             String player4Name = mEditTeam1Player2Name.getText().toString();
             updatePlayerInDatabase(database, player4Name, player4Picture);
 
-            database.Serialize(EnterDoublesPlayersNames.this);
+            database.serialize(EnterDoublesPlayersNames.this);
 
         }
         catch (IOException e)
@@ -369,7 +369,7 @@ public class EnterDoublesPlayersNames extends AppCompatActivity implements Selec
     public void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName) {
 
         Database database = new Database();
-        database.Deserialize(this);
+        database.deserialize(this);
         Player player = database.getPlayerWithName(playerName);
 
         if (mPlayerSelectionShown == 1)

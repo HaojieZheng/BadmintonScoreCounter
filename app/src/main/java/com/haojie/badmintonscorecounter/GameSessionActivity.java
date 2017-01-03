@@ -99,10 +99,10 @@ public class GameSessionActivity extends AppCompatActivity {
 
         Database database = new Database();
         try {
-            database.Deserialize(this);
+            database.deserialize(this);
             database.addGame(mGame);
 
-            database.Serialize(this);
+            database.serialize(this);
         }
         catch (IOException e)
         {
@@ -149,7 +149,7 @@ public class GameSessionActivity extends AppCompatActivity {
         }
 
         Database database = new Database();
-        database.Deserialize(this);
+        database.deserialize(this);
 
         mGame = new Game(isSingles ? Game.GameType.Singles : Game.GameType.Doubles, 1);
         mGame.setPlayer(Game.PlayerPosition.Team1Right, database.getPlayerWithName(team1RightPlayer));

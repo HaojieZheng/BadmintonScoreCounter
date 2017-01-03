@@ -71,7 +71,7 @@ public class Database {
         mPlayers.add(player);
     }
 
-    public void Deserialize(Context context)
+    public void deserialize(Context context)
     {
         try {
             FileInputStream stream = context.openFileInput("persist.db");
@@ -93,7 +93,7 @@ public class Database {
     }
 
 
-    public void Serialize(Context context) throws IOException
+    public void serialize(Context context) throws IOException
     {
         String serialized = new Gson().toJson(this);
         try

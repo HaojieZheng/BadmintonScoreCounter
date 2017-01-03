@@ -3,17 +3,10 @@ package com.haojie.badmintonscorecounter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Haojie on 12/30/2016.
@@ -59,7 +52,7 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
     private void populateList(View v)
     {
         Database database = new Database();
-        database.Deserialize(v.getContext());
+        database.deserialize(v.getContext());
 
         PlayerArrayAdapter adapter = new PlayerArrayAdapter(v.getContext(), database.getPlayersWithoutDefault());
 
