@@ -5,6 +5,15 @@ by Zheng Haojie
 == Introdution ==
 This is a simple project for me to get hands on with Android application programming.
 
+The goal of this app is to make an app that serves 2 purposes. The first is for badminton umpires
+to use during tournaments to keep track of scores. Sometimes it can be hard to both remember the
+scores, where the players should stand (especially doubles) and to notice fouls in the game. This
+app can help to reduce the mental strain by tracking the score and the player positions. The second
+purpose is for badminton clubs to keep track of their games. They will be able to use the player
+ranking feature to award the best player, or the player with the best turnout rate, or just as a
+record to calculate membership fees.
+
+
 == Change Log ==
  1.2    Fix Landscape mode
  1.1    Added player names to persistance storage
@@ -16,6 +25,8 @@ This is a simple project for me to get hands on with Android application program
 
 == Future features ==
 - Manage players
+- Persist games
 - Add players from contact list
 - Add player rankings
 - Read out scores
+- Start official game (3 match game, with switch over on 3rd game)
