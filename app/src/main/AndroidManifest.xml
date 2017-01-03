@@ -17,10 +17,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EnterSinglesPlayersNames"
+            android:name=".EnterSinglesPlayersNamesActivity"
             android:label="@string/enter_players_names"/>
         <activity
-            android:name=".EnterDoublesPlayersNames"
+            android:name=".EnterDoublesPlayersNamesActivity"
             android:label="@string/enter_players_names"/>
         <activity
             android:name=".GameSessionActivity"

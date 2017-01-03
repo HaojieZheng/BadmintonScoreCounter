@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
            @Override
             public void onClick(View v)
            {
-               Intent intent = new Intent(MainActivity.this, EnterSinglesPlayersNames.class);
+               Intent intent = new Intent(MainActivity.this, EnterSinglesPlayersNamesActivity.class);
                startActivity(intent);
            }
         });
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, EnterDoublesPlayersNames.class);
+                Intent intent = new Intent(MainActivity.this, EnterDoublesPlayersNamesActivity.class);
                 startActivity(intent);
             }
         }

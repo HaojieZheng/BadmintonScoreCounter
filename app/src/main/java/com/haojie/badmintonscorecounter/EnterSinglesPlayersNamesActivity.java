@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
-public class EnterSinglesPlayersNames extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler{
+public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler{
 
     ImageButton mSwapButton;
     ImageButton mAddress1;
@@ -182,14 +182,14 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
         // save the player names first
         Database database = new Database();
         try {
-            database.deserialize(EnterSinglesPlayersNames.this);
+            database.deserialize(EnterSinglesPlayersNamesActivity.this);
             String player1Name = mEditPlayer1Name.getText().toString();
             updatePlayerInDatabase(database, player1Name, player1Picture);
 
             String player2Name = mEditPlayer2Name.getText().toString();
             updatePlayerInDatabase(database, player2Name, player2Picture);
 
-            database.serialize(EnterSinglesPlayersNames.this);
+            database.serialize(EnterSinglesPlayersNamesActivity.this);
 
         }
         catch (IOException e)
@@ -216,7 +216,7 @@ public class EnterSinglesPlayersNames extends AppCompatActivity implements Selec
     public void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName) {
 
         Database database = new Database();
-        database.deserialize(EnterSinglesPlayersNames.this);
+        database.deserialize(EnterSinglesPlayersNamesActivity.this);
         Player player = database.getPlayerWithName(playerName);
 
         if (mPlayerSelectionShown == 1)
