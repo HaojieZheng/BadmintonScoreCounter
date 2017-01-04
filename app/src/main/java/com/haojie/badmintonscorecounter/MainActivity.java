@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mStartSinglesButton;
     private Button mStartDoublesButton;
+    private Button mManagePlayersButton;
 
 
     @Override
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         mStartSinglesButton = (Button)findViewById(R.id.button_singles);
         mStartDoublesButton = (Button)findViewById(R.id.button_doubles);
+        mManagePlayersButton = (Button)findViewById(R.id.button_manage_players);
 
         mStartSinglesButton.setOnClickListener(new View.OnClickListener()
         {
@@ -40,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         );
+
+        mManagePlayersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ManagePlayersActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

@@ -16,8 +16,8 @@ import java.util.List;
  * Created by Haojie on 1/2/2017.
  */
 
-public class PlayerArrayAdapter extends ArrayAdapter<Player> {
-    public PlayerArrayAdapter(Context context, List<Player> players) {
+public class SelectPlayerArrayAdapter extends ArrayAdapter<Player> {
+    public SelectPlayerArrayAdapter(Context context, List<Player> players) {
         super(context, 0, players);
     }
 

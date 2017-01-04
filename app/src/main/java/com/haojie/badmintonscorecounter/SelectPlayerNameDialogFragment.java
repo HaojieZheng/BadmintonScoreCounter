@@ -54,7 +54,7 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
         Database database = new Database();
         database.deserialize(v.getContext());
 
-        PlayerArrayAdapter adapter = new PlayerArrayAdapter(v.getContext(), database.getPlayersWithoutDefault());
+        SelectPlayerArrayAdapter adapter = new SelectPlayerArrayAdapter(v.getContext(), database.getPlayersWithoutDefault());
 
         mListView.setAdapter(adapter);
     }

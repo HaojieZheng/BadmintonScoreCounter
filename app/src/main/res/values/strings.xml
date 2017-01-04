@@ -21,5 +21,6 @@
     <string name="team_1">Team 1</string>
     <string name="team_2">Team 2</string>
     <string name="SelectPlayerTitle">Select Player</string>
+    <string name="manage_player_label">Manage Players</string>
 
 </resources>
