@@ -271,33 +271,6 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     }
 
 
-    private static void updatePlayerInDatabase(Database database, String name, Bitmap picture)
-    {
-        Player player = database.getPlayerWithName(name);
-        if (player == null)
-        {
-            player = new Player(name);
-
-            if (picture != null)
-            {
-                String fileName = Database.writeBitmapToDisk(picture);
-                player.setImagePath(fileName);
-            }
-            database.addPlayer(player);
-        }
-        else
-        {
-            // update the image for the player in the database
-            if (picture != null)
-            {
-                String fileName = Database.writeBitmapToDisk(picture);
-                player.setImagePath(fileName);
-            }
-            else
-                player.setImagePath(null);
-        }
-    }
-
 
     private void startGameSessionActivity()
     {
@@ -307,16 +280,16 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             database.deserialize(EnterDoublesPlayersNamesActivity.this);
 
             String player1Name = mEditTeam1Player1Name.getText().toString();
-            updatePlayerInDatabase(database, player1Name, player1Picture);
+            database.updateOrAddPlayer(player1Name, player1Picture);
 
             String player2Name = mEditTeam1Player2Name.getText().toString();
-            updatePlayerInDatabase(database, player2Name, player2Picture);
+            database.updateOrAddPlayer(player2Name, player2Picture);
 
             String player3Name = mEditTeam1Player2Name.getText().toString();
-            updatePlayerInDatabase(database, player3Name, player3Picture);
+            database.updateOrAddPlayer(player3Name, player3Picture);
 
             String player4Name = mEditTeam1Player2Name.getText().toString();
-            updatePlayerInDatabase(database, player4Name, player4Picture);
+            database.updateOrAddPlayer(player4Name, player4Picture);
 
             database.serialize(EnterDoublesPlayersNamesActivity.this);
 

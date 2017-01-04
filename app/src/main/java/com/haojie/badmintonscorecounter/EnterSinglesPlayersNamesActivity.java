@@ -148,32 +148,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     }
 
 
-    private static void updatePlayerInDatabase(Database database, String name, Bitmap picture)
-    {
-        Player player = database.getPlayerWithName(name);
-        if (player == null)
-        {
-            player = new Player(name);
 
-            if (picture != null)
-            {
-                String fileName = Database.writeBitmapToDisk(picture);
-                player.setImagePath(fileName);
-            }
-            database.addPlayer(player);
-        }
-        else
-        {
-            // update the image for the player in the database
-            if (picture != null)
-            {
-                String fileName = Database.writeBitmapToDisk(picture);
-                player.setImagePath(fileName);
-            }
-            else
-                player.setImagePath(null);
-        }
-    }
 
 
     private void startGameSessionActivity()
@@ -184,10 +159,10 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         try {
             database.deserialize(EnterSinglesPlayersNamesActivity.this);
             String player1Name = mEditPlayer1Name.getText().toString();
-            updatePlayerInDatabase(database, player1Name, player1Picture);
+            database.updateOrAddPlayer(player1Name, player1Picture);
 
             String player2Name = mEditPlayer2Name.getText().toString();
-            updatePlayerInDatabase(database, player2Name, player2Picture);
+            database.updateOrAddPlayer(player2Name, player2Picture);
 
             database.serialize(EnterSinglesPlayersNamesActivity.this);
 

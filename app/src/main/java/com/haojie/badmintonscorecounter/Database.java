@@ -131,8 +131,35 @@ public class Database {
         return fileName;
     }
 
-    ArrayList<Game> mGames = new ArrayList<Game>();
-    ArrayList<Player> mPlayers = new ArrayList<Player>();
+    public void updateOrAddPlayer(String name, Bitmap picture)
+    {
+        Player player = getPlayerWithName(name);
+        if (player == null)
+        {
+            player = new Player(name);
+
+            if (picture != null)
+            {
+                String fileName = Database.writeBitmapToDisk(picture);
+                player.setImagePath(fileName);
+            }
+            addPlayer(player);
+        }
+        else
+        {
+            // update the image for the player in the database
+            if (picture != null)
+            {
+                String fileName = Database.writeBitmapToDisk(picture);
+                player.setImagePath(fileName);
+            }
+            else
+                player.setImagePath(null);
+        }
+    }
+
+    private ArrayList<Game> mGames = new ArrayList<Game>();
+    private ArrayList<Player> mPlayers = new ArrayList<Player>();
 
 
 }

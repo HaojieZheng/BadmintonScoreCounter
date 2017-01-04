@@ -48,7 +48,7 @@ public class Game {
     }
 
 
-    class GameState
+    private class GameState
     {
         public GameState(Player[] players, PlayerPosition currentServer, int team1Score, int team2Score)
         {

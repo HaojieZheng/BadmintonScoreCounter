@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/textView"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:text="@string/new_game"
@@ -42,8 +42,15 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="40dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:text="@string/manage_label"
+            android:textAlignment="center"/>
         <Button
-            android:text="@string/manage_player_label"
+            android:text="@string/players_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button_manage_players"/>
