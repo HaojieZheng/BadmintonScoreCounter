@@ -16,6 +16,7 @@ record to calculate membership fees.
 
 == Change Log ==
  1.2    Fix Landscape mode
+        Add Manage Player screen for deleting players
  1.1    Added player names to persistance storage
         Allow user to store photograph of player
  1.0    Published into Play Store with only score counting capability
