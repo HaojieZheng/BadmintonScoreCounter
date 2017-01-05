@@ -24,7 +24,7 @@ public class ManagePlayersActivity extends AppCompatActivity {
         Database database = new Database();
         database.deserialize(getApplicationContext());
 
-        SelectPlayerArrayAdapter adapter = new SelectPlayerArrayAdapter(getApplicationContext(), database.getPlayersWithoutDefault());
+        ManagePlayerArrayAdapter adapter = new ManagePlayerArrayAdapter(getApplicationContext(), database.getPlayersWithoutDefault());
 
         mPlayerList.setAdapter(adapter);
     }

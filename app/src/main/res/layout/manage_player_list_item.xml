@@ -8,15 +8,24 @@
         android:id="@+id/player_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         app:srcCompat="@drawable/ic_action_name"/>
     <Space
         android:layout_width="10dp"
         android:layout_height="match_parent"/>
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/player_name"
+        android:layout_weight="1"
+        android:text="PLAYER NAME"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/player_name"
-        android:text="TEST"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+        android:layout_gravity="center_vertical"
+        app:srcCompat="@drawable/ic_delete"
+        android:id="@+id/delete_button"/>
 
 </LinearLayout>

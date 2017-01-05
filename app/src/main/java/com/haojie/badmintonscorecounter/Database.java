@@ -71,6 +71,14 @@ public class Database {
         mPlayers.add(player);
     }
 
+    public void removePlayer(String name)
+    {
+        Player player = getPlayerWithName(name);
+        if (player == null)
+            throw new IllegalArgumentException("Player not found");
+        mPlayers.remove(player);
+    }
+
     public void deserialize(Context context)
     {
         try {
@@ -113,7 +121,7 @@ public class Database {
         FileOutputStream out = null;
         String fileName = null;
         try {
-            fileName = File.createTempFile("Pht","").getPath();
+            fileName = File.createTempFile(".pht","").getPath();
             out = new FileOutputStream(fileName);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
             // PNG is a lossless format, the compression factor (100) is ignored
