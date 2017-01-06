@@ -66,7 +66,7 @@ public class CourtView extends View {
     ////////////////////////////
     // Getters and Setters
     //////////////////////////////
-    
+
     public void registerListener(CourtViewTouchListener listener)
     {
         mListeners.add(listener);

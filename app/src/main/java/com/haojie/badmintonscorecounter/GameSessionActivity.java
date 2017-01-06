@@ -24,6 +24,7 @@ public class GameSessionActivity extends AppCompatActivity {
     private View mControlsView;
     private TextView mTeam1ScoreLabel;
     private TextView mTeam2ScoreLabel;
+    private TextView mWinningLabel;
     private View mContentView;
     private Button mUndoButton;
 
@@ -199,6 +200,8 @@ public class GameSessionActivity extends AppCompatActivity {
 
         mTeam1ScoreLabel = (TextView)findViewById(R.id.team1_score);
         mTeam2ScoreLabel = (TextView)findViewById(R.id.team2_score);
+        mWinningLabel = (TextView)findViewById(R.id.winning_text_view);
+        mWinningLabel.setVisibility(View.INVISIBLE);
 
         mUndoButton = (Button)findViewById(R.id.undo_button);
         mUndoButton.setOnClickListener(new View.OnClickListener() {
@@ -297,8 +300,18 @@ public class GameSessionActivity extends AppCompatActivity {
         mCourtView.setBottomLeftPic(playerBottomLeft != null ? playerBottomLeft.getImage() : null);
         mCourtView.setBottomRightPic(playerBottomRight != null ? playerBottomRight.getImage() : null);
 
-
         mCourtView.setServicePosition(PlayerPositionToPosition(mGame.getCurrentServer()));
+
+        if (mGame.getWinner() != 0)
+        {
+            mWinningLabel.setText("Team " + mGame.getWinner() + " wins");
+            mWinningLabel.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+            mWinningLabel.setVisibility(View.INVISIBLE);
+        }
 
         mCourtView.invalidate();
 
