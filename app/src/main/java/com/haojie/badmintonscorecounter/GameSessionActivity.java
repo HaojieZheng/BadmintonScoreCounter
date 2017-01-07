@@ -1,6 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -109,7 +110,14 @@ public class GameSessionActivity extends AppCompatActivity {
         {
 
         }
+    }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        initUI();
     }
 
     @Override
@@ -161,6 +169,23 @@ public class GameSessionActivity extends AppCompatActivity {
             mGame.setPlayer(Game.PlayerPosition.Team2Left, database.getPlayerWithName(team2LeftPlayer));
         }
 
+        initUI();
+    }
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Trigger the initial hide() shortly after the activity has been
+        // created, to briefly hint to the user that UI controls
+        // are available.
+        delayedHide(100);
+    }
+
+
+    private void initUI()
+    {
         setContentView(R.layout.activity_game_session);
 
         mVisible = true;
@@ -213,17 +238,6 @@ public class GameSessionActivity extends AppCompatActivity {
         });
 
         refreshScores();
-    }
-
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
     }
 
     private void toggle() {
