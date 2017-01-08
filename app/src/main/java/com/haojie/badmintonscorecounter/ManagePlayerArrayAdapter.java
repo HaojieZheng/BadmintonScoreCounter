@@ -1,7 +1,13 @@
 package com.haojie.badmintonscorecounter;
 
+import android.support.v4.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +25,31 @@ import java.util.List;
 
 public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
 
-    public ManagePlayerArrayAdapter(Context context, List<Player> players) {
+    public ManagePlayerArrayAdapter(Context context, List<Player> players, AppCompatActivity activity) {
         super(context, 0, players);
+        mActivity = activity;
     }
 
+    AppCompatActivity mActivity;
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, ViewGroup parent) {
         View row = convertView;
         if(row == null) {
             row = LayoutInflater.from(getContext()).inflate(R.layout.manage_player_list_item, parent, false);
         }
         final Player player = getItem(position);
         ImageView playerImage = (ImageView)row.findViewById(R.id.player_image);
+
+        /*playerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+                FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.view_update_photo_dialog_fragment, fr);
+                ft.commit();
+            }
+        });*/
 
         String path = player.getImagePath();
         if (path != null) {
