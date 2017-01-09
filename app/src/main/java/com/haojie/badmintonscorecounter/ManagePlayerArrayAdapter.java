@@ -1,5 +1,6 @@
 package com.haojie.badmintonscorecounter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -41,15 +42,22 @@ public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
         final Player player = getItem(position);
         ImageView playerImage = (ImageView)row.findViewById(R.id.player_image);
 
-        /*playerImage.setOnClickListener(new View.OnClickListener() {
+        playerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (player.getImagePath() == null)
+                    return;
+
                 ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PLAYER_NAME, player.getName());
+                fr.setArguments(bundle);
+
                 FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.view_update_photo_dialog_fragment, fr);
+                ft.add(fr, "Manage player image");
                 ft.commit();
             }
-        });*/
+        });
 
         String path = player.getImagePath();
         if (path != null) {
