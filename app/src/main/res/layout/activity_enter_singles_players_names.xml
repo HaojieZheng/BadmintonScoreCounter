@@ -15,13 +15,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/swapbutton"
-                    android:id="@+id/swap_button"
-                    android:contentDescription="@string/swap_name_access" />
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -63,10 +56,13 @@
                             app:srcCompat="@drawable/ic_action_name"/>
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
+                    <ImageButton
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="30dp" />
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/swapbutton"
+                        android:id="@+id/swap_button"
+                        android:contentDescription="@string/swap_name_access" />
 
                     <TextView
                         android:text="@string/player2_label"
