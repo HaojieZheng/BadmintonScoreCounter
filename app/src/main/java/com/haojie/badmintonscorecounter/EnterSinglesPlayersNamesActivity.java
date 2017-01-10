@@ -3,7 +3,9 @@ package com.haojie.badmintonscorecounter;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.IOException;
 
-public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler{
+public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
     ImageButton mSwapButton;
     ImageButton mAddress1;
@@ -82,24 +85,40 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPhotoButton(REQUEST_IMAGE_CAPTURE_1);
+                onClickPhotoButton(player1Picture, REQUEST_IMAGE_CAPTURE_1);
             }
         });
 
         mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPhotoButton(REQUEST_IMAGE_CAPTURE_2);
+                onClickPhotoButton(player2Picture, REQUEST_IMAGE_CAPTURE_2);
             }
         });
 
     }
 
-    private void onClickPhotoButton(int code)
+    private void onClickPhotoButton(Bitmap bitmap, int code)
     {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, code);
+        if (bitmap != null)
+        {
+            String path = Database.writeBitmapToDisk(bitmap);
+            ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, path);
+            fr.setArguments(bundle);
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(fr, "Manage player image");
+            ft.commit();
+        }
+        else
+        {
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, code);
+            }
         }
 
     }
@@ -215,5 +234,10 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
                 mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
             }
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -138,40 +139,28 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_1);
-                }
+                onClickPhotoButton(player1Picture, REQUEST_IMAGE_CAPTURE_1);
             }
         });
 
         mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_2);
-                }
+                onClickPhotoButton(player2Picture, REQUEST_IMAGE_CAPTURE_2);
             }
         });
 
         mTakePhotoButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_3);
-                }
+                onClickPhotoButton(player3Picture, REQUEST_IMAGE_CAPTURE_3);
             }
         });
 
         mTakePhotoButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_4);
-                }
+                onClickPhotoButton(player4Picture, REQUEST_IMAGE_CAPTURE_4);
             }
         });
 
@@ -270,6 +259,31 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         dialogFrag.show(getFragmentManager(), "Select double player names");
     }
 
+
+    private void onClickPhotoButton(Bitmap bitmap, int code)
+    {
+        if (bitmap != null)
+        {
+            String path = Database.writeBitmapToDisk(bitmap);
+            ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, path);
+            fr.setArguments(bundle);
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(fr, "Manage player image");
+            ft.commit();
+        }
+        else
+        {
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, code);
+            }
+        }
+
+    }
 
 
     private void startGameSessionActivity()
