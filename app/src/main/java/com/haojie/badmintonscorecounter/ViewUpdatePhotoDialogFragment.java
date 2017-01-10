@@ -1,5 +1,6 @@
 package com.haojie.badmintonscorecounter;
 
+import android.graphics.BitmapFactory;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
@@ -20,11 +21,11 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class ViewUpdatePhotoDialogFragment extends DialogFragment {
-    public static final String ARG_PLAYER_NAME = "playerName";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String ARG_PHOTO_PATH = "photoPath";
 
-    private String mPlayerName;
-    private String mParam2;
+    private String mPhotoPath;
+
+
 
     private ImageView mPlayerImageView;
 
@@ -40,27 +41,21 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
 
         mPlayerImageView = (ImageView)(getView().findViewById(R.id.player_image_view));
 
-        Database database = new Database();
-        database.deserialize(getContext());
-        Player player = database.getPlayerWithName(mPlayerName);
-
-        mPlayerImageView.setImageBitmap(player.getImage());
+        mPlayerImageView.setImageBitmap(BitmapFactory.decodeFile(mPhotoPath));
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param playerName Parameter 1.
-     * @param param2 Parameter 2.
+     * @param photoPath Parameter 1.
      * @return A new instance of fragment ViewUpdatePhotoDialogFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ViewUpdatePhotoDialogFragment newInstance(String playerName, String param2) {
+    public static ViewUpdatePhotoDialogFragment newInstance(String photoPath, String param2) {
         ViewUpdatePhotoDialogFragment fragment = new ViewUpdatePhotoDialogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PLAYER_NAME, playerName);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PHOTO_PATH, photoPath);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,8 +64,7 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mPlayerName = getArguments().getString(ARG_PLAYER_NAME);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mPhotoPath = getArguments().getString(ARG_PHOTO_PATH);
         }
 
     }

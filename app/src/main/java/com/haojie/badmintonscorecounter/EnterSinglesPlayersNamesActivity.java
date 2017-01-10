@@ -82,22 +82,25 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_1);
-                }
+                onClickPhotoButton(REQUEST_IMAGE_CAPTURE_1);
             }
         });
 
         mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE_2);
-                }
+                onClickPhotoButton(REQUEST_IMAGE_CAPTURE_2);
             }
         });
+
+    }
+
+    private void onClickPhotoButton(int code)
+    {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, code);
+        }
 
     }
 
