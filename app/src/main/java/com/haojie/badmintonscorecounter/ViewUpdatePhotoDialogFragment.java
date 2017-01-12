@@ -1,6 +1,11 @@
 package com.haojie.badmintonscorecounter;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
@@ -22,8 +28,11 @@ import android.widget.ImageView;
  */
 public class ViewUpdatePhotoDialogFragment extends DialogFragment {
     public static final String ARG_PHOTO_PATH = "photoPath";
+    public static final String ARG_PlAYER_NAME = "playerName";
 
     private String mPhotoPath;
+    private String mPlayerName;
+    private ImageButton mCameraButton;
 
 
 
@@ -42,20 +51,40 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
         mPlayerImageView = (ImageView)(getView().findViewById(R.id.player_image_view));
 
         mPlayerImageView.setImageBitmap(BitmapFactory.decodeFile(mPhotoPath));
+
+        mCameraButton = (ImageButton)(getView().findViewById(R.id.button_camera));
+        mCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, 1);
+                }
+            });
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param photoPath Parameter 1.
-     * @return A new instance of fragment ViewUpdatePhotoDialogFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ViewUpdatePhotoDialogFragment newInstance(String photoPath, String param2) {
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListener.onDismiss(mPlayerName);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = BitmapUtils.resizeAndCropPhoto(imageBitmap);
+            Database.writeBitmapToDisk(imageBitmap, mPhotoPath);
+            mPlayerImageView.setImageBitmap(imageBitmap);
+        }
+    }
+
+
+    public static ViewUpdatePhotoDialogFragment newInstance(String photoPath, String playerName) {
         ViewUpdatePhotoDialogFragment fragment = new ViewUpdatePhotoDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PHOTO_PATH, photoPath);
+        args.putString(ARG_PlAYER_NAME, playerName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +94,7 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mPhotoPath = getArguments().getString(ARG_PHOTO_PATH);
+            mPlayerName = getArguments().getString(ARG_PlAYER_NAME);
         }
 
     }
@@ -74,13 +104,6 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_view_update_photo, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -111,7 +134,6 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onDismiss(String playerName);
     }
 }

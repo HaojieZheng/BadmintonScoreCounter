@@ -118,10 +118,22 @@ public class Database {
 
     public static String writeBitmapToDisk(Bitmap bitmap)
     {
-        FileOutputStream out = null;
         String fileName = null;
         try {
-            fileName = File.createTempFile(".pht","").getPath();
+            fileName = File.createTempFile(".pht", "").getPath();
+            writeBitmapToDisk(bitmap, fileName);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return fileName;
+    }
+
+    public static void writeBitmapToDisk(Bitmap bitmap, String fileName)
+    {
+        FileOutputStream out = null;
+        try {
             out = new FileOutputStream(fileName);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
             // PNG is a lossless format, the compression factor (100) is ignored
@@ -136,8 +148,8 @@ public class Database {
                 e.printStackTrace();
             }
         }
-        return fileName;
     }
+
 
     public void updateOrAddPlayer(String name, Bitmap picture)
     {

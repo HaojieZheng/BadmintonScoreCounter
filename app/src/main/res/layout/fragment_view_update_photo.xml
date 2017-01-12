@@ -20,7 +20,8 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_take_photo"/>
+                app:srcCompat="@drawable/ic_take_photo"
+                android:id="@+id/button_camera"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

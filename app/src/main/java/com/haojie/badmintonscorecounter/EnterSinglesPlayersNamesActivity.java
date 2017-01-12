@@ -33,6 +33,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     static final int REQUEST_IMAGE_CAPTURE_2 = 2;
     Bitmap player1Picture = null;
     Bitmap player2Picture = null;
+    private String mTempPath;
 
 
     @Override
@@ -102,10 +103,11 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     {
         if (bitmap != null)
         {
-            String path = Database.writeBitmapToDisk(bitmap);
+            mTempPath = Database.writeBitmapToDisk(bitmap);
             ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, path);
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, Integer.toString(code));
             fr.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -236,8 +238,22 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
+    @Override
+    public void onDismiss(String code) {
+        // refresh the photo
+        int playerNumber = Integer.parseInt(code);
+
+        if (playerNumber == 1) {
+            player1Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+        }
+        else if (playerNumber == 2)
+        {
+            player2Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+        }
+
+        new File(mTempPath).delete();
     }
 }

@@ -32,7 +32,8 @@ public class ManagePlayersActivity extends AppCompatActivity implements ViewUpda
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onDismiss(String name) {
+        // refresh the photo
+        ((ManagePlayerArrayAdapter)mPlayerList.getAdapter()).notifyDataSetChanged();
     }
 }
