@@ -34,6 +34,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     Bitmap player1Picture = null;
     Bitmap player2Picture = null;
     private String mTempPath;
+    ViewUpdatePhotoDialogFragment mdialogFragment;
 
 
     @Override
@@ -104,14 +105,14 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         if (bitmap != null)
         {
             mTempPath = Database.writeBitmapToDisk(bitmap);
-            ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+            mdialogFragment = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, Integer.toString(code));
-            fr.setArguments(bundle);
+            mdialogFragment.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(fr, "Manage player image");
+            ft.add(mdialogFragment, "Manage player image");
             ft.commit();
         }
         else
@@ -169,6 +170,8 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
         }
+        else
+            mdialogFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 

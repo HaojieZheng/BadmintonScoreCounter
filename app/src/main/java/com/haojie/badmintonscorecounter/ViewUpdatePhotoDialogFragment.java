@@ -57,7 +57,7 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePictureIntent, 1);
+                getActivity().startActivityForResult(takePictureIntent, 1001);
                 }
             });
     }
@@ -70,7 +70,7 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageBitmap = BitmapUtils.resizeAndCropPhoto(imageBitmap);
