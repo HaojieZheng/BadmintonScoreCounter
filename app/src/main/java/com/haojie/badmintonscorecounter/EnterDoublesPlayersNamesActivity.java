@@ -14,9 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.IOException;
 
-public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler{
+public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
     ImageButton mSwapTeam1Button;
     ImageButton mSwapTeam2Button;
@@ -46,6 +47,9 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     Bitmap player2Picture = null;
     Bitmap player3Picture = null;
     Bitmap player4Picture = null;
+
+    ViewUpdatePhotoDialogFragment mdialogFragment;
+    private String mTempPath;
 
 
     @Override
@@ -264,14 +268,15 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     {
         if (bitmap != null)
         {
-            String path = Database.writeBitmapToDisk(bitmap);
-            ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
+            mTempPath = Database.writeBitmapToDisk(bitmap);
+            mdialogFragment = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, path);
-            fr.setArguments(bundle);
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, Integer.toString(code));
+            mdialogFragment.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(fr, "Manage player image");
+            ft.add(mdialogFragment, "Manage player image");
             ft.commit();
         }
         else
@@ -338,7 +343,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
         }
-        if (requestCode == REQUEST_IMAGE_CAPTURE_3 && resultCode == RESULT_OK) {
+        else if (requestCode == REQUEST_IMAGE_CAPTURE_3 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             player3Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
@@ -350,6 +355,8 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             player4Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
         }
+        else
+            mdialogFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -359,44 +366,58 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         database.deserialize(this);
         Player player = database.getPlayerWithName(playerName);
 
-        if (mPlayerSelectionShown == 1)
-        {
+        if (mPlayerSelectionShown == 1) {
             mEditTeam1Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
-            if (player.getImagePath() != null)
-            {
+            if (player.getImagePath() != null) {
                 player1Picture = BitmapFactory.decodeFile(player.getImagePath());
                 mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
             }
-        }
-        else if (mPlayerSelectionShown == 2)
-        {
+        } else if (mPlayerSelectionShown == 2) {
             mEditTeam1Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
-            if (player.getImagePath() != null)
-            {
+            if (player.getImagePath() != null) {
                 player2Picture = BitmapFactory.decodeFile(player.getImagePath());
                 mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
             }
-        }
-        else if (mPlayerSelectionShown == 3)
-        {
+        } else if (mPlayerSelectionShown == 3) {
             mEditTeam2Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
-            if (player.getImagePath() != null)
-            {
+            if (player.getImagePath() != null) {
                 player3Picture = BitmapFactory.decodeFile(player.getImagePath());
                 mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
             }
-        }
-        else if (mPlayerSelectionShown == 4)
-        {
+        } else if (mPlayerSelectionShown == 4) {
             mEditTeam2Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
-            if (player.getImagePath() != null)
-            {
+            if (player.getImagePath() != null) {
                 player4Picture = BitmapFactory.decodeFile(player.getImagePath());
                 mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
             }
         }
+    }
 
+    @Override
+    public void onDismiss(String code) {
+        // refresh the photo
+        int playerNumber = Integer.parseInt(code);
 
+        if (playerNumber == 1) {
+            player1Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+        }
+        else if (playerNumber == 2)
+        {
+            player2Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+        }
+        else if (playerNumber == 3) {
+            player3Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
+        }
+        else if (playerNumber == 4)
+        {
+            player4Picture = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
+        }
+
+        new File(mTempPath).delete();
     }
 
 }
