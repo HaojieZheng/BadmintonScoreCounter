@@ -8,21 +8,16 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mStartSinglesButton;
-    private Button mStartDoublesButton;
-    private Button mManagePlayersButton;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStartSinglesButton = (Button)findViewById(R.id.button_singles);
-        mStartDoublesButton = (Button)findViewById(R.id.button_doubles);
-        mManagePlayersButton = (Button)findViewById(R.id.button_manage_players);
+        Button startSinglesButton = (Button)findViewById(R.id.button_singles);
+        Button startDoublesButton = (Button)findViewById(R.id.button_doubles);
+        Button managePlayersButton = (Button)findViewById(R.id.button_manage_players);
 
-        mStartSinglesButton.setOnClickListener(new View.OnClickListener()
+        startSinglesButton.setOnClickListener(new View.OnClickListener()
         {
            @Override
             public void onClick(View v)
@@ -32,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
            }
         });
 
-        mStartDoublesButton.setOnClickListener(new View.OnClickListener()
+        startDoublesButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -43,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
         );
 
-        mManagePlayersButton.setOnClickListener(new View.OnClickListener() {
+        managePlayersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ManagePlayersActivity.class);

@@ -32,7 +32,6 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
 
     private String mPhotoPath;
     private String mPlayerName;
-    private ImageButton mCameraButton;
 
 
 
@@ -52,8 +51,8 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
 
         mPlayerImageView.setImageBitmap(BitmapFactory.decodeFile(mPhotoPath));
 
-        mCameraButton = (ImageButton)(getView().findViewById(R.id.button_camera));
-        mCameraButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton cameraButton = (ImageButton)(getView().findViewById(R.id.button_camera));
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

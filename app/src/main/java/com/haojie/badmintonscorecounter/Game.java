@@ -30,7 +30,7 @@ public class Game {
                 case Team1Right: return 1;
                 case Team2Left: return 2;
                 case Team2Right: return 3;
-            };
+            }
             return -1;
         }
 
@@ -42,7 +42,7 @@ public class Game {
                 case Team1Right: return 1;
                 case Team2Left: return 2;
                 case Team2Right: return 2;
-            };
+            }
             return -1;
         }
     }

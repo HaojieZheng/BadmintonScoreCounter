@@ -19,9 +19,7 @@ public class BitmapUtils {
         int cropH = (height - width) / 2;
         cropH = (cropH < 0)? 0: cropH;
         Bitmap cropImg = Bitmap.createBitmap(original, cropW, cropH, newWidth, newHeight);
-        Bitmap resizedImg = Bitmap.createScaledBitmap(cropImg, 480, 480, true);
-
-        return resizedImg;
+        return Bitmap.createScaledBitmap(cropImg, 480, 480, true);
     }
 
 

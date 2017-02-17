@@ -30,7 +30,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    app:srcCompat="@drawable/ic_delete"/>
+                    app:srcCompat="@drawable/ic_delete"
+                    android:id="@+id/delete_image_button"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
