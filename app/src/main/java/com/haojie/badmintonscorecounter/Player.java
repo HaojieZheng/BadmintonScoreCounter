@@ -2,7 +2,6 @@ package com.haojie.badmintonscorecounter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 
 import java.io.File;
 

@@ -2,10 +2,7 @@ package com.haojie.badmintonscorecounter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Debug;
-
 import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
