@@ -10,8 +10,11 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class GameUnitTest {
+    public GameUnitTest()
+    {}
+
     @Test
-    public void Game_Init_ScoreZero() throws Exception {
+    public void TestGame_Init_ScoreZero() throws Exception {
         Game game = new Game(Game.GameType.Singles, 1);
         assertEquals(0, game.getTeam1Score());
         assertEquals(0, game.getTeam2Score());
@@ -19,7 +22,7 @@ public class GameUnitTest {
     }
 
     @Test
-    public void Game_onTeam1Score_IncreaseTeam1Points() throws Exception {
+    public void TestGame_onTeam1Score_IncreaseTeam1Points() throws Exception {
         Game game = new Game(Game.GameType.Singles, 2);
         int team1Score = game.getTeam1Score();
         game.onTeam1Score();
@@ -28,7 +31,7 @@ public class GameUnitTest {
     }
 
     @Test
-    public void Game_onTeam2Score_IncreaseTeam2Points() throws Exception {
+    public void TestGame_onTeam2Score_IncreaseTeam2Points() throws Exception {
         Game game = new Game(Game.GameType.Singles, 1);
         int team2Score = game.getTeam2Score();
         game.onTeam2Score();
