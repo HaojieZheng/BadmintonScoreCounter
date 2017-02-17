@@ -224,9 +224,7 @@ public class Game {
 
     public Player getPlayer(PlayerPosition position)
     {
-        Player result = mPlayers[position.getValue()];
-
-        return result;
+        return mPlayers[position.getValue()];
     }
 
     public void setPlayer(PlayerPosition position, Player player)

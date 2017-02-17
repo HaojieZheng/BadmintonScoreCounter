@@ -288,15 +288,7 @@ public class CourtView extends View {
 
         canvas.save();
 
-        //calculate X and Y coordinates - In this case we want to draw the text in the
-        //center of canvas so we calculate
-        //text height and number of lines to move Y coordinate to center.
-        float textYCoordinate = y;
-
-        //text will be drawn from left
-        float textXCoordinate = x;
-
-        canvas.translate(textXCoordinate, textYCoordinate);
+        canvas.translate(x, y);
 
         //draws static layout on canvas
         sl.draw(canvas);

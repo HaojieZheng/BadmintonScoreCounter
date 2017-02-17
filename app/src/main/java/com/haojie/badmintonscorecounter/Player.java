@@ -40,8 +40,7 @@ public class Player
     public Bitmap getImage()
     {
         if (mImagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(mImagePath);
-            return bitmap;
+            return BitmapFactory.decodeFile(mImagePath);
         }
         else
             return null;
