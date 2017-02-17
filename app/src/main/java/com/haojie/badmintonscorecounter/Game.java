@@ -229,7 +229,7 @@ public class Game {
 
     public void setPlayer(PlayerPosition position, Player player)
     {
-        if (mGameType != mGameType.Doubles && (position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left))
+        if (mGameType != GameType.Doubles && (position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left))
             throw new InvalidParameterException();
 
         mPlayers[position.getValue()] = player;

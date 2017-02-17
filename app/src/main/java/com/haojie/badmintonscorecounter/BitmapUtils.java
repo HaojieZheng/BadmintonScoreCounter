@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * Created by Haojie on 1/2/2017.
  */
 
-public class BitmapUtils {
+class BitmapUtils {
 
     public static Bitmap resizeAndCropPhoto(Bitmap original)
     {
