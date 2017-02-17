@@ -13,6 +13,8 @@ purpose is for badminton clubs to keep track of their games. They will be able t
 ranking feature to award the best player, or the player with the best turnout rate, or just as a
 record to calculate membership fees.
 
+The app is available on the app store at: https://play.google.com/store/apps/details?id=com.haojie.badmintonscorecounter&hl=en
+
 
 == Change Log ==
  1.2    Fix Landscape mode
