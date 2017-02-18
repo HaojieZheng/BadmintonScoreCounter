@@ -3,6 +3,7 @@ package com.haojie.badmintonscorecounter;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -68,6 +70,7 @@ public class GameSessionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
+    TextToSpeech tts;
 
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
@@ -329,7 +332,68 @@ public class GameSessionActivity extends AppCompatActivity {
 
         mCourtView.invalidate();
 
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.US);
+                    ConvertTextToSpeech();
+                }
+            }
+        });
+
     }
+
+    void ConvertTextToSpeech()
+    {
+        tts.speak(getAnnouncementText(), TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    String getAnnouncementText()
+    {
+        String result = "";
+
+        if (mGame.getWinner() != 0)
+        {
+            if (mGame.getWinner() == 1)
+            {
+                return "Team 1 wins " + mGame.getTeam1Score() + " " + mGame.getTeam2Score();
+            }
+            else
+            {
+                return "Team 2 wins " + mGame.getTeam2Score() + " " + mGame.getTeam1Score();
+            }
+        }
+
+        if (mGame.isServiceChanged())
+            result += "Service Over ";
+
+        if (mGame.getTeam1Score() == mGame.getTeam2Score())
+        {
+            result += mGame.getTeam1Score() + " all ";
+        }
+        else
+        {
+            Game.PlayerPosition currentServer = mGame.getCurrentServer();
+            String team1Score = mGame.getTeam1Score() + " ";
+            if (mGame.isGamePoint(1))
+                team1Score+="Game Point ";
+
+            String team2Score = mGame.getTeam2Score() + " ";
+            if (mGame.isGamePoint(2))
+                team2Score+="Game Point ";
+
+
+            if (currentServer == Game.PlayerPosition.Team1Left || currentServer == Game.PlayerPosition.Team1Right)
+                result += team1Score + team2Score;
+            else
+                result += team2Score + team1Score;
+
+        }
+
+        return result;
+    }
+
 
     private static CourtView.Position PlayerPositionToPosition(Game.PlayerPosition p)
     {

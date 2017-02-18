@@ -199,6 +199,34 @@ public class Game {
         return !mPlays.isEmpty();
     }
 
+    public boolean isServiceChanged()
+    {
+        if (mPlays.isEmpty())
+            return false;
+
+        GameState last = mPlays.peek();
+        PlayerPosition lastServer = last.getCurrentServer();
+        boolean lastServerTeam1 = (lastServer == PlayerPosition.Team1Left || lastServer == PlayerPosition.Team1Right);
+        boolean currentServerTeam1 = (getCurrentServer() == PlayerPosition.Team1Left || getCurrentServer() == PlayerPosition.Team1Right);
+        return lastServerTeam1 != currentServerTeam1;
+    }
+
+    public boolean isGamePoint(int team)
+    {
+        if (team != 1 && team != 2)
+            throw new InvalidParameterException("team");
+        int teamScore = (team == 1) ? getTeam1Score() : getTeam2Score();
+        int opposingTeamScore = (team == 1) ? getTeam2Score() : getTeam1Score();
+
+        if (teamScore == 20 && opposingTeamScore <= 19)
+            return true;
+
+        if (teamScore == 1 + opposingTeamScore && opposingTeamScore >= 20)
+            return true;
+
+        return false;
+    }
+
     public int getWinner()
     {
         if (mTeam1Score == 30)
