@@ -87,6 +87,65 @@ public class GameUnitTest {
         assertEquals(2, game.getWinner());
     }
 
+    @Test
+    public void Game_isGamePoint() {
+        Game game = new Game(Game.GameType.Singles, 1);
+
+        for (int i = 0; i < 20; i++) {
+            assertFalse(game.isGamePoint(1));
+            assertFalse(game.isGamePoint(2));
+            game.onTeam1Score();
+        }
+
+        //20-0
+        assertTrue(game.isGamePoint(1));
+        assertFalse(game.isGamePoint(2));
+
+        for (int i = 0; i < 20; i++) {
+            assertTrue(game.isGamePoint(1));
+            assertFalse(game.isGamePoint(2));
+            game.onTeam2Score();
+        }
+        // 20 - 20
+        assertFalse(game.isGamePoint(1));
+        assertFalse(game.isGamePoint(2));
+
+        for (int i = 0; i < 8; i++)
+        {
+            game.onTeam1Score();
+            assertTrue(game.isGamePoint(1));
+            assertFalse(game.isGamePoint(2));
+            game.onTeam2Score();
+            assertFalse(game.isGamePoint(1));
+            assertFalse(game.isGamePoint(2));
+        }
+        // 28-28
+
+        game.onTeam1Score();
+        game.onTeam2Score();
+        // 29 - 29
+        assertTrue(game.isGamePoint(1));
+        assertTrue(game.isGamePoint(2));
+    }
+
+    @Test
+    public void Game_isServiceChanged() {
+        Game game = new Game(Game.GameType.Singles, 1);
+        assertFalse(game.isServiceChanged());
+        
+        game.onTeam2Score();
+        assertTrue(game.isServiceChanged());
+        game.onTeam2Score();
+        assertFalse(game.isServiceChanged());
+
+        game.onTeam1Score();
+        assertTrue(game.isServiceChanged());
+        game.onTeam1Score();
+        assertFalse(game.isServiceChanged());
+
+    }
+
+
 
 
 }

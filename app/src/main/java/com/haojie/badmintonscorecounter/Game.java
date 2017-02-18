@@ -224,6 +224,9 @@ public class Game {
         if (teamScore == 1 + opposingTeamScore && opposingTeamScore >= 20)
             return true;
 
+        if (teamScore == 29 && opposingTeamScore == 29)
+            return true;
+
         return false;
     }
 
