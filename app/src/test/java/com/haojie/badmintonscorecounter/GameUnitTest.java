@@ -42,9 +42,15 @@ public class GameUnitTest {
     }
 
     @Test(expected= InvalidParameterException.class)
-    public void Game_setPlayer_leftPlayerSinglesGame() {
+    public void Game_setPlayer_leftPlayer1SinglesGame() {
         Game game = new Game(Game.GameType.Singles, 1);
         game.setPlayer(Game.PlayerPosition.Team1Left, new Player("test player"));
+    }
+
+    @Test(expected= InvalidParameterException.class)
+    public void Game_setPlayer_leftPlayer2SinglesGame() {
+        Game game = new Game(Game.GameType.Singles, 1);
+        game.setPlayer(Game.PlayerPosition.Team2Left, new Player("test player"));
     }
 
     @Test
@@ -57,7 +63,6 @@ public class GameUnitTest {
         assertEquals("1", player1.getName());
         Player player2 = game.getPlayer(Game.PlayerPosition.Team2Right);
         assertEquals("2", player2.getName());
-
     }
 
 
