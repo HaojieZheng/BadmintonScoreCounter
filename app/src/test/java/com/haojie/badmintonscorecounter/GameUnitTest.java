@@ -65,5 +65,28 @@ public class GameUnitTest {
         assertEquals("2", player2.getName());
     }
 
+    @Test
+    public void Game_getWinner_team1Scores() {
+        Game game = new Game(Game.GameType.Singles, 1);
+
+        for (int i = 0; i < 21; i++) {
+            assertEquals(0, game.getWinner());
+            game.onTeam1Score();
+        }
+        assertEquals(1, game.getWinner());
+    }
+
+    @Test
+    public void Game_getWinner_team2Scores() {
+        Game game = new Game(Game.GameType.Singles, 1);
+
+        for (int i = 0; i < 21; i++) {
+            assertEquals(0, game.getWinner());
+            game.onTeam2Score();
+        }
+        assertEquals(2, game.getWinner());
+    }
+
+
 
 }
