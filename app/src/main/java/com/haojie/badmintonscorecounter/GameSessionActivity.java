@@ -124,7 +124,7 @@ public class GameSessionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Boolean isSingles = true;
+        boolean isSingles = true;
         String team1RightPlayer = "";
         String team2RightPlayer = "";
         String team1LeftPlayer = "";
@@ -146,7 +146,7 @@ public class GameSessionActivity extends AppCompatActivity {
             }
         }
         else {
-            isSingles = (Boolean) savedInstanceState.getSerializable(EXTRA_GAME_TYPE);
+            isSingles = (boolean) savedInstanceState.getSerializable(EXTRA_GAME_TYPE);
             team1RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
             team2RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
 

@@ -26,6 +26,8 @@ public class SelectPlayerArrayAdapter extends ArrayAdapter<Player> {
             row = LayoutInflater.from(getContext()).inflate(R.layout.player_name_list_item, parent, false);
         }
         Player player = getItem(position);
+        assert player != null;
+
         ImageView playerImage = (ImageView)row.findViewById(R.id.player_image);
 
         String path = player.getImagePath();

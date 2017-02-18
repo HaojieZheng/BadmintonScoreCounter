@@ -36,6 +36,7 @@ public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
             row = LayoutInflater.from(getContext()).inflate(R.layout.manage_player_list_item, parent, false);
         }
         final Player player = getItem(position);
+        assert player != null;
         ImageView playerImage = (ImageView)row.findViewById(R.id.player_image);
 
         playerImage.setOnClickListener(new View.OnClickListener() {
