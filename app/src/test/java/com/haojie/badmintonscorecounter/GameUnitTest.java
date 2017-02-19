@@ -132,7 +132,7 @@ public class GameUnitTest {
     public void Game_isServiceChanged() {
         Game game = new Game(Game.GameType.Singles, 1);
         assertFalse(game.isServiceChanged());
-        
+
         game.onTeam2Score();
         assertTrue(game.isServiceChanged());
         game.onTeam2Score();
@@ -142,9 +142,69 @@ public class GameUnitTest {
         assertTrue(game.isServiceChanged());
         game.onTeam1Score();
         assertFalse(game.isServiceChanged());
+    }
+
+
+    @Test
+    public void Game_Undo() {
+        Game game = new Game(Game.GameType.Singles, 1);
+        game.onTeam2Score();
+        assertTrue(game.isServiceChanged());
+        assertEquals(Game.PlayerPosition.Team2Left, game.getCurrentServer());
+        assertEquals(0, game.getTeam1Score());
+        assertEquals(1, game.getTeam2Score());
+        assertTrue(game.isUndoable());
+
+        game.undo();
+        assertFalse(game.isServiceChanged());
+        assertEquals(Game.PlayerPosition.Team1Right, game.getCurrentServer());
+        assertEquals(0, game.getTeam1Score());
+        assertEquals(0, game.getTeam2Score());
+        assertFalse(game.isUndoable());
 
     }
 
+
+    @Test
+    public void Game_DoublesScoring() {
+        Game game = new Game(Game.GameType.Doubles, 1);
+        game.setPlayer(Game.PlayerPosition.Team1Left, new Player("Team1Left"));
+        game.setPlayer(Game.PlayerPosition.Team1Right, new Player("Team1Right"));
+        game.setPlayer(Game.PlayerPosition.Team2Left, new Player("Team2Left"));
+        game.setPlayer(Game.PlayerPosition.Team2Right, new Player("Team2Right"));
+
+        assertEquals(0, game.getWinner());
+        assertTrue(game.getIsDoubles());
+        assertFalse(game.getIsSingles());
+
+        game.onTeam1Score();
+        assertEquals(Game.PlayerPosition.Team1Left, game.getCurrentServer());
+        assertEquals("Team1Right", game.getPlayer(Game.PlayerPosition.Team1Left).getName());
+        assertEquals("Team1Left", game.getPlayer(Game.PlayerPosition.Team1Right).getName());
+        assertEquals("Team2Right", game.getPlayer(Game.PlayerPosition.Team2Right).getName());
+        assertEquals("Team2Left", game.getPlayer(Game.PlayerPosition.Team2Left).getName());
+        assertFalse(game.isServiceChanged());
+
+        game.onTeam2Score();
+        assertTrue(game.isServiceChanged());
+        assertEquals(Game.PlayerPosition.Team2Left, game.getCurrentServer());
+        assertEquals("Team1Right", game.getPlayer(Game.PlayerPosition.Team1Left).getName());
+        assertEquals("Team1Left", game.getPlayer(Game.PlayerPosition.Team1Right).getName());
+        assertEquals("Team2Right", game.getPlayer(Game.PlayerPosition.Team2Right).getName());
+        assertEquals("Team2Left", game.getPlayer(Game.PlayerPosition.Team2Left).getName());
+
+        game.onTeam2Score();
+        assertFalse(game.isServiceChanged());
+        assertEquals(Game.PlayerPosition.Team2Right, game.getCurrentServer());
+        assertEquals("Team1Right", game.getPlayer(Game.PlayerPosition.Team1Left).getName());
+        assertEquals("Team1Left", game.getPlayer(Game.PlayerPosition.Team1Right).getName());
+        assertEquals("Team2Left", game.getPlayer(Game.PlayerPosition.Team2Right).getName());
+        assertEquals("Team2Right", game.getPlayer(Game.PlayerPosition.Team2Left).getName());
+
+        assertEquals(1, game.getTeam1Score());
+        assertEquals(2, game.getTeam2Score());
+
+    }
 
 
 
