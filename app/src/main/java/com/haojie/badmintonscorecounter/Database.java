@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Haojie on 12/28/2016.
@@ -20,6 +21,7 @@ public class Database {
 
     public Database()
     {
+        mVersion = 2;
     }
 
 
@@ -89,6 +91,7 @@ public class Database {
             Database db = new Gson().fromJson(out.toString(), Database.class);
             mPlayers = db.mPlayers;
             mGames = db.mGames;
+            ConvertDataBase(db.mVersion);
 
             stream.close();
         }
@@ -96,6 +99,14 @@ public class Database {
         {
         }
     }
+
+    void ConvertDataBase(int version) {
+        for (Game game : mGames) {
+            if (game.getDate() == null)
+                game.setDate(new Date());
+        }
+    }
+
 
 
     public void serialize(Context context) throws IOException
@@ -175,8 +186,14 @@ public class Database {
         }
     }
 
+    int getVersion()
+    {
+        return mVersion;
+    }
+
     private ArrayList<Game> mGames = new ArrayList<Game>();
     private ArrayList<Player> mPlayers = new ArrayList<Player>();
+    int mVersion;
 
 
 }

@@ -1,6 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
 import java.security.InvalidParameterException;
+import java.util.Date;
 import java.util.Stack;
 
 /**
@@ -94,6 +95,8 @@ public class Game {
             mCurrentServer = PlayerPosition.Team2Right;
         else
             throw new IllegalArgumentException();
+
+        mDate = new Date();
     }
 
     public Boolean getIsSingles()
@@ -280,6 +283,16 @@ public class Game {
         mPlayers[3] = temp;
     }
 
+    public Date getDate()
+    {
+        return mDate;
+    }
+
+    public void setDate(Date date)
+    {
+        mDate = date;
+    }
+
     // member variables
     GameType mGameType;
     int mTeam1Score = 0;
@@ -287,6 +300,7 @@ public class Game {
     Stack<GameState> mPlays = new Stack<GameState>();
     Player [] mPlayers = new Player[4];
     PlayerPosition mCurrentServer;
+    Date mDate;
 
 
 
