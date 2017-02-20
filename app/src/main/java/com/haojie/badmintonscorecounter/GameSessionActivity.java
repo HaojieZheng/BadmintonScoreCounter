@@ -317,7 +317,7 @@ public class GameSessionActivity extends AppCompatActivity {
         mCourtView.setBottomLeftPic(playerBottomLeft != null ? playerBottomLeft.getImage() : null);
         mCourtView.setBottomRightPic(playerBottomRight != null ? playerBottomRight.getImage() : null);
 
-        mCourtView.setServicePosition(PlayerPositionToPosition(mGame.getCurrentServer()));
+        mCourtView.setServicePosition(GamePresenter.PlayerPositionToPosition(mGame.getCurrentServer()));
 
         if (mGame.getWinner() != 0)
         {
@@ -346,70 +346,8 @@ public class GameSessionActivity extends AppCompatActivity {
 
     void ConvertTextToSpeech()
     {
-        tts.speak(getAnnouncementText(), TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(GamePresenter.getAnnouncementText(mGame), TextToSpeech.QUEUE_FLUSH, null);
     }
 
-    String getAnnouncementText()
-    {
-        String result = "";
-
-        if (mGame.getWinner() != 0)
-        {
-            if (mGame.getWinner() == 1)
-            {
-                return "Team 1 wins " + mGame.getTeam1Score() + " " + mGame.getTeam2Score();
-            }
-            else
-            {
-                return "Team 2 wins " + mGame.getTeam2Score() + " " + mGame.getTeam1Score();
-            }
-        }
-
-        if (mGame.isServiceChanged())
-            result += "Service Over ";
-
-        if (mGame.getTeam1Score() == mGame.getTeam2Score())
-        {
-            result += mGame.getTeam1Score() + " all ";
-        }
-        else
-        {
-            Game.PlayerPosition currentServer = mGame.getCurrentServer();
-            String team1Score = mGame.getTeam1Score() + " ";
-            if (mGame.isGamePoint(1))
-                team1Score+="Game Point ";
-
-            String team2Score = mGame.getTeam2Score() + " ";
-            if (mGame.isGamePoint(2))
-                team2Score+="Game Point ";
-
-
-            if (currentServer == Game.PlayerPosition.Team1Left || currentServer == Game.PlayerPosition.Team1Right)
-                result += team1Score + team2Score;
-            else
-                result += team2Score + team1Score;
-
-        }
-
-        return result;
-    }
-
-
-    private static CourtView.Position PlayerPositionToPosition(Game.PlayerPosition p)
-    {
-        switch (p)
-        {
-            case Team1Left:
-                return CourtView.Position.TopRight;
-            case Team1Right:
-                return CourtView.Position.TopLeft;
-            case Team2Left:
-                return CourtView.Position.BottomLeft;
-            case Team2Right:
-                return CourtView.Position.BottomRight;
-        }
-
-        return CourtView.Position.None;
-    }
 
 }
