@@ -22,12 +22,12 @@ import java.util.List;
 
 public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
 
-    public ManagePlayerArrayAdapter(Context context, List<Player> players, AppCompatActivity activity) {
+    public ManagePlayerArrayAdapter(Context context, List<Player> players, ManagePlayersActivity activity) {
         super(context, 0, players);
         mActivity = activity;
     }
 
-    AppCompatActivity mActivity;
+    ManagePlayersActivity mActivity;
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
@@ -84,6 +84,7 @@ public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
 
                 remove(player);
                 notifyDataSetChanged();
+                mActivity.onDataSetChanged();
 
             }
         });

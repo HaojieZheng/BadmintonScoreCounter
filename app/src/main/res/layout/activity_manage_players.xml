@@ -10,6 +10,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.haojie.badmintonscorecounter.ManagePlayersActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Players found"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:id="@+id/no_players_found_label"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
