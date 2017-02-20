@@ -4,7 +4,7 @@ package com.haojie.badmintonscorecounter;
  * Created by Haojie on 2/20/2017.
  */
 public class GamePresenter {
-    static String getAnnouncementText(Game game)
+    static String getAnnouncementText(Game game, boolean includeServiceCalls)
     {
         String result = "";
 
@@ -20,7 +20,7 @@ public class GamePresenter {
             }
         }
 
-        if (game.isServiceChanged())
+        if (includeServiceCalls && game.isServiceChanged())
             result += "Service Over ";
 
         if (game.getTeam1Score() == game.getTeam2Score())

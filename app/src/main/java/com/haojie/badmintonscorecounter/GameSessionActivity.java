@@ -215,14 +215,14 @@ public class GameSessionActivity extends AppCompatActivity {
             @Override
             public void onTeam1Score() {
                 mGame.onTeam1Score();
-                refreshScores();
+                refreshScores(false);
             }
 
             @Override
             public void onTeam2Score()
             {
                 mGame.onTeam2Score();
-                refreshScores();
+                refreshScores(false);
             }
         });
 
@@ -236,11 +236,11 @@ public class GameSessionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mGame.undo();
-                refreshScores();
+                refreshScores(true);
             }
         });
 
-        refreshScores();
+        refreshScores(false);
     }
 
     private void toggle() {
@@ -286,7 +286,7 @@ public class GameSessionActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private void refreshScores()
+    private void refreshScores(boolean isUndo)
     {
         mTeam1ScoreLabel.setText(Integer.toString(mGame.getTeam1Score()), TextView.BufferType.EDITABLE);
         mTeam2ScoreLabel.setText(Integer.toString(mGame.getTeam2Score()), TextView.BufferType.EDITABLE);
@@ -332,21 +332,22 @@ public class GameSessionActivity extends AppCompatActivity {
 
         mCourtView.invalidate();
 
+        final boolean isUndoCopy = isUndo;
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.US);
-                    ConvertTextToSpeech();
+                    ConvertTextToSpeech(isUndoCopy);
                 }
             }
         });
 
     }
 
-    void ConvertTextToSpeech()
+    void ConvertTextToSpeech(boolean isUndo)
     {
-        tts.speak(GamePresenter.getAnnouncementText(mGame), TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(GamePresenter.getAnnouncementText(mGame, !isUndo), TextToSpeech.QUEUE_FLUSH, null);
     }
 
 
