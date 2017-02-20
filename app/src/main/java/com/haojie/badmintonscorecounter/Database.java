@@ -21,7 +21,10 @@ public class Database {
 
     public Database()
     {
-        mVersion = 2;
+        // because when the DB was created in 1.1, there is no version number.
+        // So, to make sure the DB is converted correctly from 1.1, initialize the version to 1
+        // This will be set to the latest version when the database is serialized
+        mVersion = 1;
     }
 
 
@@ -100,10 +103,16 @@ public class Database {
         }
     }
 
+    /**
+     * Convert the database to the latest version
+     * @param version current database version
+     */
     void ConvertDataBase(int version) {
-        for (Game game : mGames) {
-            if (game.getDate() == null)
-                game.setDate(new Date());
+        if (version < 2) {
+            for (Game game : mGames) {
+                if (game.getDate() == null)
+                    game.setDate(new Date());
+            }
         }
     }
 
@@ -111,6 +120,7 @@ public class Database {
 
     public void serialize(Context context) throws IOException
     {
+        mVersion = CURRENT_RELEASE_VERSION;
         String serialized = new Gson().toJson(this);
         try
         {
@@ -188,12 +198,13 @@ public class Database {
 
     int getVersion()
     {
-        return mVersion;
+        return CURRENT_RELEASE_VERSION;
     }
 
     private ArrayList<Game> mGames = new ArrayList<Game>();
     private ArrayList<Player> mPlayers = new ArrayList<Player>();
     int mVersion;
+    static final int CURRENT_RELEASE_VERSION = 2;
 
 
 }
