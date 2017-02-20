@@ -2,7 +2,7 @@ package com.haojie.badmintonscorecounter;
 
 import org.junit.Test;
 
-import java.security.InvalidParameterException;
+
 
 import static org.junit.Assert.*;
 
@@ -41,13 +41,13 @@ public class GameUnitTest {
         assertEquals(Game.PlayerPosition.Team2Left, game.getCurrentServer());
     }
 
-    @Test(expected= InvalidParameterException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void Game_setPlayer_leftPlayer1SinglesGame() {
         Game game = new Game(Game.GameType.Singles, 1);
         game.setPlayer(Game.PlayerPosition.Team1Left, new Player("test player"));
     }
 
-    @Test(expected= InvalidParameterException.class)
+    @Test(expected= IllegalArgumentException.class)
     public void Game_setPlayer_leftPlayer2SinglesGame() {
         Game game = new Game(Game.GameType.Singles, 1);
         game.setPlayer(Game.PlayerPosition.Team2Left, new Player("test player"));

@@ -35,4 +35,18 @@ public class DatabaseTest {
         assertEquals("Real Player", database.getPlayersWithoutDefault().get(0).getName());
     }
 
+    @Test(expected= IllegalArgumentException.class)
+    public void Database_addPlayer_duplicatePlayer() {
+        Database database = new Database();
+        database.addPlayer(new Player("Player 1"));
+        database.addPlayer(new Player("player 1"));
+    }
+
+    @Test(expected= IllegalArgumentException.class)
+    public void Database_removePlayer_nonExistance() {
+        Database database = new Database();
+        database.removePlayer("Player 1");
+
+    }
+
 }

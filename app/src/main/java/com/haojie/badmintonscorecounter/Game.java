@@ -1,6 +1,5 @@
 package com.haojie.badmintonscorecounter;
 
-import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.Stack;
 
@@ -217,7 +216,7 @@ public class Game {
     public boolean isGamePoint(int team)
     {
         if (team != 1 && team != 2)
-            throw new InvalidParameterException("team");
+            throw new IllegalArgumentException("team");
         int teamScore = (team == 1) ? getTeam1Score() : getTeam2Score();
         int opposingTeamScore = (team == 1) ? getTeam2Score() : getTeam1Score();
 
@@ -264,7 +263,7 @@ public class Game {
     public void setPlayer(PlayerPosition position, Player player)
     {
         if (mGameType != GameType.Doubles && (position == PlayerPosition.Team1Left || position == PlayerPosition.Team2Left))
-            throw new InvalidParameterException();
+            throw new IllegalArgumentException();
 
         mPlayers[position.getValue()] = player;
     }
