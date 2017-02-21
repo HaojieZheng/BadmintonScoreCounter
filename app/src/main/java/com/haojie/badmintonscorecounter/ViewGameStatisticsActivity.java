@@ -3,7 +3,7 @@ package com.haojie.badmintonscorecounter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class GameStatisticsActivity extends AppCompatActivity {
+public class ViewGameStatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,6 +25,7 @@
     <string name="players_label">Players</string>
     <string name="game_statistics_label">Game Statistics</string>
     <string name="title_activity_view_players">View Players</string>
+    <string name="title_activity_game_statistics">View Game Statistics</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
