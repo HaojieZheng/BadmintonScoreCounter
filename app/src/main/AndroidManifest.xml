@@ -30,12 +30,18 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_game_session"
             android:theme="@style/FullscreenTheme"/>
-        <activity android:name=".ManagePlayersActivity">
+        <activity android:name=".ViewPlayersActivity"
+                  android:label="@string/title_activity_view_players"/>
+
+
+        <fragment
+            android:id="@+id/view_update_photo_dialog_fragment"
+            android:name=".ViewUpdatePhotoDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <activity android:name=".GameStatisticsActivity">
         </activity>
-        <fragment android:name=".ViewUpdatePhotoDialogFragment"
-                  android:id="@+id/view_update_photo_dialog_fragment"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"/>
     </application>
 
 </manifest>

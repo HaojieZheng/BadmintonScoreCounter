@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +19,20 @@ import java.util.List;
  * Created by Haojie on 1/5/2017.
  */
 
-public class ManagePlayerArrayAdapter extends ArrayAdapter<Player> {
+public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
 
-    public ManagePlayerArrayAdapter(Context context, List<Player> players, ManagePlayersActivity activity) {
+    public ViewPlayersArrayAdapter(Context context, List<Player> players, ViewPlayersActivity activity) {
         super(context, 0, players);
         mActivity = activity;
     }
 
-    ManagePlayersActivity mActivity;
+    ViewPlayersActivity mActivity;
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
         View row = convertView;
         if(row == null) {
-            row = LayoutInflater.from(getContext()).inflate(R.layout.manage_player_list_item, parent, false);
+            row = LayoutInflater.from(getContext()).inflate(R.layout.view_player_list_item, parent, false);
         }
         final Player player = getItem(position);
         assert player != null;

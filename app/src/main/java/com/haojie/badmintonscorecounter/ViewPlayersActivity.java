@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ManagePlayersActivity extends AppCompatActivity implements ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
+public class ViewPlayersActivity extends AppCompatActivity implements ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
     ListView mPlayerList;
     TextView mNoPlayersFoundLabel;
@@ -30,7 +30,7 @@ public class ManagePlayersActivity extends AppCompatActivity implements ViewUpda
         Database database = new Database();
         database.deserialize(getApplicationContext());
 
-        ManagePlayerArrayAdapter adapter = new ManagePlayerArrayAdapter(getApplicationContext(), database.getPlayersWithoutDefault(), this);
+        ViewPlayersArrayAdapter adapter = new ViewPlayersArrayAdapter(getApplicationContext(), database.getPlayersWithoutDefault(), this);
 
         mPlayerList.setAdapter(adapter);
         onDataSetChanged();
@@ -40,7 +40,7 @@ public class ManagePlayersActivity extends AppCompatActivity implements ViewUpda
     @Override
     public void onDismiss(String name) {
         // refresh the photo
-        ((ManagePlayerArrayAdapter)mPlayerList.getAdapter()).notifyDataSetChanged();
+        ((ViewPlayersArrayAdapter)mPlayerList.getAdapter()).notifyDataSetChanged();
     }
 
     public void onDataSetChanged()

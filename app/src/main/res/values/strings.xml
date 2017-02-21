@@ -21,8 +21,10 @@
     <string name="team_1">Team 1</string>
     <string name="team_2">Team 2</string>
     <string name="SelectPlayerTitle">Select Player</string>
-    <string name="manage_label">Manage</string>
+    <string name="view_label">View</string>
     <string name="players_label">Players</string>
+    <string name="game_statistics_label">Game Statistics</string>
+    <string name="title_activity_view_players">View Players</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

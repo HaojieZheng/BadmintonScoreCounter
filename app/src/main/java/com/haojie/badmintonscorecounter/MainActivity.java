@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button startSinglesButton = (Button)findViewById(R.id.button_singles);
         Button startDoublesButton = (Button)findViewById(R.id.button_doubles);
-        Button managePlayersButton = (Button)findViewById(R.id.button_manage_players);
+        Button viewPlayersButton = (Button)findViewById(R.id.button_view_players);
 
         startSinglesButton.setOnClickListener(new View.OnClickListener()
         {
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         }
         );
 
-        managePlayersButton.setOnClickListener(new View.OnClickListener() {
+        viewPlayersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ManagePlayersActivity.class);
+                Intent intent = new Intent(MainActivity.this, ViewPlayersActivity.class);
                 startActivity(intent);
             }
         });

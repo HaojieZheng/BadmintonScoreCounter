@@ -46,12 +46,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:text="@string/manage_label"
+            android:text="@string/view_label"
             android:textAlignment="center"/>
         <Button
             android:text="@string/players_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_manage_players"/>
+            android:id="@+id/button_view_players"/>
+        <Button
+            android:text="@string/game_statistics_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_view_game_statistics"/>
+
     </LinearLayout>
 </RelativeLayout>
