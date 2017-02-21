@@ -46,7 +46,7 @@ public class GamePresenter {
 
         }
 
-        return result;
+        return result.trim();
     }
 
     static CourtView.Position PlayerPositionToPosition(Game.PlayerPosition p)
