@@ -9,5 +9,11 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_statistics);
+
+        Database database = new Database();
+        database.deserialize(this);
+        mGameStatisticsPresenter = new GameStatisticsPresenter(database);
     }
+
+    GameStatisticsPresenter mGameStatisticsPresenter;
 }
