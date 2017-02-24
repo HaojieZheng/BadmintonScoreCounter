@@ -26,7 +26,7 @@ public class GameStatisticsPresenter {
     {
         Map<Player, Integer> playerWins = new HashMap<>();
 
-        for (Player player : mDatabase.getPlayers())
+        for (Player player : mDatabase.getPlayersWithoutDefault())
         {
             playerWins.put(player, 0);
         }
@@ -58,7 +58,7 @@ public class GameStatisticsPresenter {
 
     private void addWin(Map<Player, Integer> playerWins, Player player)
     {
-        if (player == null)
+        if (player == null || !playerWins.containsKey(player))
             return;
         Integer score = playerWins.get(player);
         playerWins.put(player, score + 1);
