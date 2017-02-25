@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ViewGameStatisticsActivity extends AppCompatActivity {
 
-    TextView mInfoTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,5 +52,8 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
         }
     }
 
+
+
+    TextView mInfoTextView;
     GameStatisticsPresenter mGameStatisticsPresenter;
 }
