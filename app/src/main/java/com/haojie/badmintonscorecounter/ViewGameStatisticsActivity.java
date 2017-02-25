@@ -2,6 +2,7 @@ package com.haojie.badmintonscorecounter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Pair;
 import android.widget.TextView;
 
@@ -33,12 +34,22 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
 
         String displayText = "";
         if (!top3Players.isEmpty()) {
-            displayText += "Top Players:\n";
+            displayText += "<b>Top Players:</b><br>";
             for (Pair<Player, Integer> pair : top3Players) {
-                displayText += pair.first.getName() + " : " + pair.second + " wins\n";
+                displayText += "\t" + pair.first.getName() + " : " + pair.second + " wins<br>";
             }
         }
-        mInfoTextView.setText(displayText);
+
+        if (displayText.isEmpty())
+            displayText = "No statistics to display";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            mInfoTextView.setText(android.text.Html.fromHtml(displayText, Html.FROM_HTML_MODE_COMPACT));
+        }
+        else
+        {
+            mInfoTextView.setText(android.text.Html.fromHtml(displayText));
+        }
     }
 
     GameStatisticsPresenter mGameStatisticsPresenter;

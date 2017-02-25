@@ -24,11 +24,11 @@ public class GameStatisticsPresenter {
 
     public void calculate()
     {
-        Map<Player, Integer> playerWins = new HashMap<>();
+        Map<String, Integer> playerWins = new HashMap<>();
 
         for (Player player : mDatabase.getPlayersWithoutDefault())
         {
-            playerWins.put(player, 0);
+            playerWins.put(player.getName(), 0);
         }
 
 
@@ -52,16 +52,16 @@ public class GameStatisticsPresenter {
                 }
             }
         }
-        mPlayersByWins = sortByValue(playerWins);
-
+        mPlayersByWins = sortByValue(playerWins, true);
     }
 
-    private void addWin(Map<Player, Integer> playerWins, Player player)
+    private void addWin(Map<String, Integer> playerWins, Player player)
     {
-        if (player == null || !playerWins.containsKey(player))
+        if (player == null || !playerWins.containsKey(player.getName()))
             return;
-        Integer score = playerWins.get(player);
-        playerWins.put(player, score + 1);
+
+        String playerName = player.getName();
+        playerWins.put(playerName, playerWins.get(playerName) + 1);
     }
 
     public ArrayList<Pair<Player, Integer>> getTopNPlayers(int n)
@@ -69,8 +69,8 @@ public class GameStatisticsPresenter {
         int count = 0;
         ArrayList<Pair<Player, Integer>> result = new ArrayList<Pair<Player, Integer>>();
 
-        for(Map.Entry<Player, Integer> entry : mPlayersByWins.entrySet()) {
-            result.add(new Pair<Player, Integer>(entry.getKey(), entry.getValue()));
+        for(Map.Entry<String, Integer> entry : mPlayersByWins.entrySet()) {
+            result.add(new Pair<Player, Integer>(mDatabase.getPlayerWithName(entry.getKey()), entry.getValue()));
             count ++;
             if (count > n)
                 break;
@@ -80,7 +80,7 @@ public class GameStatisticsPresenter {
     }
 
 
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue( Map<K, V> map )
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue( Map<K, V> map , boolean reverse)
     {
         List<Map.Entry<K, V>> list =
                 new LinkedList<>( map.entrySet() );
@@ -93,6 +93,8 @@ public class GameStatisticsPresenter {
             }
         } );
 
+        if (reverse)
+            Collections.reverse(list);
         Map<K, V> result = new LinkedHashMap<>();
         for (Map.Entry<K, V> entry : list)
         {
@@ -104,7 +106,7 @@ public class GameStatisticsPresenter {
 
 
     Database mDatabase;
-    Map<Player, Integer> mPlayersByWins;
+    Map<String, Integer> mPlayersByWins;
 
 
 

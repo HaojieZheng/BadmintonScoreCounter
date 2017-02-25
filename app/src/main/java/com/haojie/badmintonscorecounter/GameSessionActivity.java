@@ -24,7 +24,6 @@ public class GameSessionActivity extends AppCompatActivity {
 
     // Controls
     private CourtView mCourtView;
-    private View mControlsView;
     private TextView mTeam1ScoreLabel;
     private TextView mTeam2ScoreLabel;
     private TextView mWinningLabel;
