@@ -19,7 +19,7 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        ArrayList<Pair<Player, Integer>> result = presenter.getTopNPlayers(1);
+        ArrayList<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(1);
 
         assertTrue(result.isEmpty());
     }
@@ -39,9 +39,30 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        ArrayList<Pair<Player, Integer>> result = presenter.getTopNPlayers(0);
+        ArrayList<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(0);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void getTopNPlayers_get_two_but_only_one_win(){
+
+        Database database = new Database();
+        Player p1 = new Player("Test1");
+        Player p2 = new Player("Test2");
+        database.addPlayer(p1);
+        database.addPlayer(p2);
+
+        database.addGame(createGameWithWinner(p1, p2, 1));
+
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+
+        presenter.calculate();
+
+        ArrayList<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(2);
+        assertEquals(1, result.size());
+        assertEquals(p1, result.get(0).getPlayer());
+
     }
 
 

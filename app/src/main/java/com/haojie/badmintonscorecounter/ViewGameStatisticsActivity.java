@@ -30,13 +30,13 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
 
     private void loadInfoText()
     {
-        ArrayList<Pair<Player, Integer>> top3Players = mGameStatisticsPresenter.getTopNPlayers(3);
+        ArrayList<GameStatisticsPresenter.PlayerWinEntry> top3Players = mGameStatisticsPresenter.getTopNPlayers(3);
 
         String displayText = "";
         if (!top3Players.isEmpty()) {
             displayText += "<b>Top Players:</b><br>";
-            for (Pair<Player, Integer> pair : top3Players) {
-                displayText += "\t" + pair.first.getName() + " : " + pair.second + " wins<br>";
+            for (GameStatisticsPresenter.PlayerWinEntry pair : top3Players) {
+                displayText += "\t" + pair.getPlayer().getName() + " : " + pair.getWins() + " wins<br>";
             }
         }
 

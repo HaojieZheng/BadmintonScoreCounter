@@ -64,16 +64,39 @@ public class GameStatisticsPresenter {
         playerWins.put(playerName, playerWins.get(playerName) + 1);
     }
 
-    public ArrayList<Pair<Player, Integer>> getTopNPlayers(int n)
+    public class PlayerWinEntry
+    {
+        public PlayerWinEntry(Player player, int wins)
+        {
+            mPlayer = player;
+            mWins = wins;
+        }
+
+        public Player getPlayer() { return mPlayer; }
+        public int getWins() { return mWins;}
+
+        Player mPlayer;
+        int mWins;
+    }
+
+    public ArrayList<PlayerWinEntry> getTopNPlayers(int n)
     {
         int count = 0;
-        ArrayList<Pair<Player, Integer>> result = new ArrayList<Pair<Player, Integer>>();
+        ArrayList<PlayerWinEntry> result = new ArrayList<PlayerWinEntry>();
 
         for(Map.Entry<String, Integer> entry : mPlayersByWins.entrySet()) {
             if (count >= n)
                 break;
-            result.add(new Pair<Player, Integer>(mDatabase.getPlayerWithName(entry.getKey()), entry.getValue()));
-            count ++;
+
+            Player player = mDatabase.getPlayerWithName(entry.getKey());
+            int wins = entry.getValue();
+            if (wins > 0) {
+                PlayerWinEntry playerWinEntry = new PlayerWinEntry(player, wins);
+                result.add(playerWinEntry);
+                count++;
+            }
+            else
+                break;
         }
 
         return result;
