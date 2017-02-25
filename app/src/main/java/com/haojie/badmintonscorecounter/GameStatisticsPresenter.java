@@ -70,10 +70,10 @@ public class GameStatisticsPresenter {
         ArrayList<Pair<Player, Integer>> result = new ArrayList<Pair<Player, Integer>>();
 
         for(Map.Entry<String, Integer> entry : mPlayersByWins.entrySet()) {
+            if (count >= n)
+                break;
             result.add(new Pair<Player, Integer>(mDatabase.getPlayerWithName(entry.getKey()), entry.getValue()));
             count ++;
-            if (count > n)
-                break;
         }
 
         return result;

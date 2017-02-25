@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class GameStatisticsPresenterTest {
     @Test
-    public void getTopNPlayers_empty_database() throws Exception {
+    public void getTopNPlayers_empty_database(){
 
         Database database = new Database();
         GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
@@ -22,6 +22,48 @@ public class GameStatisticsPresenterTest {
         ArrayList<Pair<Player, Integer>> result = presenter.getTopNPlayers(1);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void getTopNPlayers_get_zero(){
+
+        Database database = new Database();
+        Player p1 = new Player("Test1");
+        Player p2 = new Player("Test2");
+        database.addPlayer(p1);
+        database.addPlayer(p2);
+
+        database.addGame(createGameWithWinner(p1, p2, 1));
+
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+
+        presenter.calculate();
+
+        ArrayList<Pair<Player, Integer>> result = presenter.getTopNPlayers(0);
+
+        assertTrue(result.isEmpty());
+    }
+
+
+    private Game createGameWithWinner(Player p1, Player p2, int teamWin)
+    {
+        Game game = new Game(Game.GameType.Singles, 1);
+        game.setPlayer(Game.PlayerPosition.Team1Right, p1);
+        game.setPlayer(Game.PlayerPosition.Team2Right, p2);
+        setGameWinner(game, 1);
+
+        return game;
+    }
+
+
+    private void setGameWinner(Game game, int team)
+    {
+        for (int  i = 0; i < 21; i++) {
+            if (team == 1)
+                game.onTeam1Score();
+            else
+                game.onTeam2Score();
+        }
 
     }
 
