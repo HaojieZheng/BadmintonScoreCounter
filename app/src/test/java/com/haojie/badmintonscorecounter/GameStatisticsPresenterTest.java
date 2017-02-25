@@ -1,11 +1,6 @@
 package com.haojie.badmintonscorecounter;
 
 import android.util.Pair;
-
-import com.haojie.badmintonscorecounter.Database;
-import com.haojie.badmintonscorecounter.GameStatisticsPresenter;
-import com.haojie.badmintonscorecounter.Player;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
