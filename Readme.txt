@@ -17,6 +17,11 @@ The app is available on the app store at: https://play.google.com/store/apps/det
 
 
 == Change Log ==
+ 1.4    Added Game Statistics screen (work in progress)
+        Added confirmation dialog when exiting game screen when game is not completed
+        Fix TTS resource leak
+ 1.3    Added TTS to read out score
+        Manage Player Screen can now change player photo
  1.2    Fix Landscape mode
         Add Manage Player screen for deleting players
  1.1    Added player names to persistance storage
