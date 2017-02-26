@@ -106,12 +106,6 @@ public class GameSessionActivity extends AppCompatActivity {
             return false;
         }
     };
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient mClient;
-
 
     @Override
     public void onBackPressed() {
@@ -211,9 +205,6 @@ public class GameSessionActivity extends AppCompatActivity {
         }
 
         initUI();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -232,7 +223,6 @@ public class GameSessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_session);
 
         mVisible = true;
-        //mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
 
@@ -243,11 +233,6 @@ public class GameSessionActivity extends AppCompatActivity {
                 toggle();
             }
         });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         mCourtView = (CourtView) findViewById(R.id.court_view);
         mCourtView.registerListener(new CourtView.CourtViewTouchListener() {
@@ -295,7 +280,6 @@ public class GameSessionActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        //mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
@@ -384,39 +368,4 @@ public class GameSessionActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("GameSession Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        mClient.connect();
-        AppIndex.AppIndexApi.start(mClient, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(mClient, getIndexApiAction());
-        mClient.disconnect();
-    }
 }
