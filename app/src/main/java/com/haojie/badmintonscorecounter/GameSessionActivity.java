@@ -1,17 +1,26 @@
 package com.haojie.badmintonscorecounter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -47,6 +56,7 @@ public class GameSessionActivity extends AppCompatActivity {
     public final static String EXTRA_TEAM2_RIGHT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team2RightPlayerName";
     public final static String EXTRA_TEAM1_LEFT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team1LeftPlayerName";
     public final static String EXTRA_TEAM2_LEFT_PLAYER_NAME = "com.Haojie.BadmintonScoreCounter.Team2LeftPlayerName";
+    private static final String TAG = "GameSessionActivity";
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -69,7 +79,7 @@ public class GameSessionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    TextToSpeech tts;
+    TextToSpeech mTts;
 
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
@@ -96,10 +106,45 @@ public class GameSessionActivity extends AppCompatActivity {
             return false;
         }
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient mClient;
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (mGame.getWinner()  == 0)
+        {
+            new AlertDialog.Builder(this)
+                    .setMessage("Game not finished.\nAre you sure you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            GameSessionActivity.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else
+        {
+            GameSessionActivity.this.finish();
+        }
+
+
+    }
+
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        if (mTts != null)
+        {
+            mTts.stop();
+            mTts.shutdown();
+        }
 
         Database database = new Database();
         try {
@@ -107,17 +152,16 @@ public class GameSessionActivity extends AppCompatActivity {
             database.addGame(mGame);
 
             database.serialize(this);
+        } catch (IOException e) {
+            Log.d(TAG, "Cannot write to database");
         }
-        catch (IOException e)
-        {
 
-        }
+        super.onDestroy();
     }
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initUI();
     }
@@ -134,28 +178,24 @@ public class GameSessionActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras != null)
-            {
+            if (extras != null) {
                 isSingles = extras.getBoolean(EXTRA_GAME_TYPE);
                 team1RightPlayer = extras.getString(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
                 team2RightPlayer = extras.getString(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
 
-                if (!isSingles)
-                {
+                if (!isSingles) {
                     team1LeftPlayer = extras.getString(EXTRA_TEAM1_LEFT_PLAYER_NAME);
                     team2LeftPlayer = extras.getString(EXTRA_TEAM2_LEFT_PLAYER_NAME);
                 }
             }
-        }
-        else {
+        } else {
             isSingles = (boolean) savedInstanceState.getSerializable(EXTRA_GAME_TYPE);
-            team1RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
-            team2RightPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
+            team1RightPlayer = (String) savedInstanceState.getSerializable(EXTRA_TEAM1_RIGHT_PLAYER_NAME);
+            team2RightPlayer = (String) savedInstanceState.getSerializable(EXTRA_TEAM2_RIGHT_PLAYER_NAME);
 
-            if (!isSingles)
-            {
-                team1LeftPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM1_LEFT_PLAYER_NAME);
-                team2LeftPlayer = (String)savedInstanceState.getSerializable(EXTRA_TEAM2_LEFT_PLAYER_NAME);
+            if (!isSingles) {
+                team1LeftPlayer = (String) savedInstanceState.getSerializable(EXTRA_TEAM1_LEFT_PLAYER_NAME);
+                team2LeftPlayer = (String) savedInstanceState.getSerializable(EXTRA_TEAM2_LEFT_PLAYER_NAME);
             }
         }
 
@@ -165,13 +205,15 @@ public class GameSessionActivity extends AppCompatActivity {
         mGame = new Game(isSingles ? Game.GameType.Singles : Game.GameType.Doubles, 1);
         mGame.setPlayer(Game.PlayerPosition.Team1Right, database.getPlayerWithName(team1RightPlayer));
         mGame.setPlayer(Game.PlayerPosition.Team2Right, database.getPlayerWithName(team2RightPlayer));
-        if (!isSingles)
-        {
+        if (!isSingles) {
             mGame.setPlayer(Game.PlayerPosition.Team1Left, database.getPlayerWithName(team1LeftPlayer));
             mGame.setPlayer(Game.PlayerPosition.Team2Left, database.getPlayerWithName(team2LeftPlayer));
         }
 
         initUI();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
@@ -186,8 +228,7 @@ public class GameSessionActivity extends AppCompatActivity {
     }
 
 
-    private void initUI()
-    {
+    private void initUI() {
         setContentView(R.layout.activity_game_session);
 
         mVisible = true;
@@ -208,9 +249,8 @@ public class GameSessionActivity extends AppCompatActivity {
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        mCourtView = (CourtView)findViewById(R.id.court_view);
-        mCourtView.registerListener(new CourtView.CourtViewTouchListener()
-        {
+        mCourtView = (CourtView) findViewById(R.id.court_view);
+        mCourtView.registerListener(new CourtView.CourtViewTouchListener() {
             @Override
             public void onTeam1Score() {
                 mGame.onTeam1Score();
@@ -218,19 +258,18 @@ public class GameSessionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTeam2Score()
-            {
+            public void onTeam2Score() {
                 mGame.onTeam2Score();
                 refreshScores(false);
             }
         });
 
-        mTeam1ScoreLabel = (TextView)findViewById(R.id.team1_score);
-        mTeam2ScoreLabel = (TextView)findViewById(R.id.team2_score);
-        mWinningLabel = (TextView)findViewById(R.id.winning_text_view);
+        mTeam1ScoreLabel = (TextView) findViewById(R.id.team1_score);
+        mTeam2ScoreLabel = (TextView) findViewById(R.id.team2_score);
+        mWinningLabel = (TextView) findViewById(R.id.winning_text_view);
         mWinningLabel.setVisibility(View.INVISIBLE);
 
-        mUndoButton = (Button)findViewById(R.id.undo_button);
+        mUndoButton = (Button) findViewById(R.id.undo_button);
         mUndoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,8 +324,7 @@ public class GameSessionActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private void refreshScores(boolean isUndo)
-    {
+    private void refreshScores(boolean isUndo) {
         mTeam1ScoreLabel.setText(Integer.toString(mGame.getTeam1Score()), TextView.BufferType.EDITABLE);
         mTeam2ScoreLabel.setText(Integer.toString(mGame.getTeam2Score()), TextView.BufferType.EDITABLE);
         if (mGame.getTeam1Score() > mGame.getTeam2Score())
@@ -318,25 +356,22 @@ public class GameSessionActivity extends AppCompatActivity {
 
         mCourtView.setServicePosition(GamePresenter.PlayerPositionToPosition(mGame.getCurrentServer()));
 
-        if (mGame.getWinner() != 0)
-        {
+        if (mGame.getWinner() != 0) {
             mWinningLabel.setText("Team " + mGame.getWinner() + " wins");
             mWinningLabel.setVisibility(View.VISIBLE);
 
-        }
-        else
-        {
+        } else {
             mWinningLabel.setVisibility(View.INVISIBLE);
         }
 
         mCourtView.invalidate();
 
         final boolean isUndoCopy = isUndo;
-        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        mTts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS) {
-                    int result = tts.setLanguage(Locale.US);
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = mTts.setLanguage(Locale.US);
                     ConvertTextToSpeech(isUndoCopy);
                 }
             }
@@ -344,10 +379,44 @@ public class GameSessionActivity extends AppCompatActivity {
 
     }
 
-    void ConvertTextToSpeech(boolean isUndo)
-    {
-        tts.speak(GamePresenter.getAnnouncementText(mGame, !isUndo), TextToSpeech.QUEUE_FLUSH, null);
+    void ConvertTextToSpeech(boolean isUndo) {
+        mTts.speak(GamePresenter.getAnnouncementText(mGame, !isUndo), TextToSpeech.QUEUE_FLUSH, null);
     }
 
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("GameSession Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mClient.connect();
+        AppIndex.AppIndexApi.start(mClient, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mClient, getIndexApiAction());
+        mClient.disconnect();
+    }
 }
