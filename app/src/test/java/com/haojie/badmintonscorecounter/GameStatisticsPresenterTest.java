@@ -62,7 +62,32 @@ public class GameStatisticsPresenterTest {
         ArrayList<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(2);
         assertEquals(1, result.size());
         assertEquals(p1, result.get(0).getPlayer());
+        assertEquals(1, result.get(0).getWins());
+    }
 
+    @Test
+    public void getTopNPlayers_get_three_but_only_two(){
+
+        Database database = new Database();
+        Player p1 = new Player("Test1");
+        Player p2 = new Player("Test2");
+        database.addPlayer(p1);
+        database.addPlayer(p2);
+
+        database.addGame(createGameWithWinner(p1, p2, 1));
+        database.addGame(createGameWithWinner(p1, p2, 1));
+        database.addGame(createGameWithWinner(p1, p2, 2));
+
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+
+        presenter.calculate();
+
+        ArrayList<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(2);
+        assertEquals(2, result.size());
+        assertEquals(p1, result.get(0).getPlayer());
+        assertEquals(2, result.get(0).getWins());
+        assertEquals(p2, result.get(1).getPlayer());
+        assertEquals(1, result.get(1).getWins());
     }
 
 
@@ -71,7 +96,7 @@ public class GameStatisticsPresenterTest {
         Game game = new Game(Game.GameType.Singles, 1);
         game.setPlayer(Game.PlayerPosition.Team1Right, p1);
         game.setPlayer(Game.PlayerPosition.Team2Right, p2);
-        setGameWinner(game, 1);
+        setGameWinner(game, teamWin);
 
         return game;
     }
