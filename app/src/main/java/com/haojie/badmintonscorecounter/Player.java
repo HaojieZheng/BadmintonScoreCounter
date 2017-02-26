@@ -3,6 +3,8 @@ package com.haojie.badmintonscorecounter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 
 /**
@@ -46,7 +48,9 @@ public class Player
     }
 
 
+    @Expose
     String mName;
+    @Expose
     String mImagePath;
 
 }

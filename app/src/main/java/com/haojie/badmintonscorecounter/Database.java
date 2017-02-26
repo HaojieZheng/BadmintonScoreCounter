@@ -3,6 +3,9 @@ package com.haojie.badmintonscorecounter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -121,7 +124,8 @@ public class Database {
     public void serialize(Context context) throws IOException
     {
         mVersion = CURRENT_RELEASE_VERSION;
-        String serialized = new Gson().toJson(this);
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String serialized = gson.toJson(this);
         try
         {
             FileOutputStream stream = context.openFileOutput("persist.db", Context.MODE_PRIVATE);
@@ -201,8 +205,12 @@ public class Database {
         return CURRENT_RELEASE_VERSION;
     }
 
+
+    @Expose
     private ArrayList<Game> mGames = new ArrayList<Game>();
+    @Expose
     private ArrayList<Player> mPlayers = new ArrayList<Player>();
+    @Expose
     int mVersion;
     static final int CURRENT_RELEASE_VERSION = 2;
 

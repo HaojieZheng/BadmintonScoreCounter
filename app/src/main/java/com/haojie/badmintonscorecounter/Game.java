@@ -1,5 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 import java.util.Stack;
 
@@ -292,16 +294,22 @@ public class Game {
         mDate = date;
     }
 
-    // member variables
+    // serialized member variables
+    @Expose
     GameType mGameType;
+    @Expose
     int mTeam1Score = 0;
+    @Expose
     int mTeam2Score = 0;
-    Stack<GameState> mPlays = new Stack<GameState>();
+    @Expose
     Player [] mPlayers = new Player[4];
+    @Expose
     PlayerPosition mCurrentServer;
+    @Expose
     Date mDate;
 
 
-
+    // non-serialized member variables
+    Stack<GameState> mPlays = new Stack<GameState>();
 
 }
