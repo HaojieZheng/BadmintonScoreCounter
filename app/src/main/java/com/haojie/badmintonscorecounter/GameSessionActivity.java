@@ -109,6 +109,7 @@ public class GameSessionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        stopTts();
 
         if (mGame.getWinner()  == 0)
         {
@@ -117,6 +118,7 @@ public class GameSessionActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            freeTts();
                             GameSessionActivity.this.finish();
                         }
                     })
@@ -132,14 +134,29 @@ public class GameSessionActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
+    private void stopTts()
+    {
+        if (mTts != null) {
+            mTts.stop();
+        }
+
+    }
+
+    private void freeTts()
+    {
         if (mTts != null)
         {
             mTts.stop();
             mTts.shutdown();
+            mTts = null;
         }
+    }
 
+
+    @Override
+    protected void onDestroy() {
+
+        freeTts();
         Database database = new Database();
         try {
             database.deserialize(this);
@@ -351,19 +368,26 @@ public class GameSessionActivity extends AppCompatActivity {
         mCourtView.invalidate();
 
         final boolean isUndoCopy = isUndo;
-        mTts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = mTts.setLanguage(Locale.US);
-                    ConvertTextToSpeech(isUndoCopy);
+        if (mTts == null) {
+            mTts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = mTts.setLanguage(Locale.US);
+                        ConvertTextToSpeech(isUndoCopy);
+                    }
                 }
-            }
-        });
+            });
+        }
+        else
+        {
+            ConvertTextToSpeech(isUndoCopy);
+        }
 
     }
 
     void ConvertTextToSpeech(boolean isUndo) {
+        mTts.stop();
         mTts.speak(GamePresenter.getAnnouncementText(mGame, !isUndo), TextToSpeech.QUEUE_FLUSH, null);
     }
 
