@@ -17,6 +17,8 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.IOException;
 
+import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
+
 public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
     ImageButton mSwapButton;
@@ -49,6 +51,14 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         mStartGameButton = (Button)findViewById(R.id.button_start);
         mAddress1 = (ImageButton)findViewById(R.id.addressbook1);
         mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
+
+        Database database = new Database();
+        database.deserialize(EnterSinglesPlayersNamesActivity.this);
+        if (database.getPlayers().size() == 0)
+        {
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress1, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress2, ic_action_name);
+        }
 
 
         mSwapButton.setOnClickListener(new View.OnClickListener() {

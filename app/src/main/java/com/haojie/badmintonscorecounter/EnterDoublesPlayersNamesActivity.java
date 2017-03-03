@@ -17,6 +17,8 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.IOException;
 
+import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
+
 public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
     ImageButton mSwapTeam1Button;
@@ -65,6 +67,16 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
         mAddress3 = (ImageButton)findViewById(R.id.addressbook3);
         mAddress4 = (ImageButton)findViewById(R.id.addressbook4);
+
+        Database database = new Database();
+        database.deserialize(EnterDoublesPlayersNamesActivity.this);
+        if (database.getPlayers().size() == 0)
+        {
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress1, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress2, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress3, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, mAddress4, ic_action_name);
+        }
 
         mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
         mTakePhotoButton2 = (ImageButton)findViewById(R.id.takephoto2);
