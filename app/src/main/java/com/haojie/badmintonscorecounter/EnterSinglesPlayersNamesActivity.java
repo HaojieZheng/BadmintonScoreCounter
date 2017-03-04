@@ -54,7 +54,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
 
         Database database = new Database();
         database.deserialize(EnterSinglesPlayersNamesActivity.this);
-        if (database.getPlayers().size() == 0)
+        if (database.getPlayersWithoutDefault().size() == 0)
         {
             BitmapUtils.setImageButtonEnabled(this, false, mAddress1, ic_action_name);
             BitmapUtils.setImageButtonEnabled(this, false, mAddress2, ic_action_name);

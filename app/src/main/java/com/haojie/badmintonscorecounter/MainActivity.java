@@ -8,6 +8,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button mViewPlayersButton;
+    private Button mViewGameStatisticsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,8 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button startSinglesButton = (Button)findViewById(R.id.button_singles);
         Button startDoublesButton = (Button)findViewById(R.id.button_doubles);
-        Button viewPlayersButton = (Button)findViewById(R.id.button_view_players);
-        Button viewGameStatisticsButton = (Button)findViewById(R.id.button_view_game_statistics);
+        mViewPlayersButton = (Button)findViewById(R.id.button_view_players);
+        mViewGameStatisticsButton = (Button)findViewById(R.id.button_view_game_statistics);
+
+        refreshButtonStates();
+
 
         startSinglesButton.setOnClickListener(new View.OnClickListener()
         {
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
         );
 
-        viewPlayersButton.setOnClickListener(new View.OnClickListener() {
+        mViewPlayersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ViewPlayersActivity.class);
@@ -47,13 +53,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewGameStatisticsButton.setOnClickListener(new View.OnClickListener() {
+        mViewGameStatisticsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ViewGameStatisticsActivity.class);
                 startActivity(intent);
             }
         });
-
     }
+
+    void refreshButtonStates()
+    {
+        Database database = new Database();
+        database.deserialize(MainActivity.this);
+        boolean enableViewPlayers = database.getPlayersWithoutDefault().size() != 0;
+        mViewPlayersButton.setEnabled(enableViewPlayers);
+        mViewPlayersButton.setClickable(enableViewPlayers);
+
+        boolean enableViewStatistics = database.getGames().size() != 0 && enableViewPlayers;
+        mViewGameStatisticsButton.setEnabled(enableViewStatistics);
+        mViewGameStatisticsButton.setClickable(enableViewStatistics);
+    }
+
+
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        refreshButtonStates();
+    }
+
+
 }
