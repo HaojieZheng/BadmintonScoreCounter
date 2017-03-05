@@ -119,7 +119,7 @@ public class CourtView extends View {
         return mServicePosition;
     }
 
-    private ArrayList<CourtViewTouchListener> mListeners = new ArrayList<>();
+    private final ArrayList<CourtViewTouchListener> mListeners = new ArrayList<>();
 
     private String mTopLeftName = "";
     private String mTopRightName = "";
@@ -128,10 +128,10 @@ public class CourtView extends View {
 
     private Position mServicePosition = Position.None;
 
-    static final double courtRatio =  13.4 / 6.1;
-    static final double longServiceLine = 0.8 / 13.4;
-    static final double shortServiceLine = 4.68 / 13.4;
-    static final double singlesSideLine = 0.46 / 6.1;
+    private static final double courtRatio =  13.4 / 6.1;
+    private static final double longServiceLine = 0.8 / 13.4;
+    private static final double shortServiceLine = 4.68 / 13.4;
+    private static final double singlesSideLine = 0.46 / 6.1;
 
     private Bitmap mTopLeftPic;
     private Bitmap mTopRightPic;
@@ -183,7 +183,7 @@ public class CourtView extends View {
         double y = getHeight();
 
         if (y >= x)
-            drawProtrait(canvas);
+            drawPortrait(canvas);
         else
             drawLandScape(canvas);
     }
@@ -300,7 +300,7 @@ public class CourtView extends View {
     }
 
 
-    private void drawProtrait(Canvas canvas)
+    private void drawPortrait(Canvas canvas)
     {
         mOrientation = Orientation.Portrait;
 

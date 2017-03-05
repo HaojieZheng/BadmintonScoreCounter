@@ -80,9 +80,10 @@ public class Game {
             return mTeam2Score;
         }
 
-        private Player[] mPlayers;
-        private PlayerPosition mCurrentServer;
-        private int mTeam1Score, mTeam2Score;
+        private final Player[] mPlayers;
+        private final PlayerPosition mCurrentServer;
+        private final int mTeam1Score;
+        private final int mTeam2Score;
 
     }
 
@@ -221,11 +222,7 @@ public class Game {
         int teamScore = (team == 1) ? getTeam1Score() : getTeam2Score();
         int opposingTeamScore = (team == 1) ? getTeam2Score() : getTeam1Score();
 
-        if (teamScore == 20 && opposingTeamScore <= 19)
-            return true;
-
-        return (teamScore == 1 + opposingTeamScore) &&
-                ((opposingTeamScore >= 20) || (teamScore == 29 && opposingTeamScore == 29));
+        return teamScore == 20 && opposingTeamScore <= 19 || (teamScore == 1 + opposingTeamScore) && ((opposingTeamScore >= 20) || (teamScore == 29 && opposingTeamScore == 29));
 
     }
 
@@ -291,7 +288,7 @@ public class Game {
 
     // serialized member variables
     @Expose
-    private GameType mGameType;
+    private final GameType mGameType;
     @Expose
     private int mTeam1Score = 0;
     @Expose
@@ -305,6 +302,6 @@ public class Game {
 
 
     // non-serialized member variables
-    Stack<GameState> mPlays = new Stack<>();
+    final Stack<GameState> mPlays = new Stack<>();
 
 }

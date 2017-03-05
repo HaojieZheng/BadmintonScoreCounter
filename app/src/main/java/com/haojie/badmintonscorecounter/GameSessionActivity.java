@@ -366,8 +366,11 @@ public class GameSessionActivity extends AppCompatActivity {
                 @Override
                 public void onInit(int status) {
                     if (status == TextToSpeech.SUCCESS) {
-                        int result = mTts.setLanguage(Locale.US);
-                        ConvertTextToSpeech(isUndoCopy);
+                        if (mTts.isLanguageAvailable(Locale.US) >= 0 &&
+                            mTts.setLanguage(Locale.US) >= 0)
+                        {
+                            ConvertTextToSpeech(isUndoCopy);
+                        }
                     }
                 }
             });
