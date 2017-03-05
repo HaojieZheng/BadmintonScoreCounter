@@ -1,10 +1,7 @@
 package com.haojie.badmintonscorecounter;
 
-import android.util.Pair;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 /**

@@ -3,7 +3,6 @@ package com.haojie.badmintonscorecounter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Pair;
 import android.widget.TextView;
 
 import java.util.ArrayList;

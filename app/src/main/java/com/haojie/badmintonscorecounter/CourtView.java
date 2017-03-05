@@ -119,7 +119,7 @@ public class CourtView extends View {
         return mServicePosition;
     }
 
-    private ArrayList<CourtViewTouchListener> mListeners = new ArrayList<CourtViewTouchListener>();
+    private ArrayList<CourtViewTouchListener> mListeners = new ArrayList<>();
 
     private String mTopLeftName = "";
     private String mTopRightName = "";

@@ -1,7 +1,5 @@
 package com.haojie.badmintonscorecounter;
 
-import android.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,7 +80,7 @@ public class GameStatisticsPresenter {
     public ArrayList<PlayerWinEntry> getTopNPlayers(int n)
     {
         int count = 0;
-        ArrayList<PlayerWinEntry> result = new ArrayList<PlayerWinEntry>();
+        ArrayList<PlayerWinEntry> result = new ArrayList<>();
 
         for(Map.Entry<String, Integer> entry : mPlayersByWins.entrySet()) {
             if (count >= n)

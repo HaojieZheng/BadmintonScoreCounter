@@ -207,9 +207,9 @@ public class Database {
 
 
     @Expose
-    private ArrayList<Game> mGames = new ArrayList<Game>();
+    private ArrayList<Game> mGames = new ArrayList<>();
     @Expose
-    private ArrayList<Player> mPlayers = new ArrayList<Player>();
+    private ArrayList<Player> mPlayers = new ArrayList<>();
     @Expose
     private int mVersion;
     private static final int CURRENT_RELEASE_VERSION = 2;

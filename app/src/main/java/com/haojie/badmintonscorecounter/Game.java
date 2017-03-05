@@ -215,8 +215,7 @@ public class Game {
         return lastServerTeam1 != currentServerTeam1;
     }
 
-    public boolean isGamePoint(int team)
-    {
+    public boolean isGamePoint(int team) {
         if (team != 1 && team != 2)
             throw new IllegalArgumentException("team");
         int teamScore = (team == 1) ? getTeam1Score() : getTeam2Score();
@@ -225,10 +224,8 @@ public class Game {
         if (teamScore == 20 && opposingTeamScore <= 19)
             return true;
 
-        if (teamScore == 1 + opposingTeamScore && opposingTeamScore >= 20)
-            return true;
-
-        return teamScore == 29 && opposingTeamScore == 29;
+        return (teamScore == 1 + opposingTeamScore) &&
+                ((opposingTeamScore >= 20) || (teamScore == 29 && opposingTeamScore == 29));
 
     }
 
@@ -308,6 +305,6 @@ public class Game {
 
 
     // non-serialized member variables
-    Stack<GameState> mPlays = new Stack<GameState>();
+    Stack<GameState> mPlays = new Stack<>();
 
 }
