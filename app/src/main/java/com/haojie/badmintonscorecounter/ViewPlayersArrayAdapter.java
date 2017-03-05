@@ -26,7 +26,7 @@ public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
         mActivity = activity;
     }
 
-    ViewPlayersActivity mActivity;
+    final ViewPlayersActivity mActivity;
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {

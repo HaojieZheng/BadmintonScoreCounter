@@ -73,8 +73,8 @@ public class GameStatisticsPresenter {
         public Player getPlayer() { return mPlayer; }
         public int getWins() { return mWins;}
 
-        Player mPlayer;
-        int mWins;
+        final Player mPlayer;
+        final int mWins;
     }
 
     public ArrayList<PlayerWinEntry> getTopNPlayers(int n)
@@ -126,7 +126,7 @@ public class GameStatisticsPresenter {
 
 
 
-    Database mDatabase;
+    final Database mDatabase;
     Map<String, Integer> mPlayersByWins;
 
 
