@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Haojie on 2/23/2017.
  */
 
-public class GameStatisticsPresenter {
+class GameStatisticsPresenter {
     public GameStatisticsPresenter(Database database )
     {
         mDatabase = database;
@@ -126,8 +126,8 @@ public class GameStatisticsPresenter {
 
 
 
-    final Database mDatabase;
-    Map<String, Integer> mPlayersByWins;
+    private final Database mDatabase;
+    private Map<String, Integer> mPlayersByWins;
 
 
 

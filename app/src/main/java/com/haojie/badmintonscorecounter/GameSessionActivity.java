@@ -72,7 +72,7 @@ public class GameSessionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    TextToSpeech mTts;
+    private TextToSpeech mTts;
 
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
@@ -382,7 +382,7 @@ public class GameSessionActivity extends AppCompatActivity {
 
     }
 
-    void ConvertTextToSpeech(boolean isUndo) {
+    private void ConvertTextToSpeech(boolean isUndo) {
         mTts.stop();
         mTts.speak(GamePresenter.getAnnouncementText(mGame, !isUndo), TextToSpeech.QUEUE_FLUSH, null);
     }

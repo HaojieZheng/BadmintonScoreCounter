@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void refreshButtonStates()
+    private void refreshButtonStates()
     {
         Database database = new Database();
         database.deserialize(MainActivity.this);

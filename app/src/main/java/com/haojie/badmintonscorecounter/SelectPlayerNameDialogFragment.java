@@ -20,7 +20,7 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
     }
 
     private static final String PLAYER_NAME_KEY = "player_name";
-    ListView mListView;
+    private ListView mListView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

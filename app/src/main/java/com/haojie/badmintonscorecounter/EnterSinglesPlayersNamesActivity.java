@@ -21,21 +21,21 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    ImageButton mSwapButton;
-    ImageButton mAddress1;
-    ImageButton mAddress2;
-    ImageButton mTakePhotoButton1;
-    ImageButton mTakePhotoButton2;
-    EditText mEditPlayer1Name;
-    EditText mEditPlayer2Name;
-    Button mStartGameButton;
-    int mPlayerSelectionShown = 0;
-    static final int REQUEST_IMAGE_CAPTURE_1 = 1;
-    static final int REQUEST_IMAGE_CAPTURE_2 = 2;
-    Bitmap player1Picture = null;
-    Bitmap player2Picture = null;
+    private ImageButton mSwapButton;
+    private ImageButton mAddress1;
+    private ImageButton mAddress2;
+    private ImageButton mTakePhotoButton1;
+    private ImageButton mTakePhotoButton2;
+    private EditText mEditPlayer1Name;
+    private EditText mEditPlayer2Name;
+    private Button mStartGameButton;
+    private int mPlayerSelectionShown = 0;
+    private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
+    private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
+    private Bitmap player1Picture = null;
+    private Bitmap player2Picture = null;
     private String mTempPath;
-    ViewUpdatePhotoDialogFragment mDialogFragment;
+    private ViewUpdatePhotoDialogFragment mDialogFragment;
 
 
     @Override

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 public class ViewPlayersActivity extends AppCompatActivity implements ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    ListView mPlayerList;
-    TextView mNoPlayersFoundLabel;
+    private ListView mPlayerList;
+    private TextView mNoPlayersFoundLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

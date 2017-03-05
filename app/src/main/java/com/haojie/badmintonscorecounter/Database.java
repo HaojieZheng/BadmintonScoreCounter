@@ -20,7 +20,7 @@ import java.util.Date;
  * Created by Haojie on 12/28/2016.
  */
 
-public class Database {
+class Database {
 
     public Database()
     {

@@ -53,6 +53,6 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
 
 
 
-    TextView mInfoTextView;
-    GameStatisticsPresenter mGameStatisticsPresenter;
+    private TextView mInfoTextView;
+    private GameStatisticsPresenter mGameStatisticsPresenter;
 }

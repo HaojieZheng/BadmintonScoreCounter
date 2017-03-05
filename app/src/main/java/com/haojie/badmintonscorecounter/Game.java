@@ -302,6 +302,6 @@ public class Game {
 
 
     // non-serialized member variables
-    final Stack<GameState> mPlays = new Stack<>();
+    private final Stack<GameState> mPlays = new Stack<>();
 
 }

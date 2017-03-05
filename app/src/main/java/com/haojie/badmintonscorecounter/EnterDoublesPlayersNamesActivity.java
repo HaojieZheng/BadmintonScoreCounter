@@ -21,36 +21,36 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    ImageButton mSwapTeam1Button;
-    ImageButton mSwapTeam2Button;
-    ImageButton mSwapTeamsButton;
-    ImageButton mAddress1;
-    ImageButton mAddress2;
-    ImageButton mAddress3;
-    ImageButton mAddress4;
-    ImageButton mTakePhotoButton1;
-    ImageButton mTakePhotoButton2;
-    ImageButton mTakePhotoButton3;
-    ImageButton mTakePhotoButton4;
+    private ImageButton mSwapTeam1Button;
+    private ImageButton mSwapTeam2Button;
+    private ImageButton mSwapTeamsButton;
+    private ImageButton mAddress1;
+    private ImageButton mAddress2;
+    private ImageButton mAddress3;
+    private ImageButton mAddress4;
+    private ImageButton mTakePhotoButton1;
+    private ImageButton mTakePhotoButton2;
+    private ImageButton mTakePhotoButton3;
+    private ImageButton mTakePhotoButton4;
 
-    EditText mEditTeam1Player1Name;
-    EditText mEditTeam1Player2Name;
-    EditText mEditTeam2Player1Name;
-    EditText mEditTeam2Player2Name;
-    Button mStartGameButton;
+    private EditText mEditTeam1Player1Name;
+    private EditText mEditTeam1Player2Name;
+    private EditText mEditTeam2Player1Name;
+    private EditText mEditTeam2Player2Name;
+    private Button mStartGameButton;
 
-    int mPlayerSelectionShown = 0;
-    static final int REQUEST_IMAGE_CAPTURE_1 = 1;
-    static final int REQUEST_IMAGE_CAPTURE_2 = 2;
-    static final int REQUEST_IMAGE_CAPTURE_3 = 3;
-    static final int REQUEST_IMAGE_CAPTURE_4 = 4;
+    private int mPlayerSelectionShown = 0;
+    private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
+    private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
+    private static final int REQUEST_IMAGE_CAPTURE_3 = 3;
+    private static final int REQUEST_IMAGE_CAPTURE_4 = 4;
 
-    Bitmap player1Picture = null;
-    Bitmap player2Picture = null;
-    Bitmap player3Picture = null;
-    Bitmap player4Picture = null;
+    private Bitmap player1Picture = null;
+    private Bitmap player2Picture = null;
+    private Bitmap player3Picture = null;
+    private Bitmap player4Picture = null;
 
-    ViewUpdatePhotoDialogFragment mDialogFragment;
+    private ViewUpdatePhotoDialogFragment mDialogFragment;
     private String mTempPath;
 
 
