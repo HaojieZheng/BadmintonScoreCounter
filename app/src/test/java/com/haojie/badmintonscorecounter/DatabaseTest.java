@@ -43,7 +43,7 @@ public class DatabaseTest {
     }
 
     @Test(expected= IllegalArgumentException.class)
-    public void Database_removePlayer_nonExistance() {
+    public void Database_removePlayer_nonExisting() {
         Database database = new Database();
         database.removePlayer("Player 1");
 

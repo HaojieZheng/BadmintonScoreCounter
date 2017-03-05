@@ -40,7 +40,7 @@ public class CourtView extends View {
     public enum Orientation
     {
         None,
-        Protrait,
+        Portrait,
         Landscape
     }
 
@@ -200,7 +200,7 @@ public class CourtView extends View {
 
         double y = getHeight();
         double x = getWidth();
-        if (mOrientation == Orientation.Protrait) {
+        if (mOrientation == Orientation.Portrait) {
             if (y < courtRatio * x) {
                 x = y / courtRatio;
             } else {
@@ -231,7 +231,7 @@ public class CourtView extends View {
                 if (touched)
                 {
                     Boolean team1Score = true;
-                    if (mOrientation == Orientation.Protrait && touched_x <= x) {
+                    if (mOrientation == Orientation.Portrait && touched_x <= x) {
                         if (touched_y > y / 2)
                             team1Score = false;
 
@@ -302,7 +302,7 @@ public class CourtView extends View {
 
     private void drawProtrait(Canvas canvas)
     {
-        mOrientation = Orientation.Protrait;
+        mOrientation = Orientation.Portrait;
 
         double x = getWidth();
         double y = getHeight();

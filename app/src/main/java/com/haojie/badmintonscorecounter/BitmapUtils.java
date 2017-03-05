@@ -43,10 +43,10 @@ class BitmapUtils {
         return res;
     }
 
-    public static void setImageButtonEnabled(Context ctxt, boolean enabled, ImageButton item,
+    public static void setImageButtonEnabled(Context context, boolean enabled, ImageButton item,
                                              int iconResId) {
         item.setEnabled(enabled);
-        Drawable originalIcon = ctxt.getResources().getDrawable(iconResId);
+        Drawable originalIcon = context.getResources().getDrawable(iconResId);
         Drawable icon = enabled ? originalIcon : convertDrawableToGrayScale(originalIcon);
         item.setImageDrawable(icon);
     }
