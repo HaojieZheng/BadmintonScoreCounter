@@ -228,10 +228,8 @@ public class Game {
         if (teamScore == 1 + opposingTeamScore && opposingTeamScore >= 20)
             return true;
 
-        if (teamScore == 29 && opposingTeamScore == 29)
-            return true;
+        return teamScore == 29 && opposingTeamScore == 29;
 
-        return false;
     }
 
     public int getWinner()
@@ -296,17 +294,17 @@ public class Game {
 
     // serialized member variables
     @Expose
-    GameType mGameType;
+    private GameType mGameType;
     @Expose
-    int mTeam1Score = 0;
+    private int mTeam1Score = 0;
     @Expose
-    int mTeam2Score = 0;
+    private int mTeam2Score = 0;
     @Expose
-    Player [] mPlayers = new Player[4];
+    private Player [] mPlayers = new Player[4];
     @Expose
-    PlayerPosition mCurrentServer;
+    private PlayerPosition mCurrentServer;
     @Expose
-    Date mDate;
+    private Date mDate;
 
 
     // non-serialized member variables

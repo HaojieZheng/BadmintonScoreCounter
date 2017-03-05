@@ -33,7 +33,7 @@ class BitmapUtils {
         return Bitmap.createScaledBitmap(original, 96, 96, true);
     }
 
-    public static Drawable convertDrawableToGrayScale(Drawable drawable) {
+    private static Drawable convertDrawableToGrayScale(Drawable drawable) {
         if (drawable == null) {
             return null;
         }

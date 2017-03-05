@@ -110,7 +110,7 @@ public class Database {
      * Convert the database to the latest version
      * @param version current database version
      */
-    void ConvertDataBase(int version) {
+    private void ConvertDataBase(int version) {
         if (version < 2) {
             for (Game game : mGames) {
                 if (game.getDate() == null)
@@ -211,8 +211,8 @@ public class Database {
     @Expose
     private ArrayList<Player> mPlayers = new ArrayList<Player>();
     @Expose
-    int mVersion;
-    static final int CURRENT_RELEASE_VERSION = 2;
+    private int mVersion;
+    private static final int CURRENT_RELEASE_VERSION = 2;
 
 
 }

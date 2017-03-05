@@ -49,8 +49,8 @@ public class Player
 
 
     @Expose
-    String mName;
+    private String mName;
     @Expose
-    String mImagePath;
+    private String mImagePath;
 
 }
