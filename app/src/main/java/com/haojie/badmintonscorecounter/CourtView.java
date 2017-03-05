@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Haojie on 12/25/2016.
+ * Control for display the badminton court
  */
 
 public class CourtView extends View {

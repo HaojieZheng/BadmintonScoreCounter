@@ -3,7 +3,6 @@
     <string name="new_game">New Game</string>
     <string name="singles_label">Singles</string>
     <string name="doubles_label">Doubles</string>
-    <string name="title_activity_enter_single_players_name">EnterSinglePlayersNameActivity</string>
     <string name="enter_players_names">Enter Players Name</string>
     <string name="player1_label">Player 1 Name:</string>
     <string name="player2_label">Player 2 Name:</string>
@@ -26,8 +25,4 @@
     <string name="game_statistics_label">Game Statistics</string>
     <string name="title_activity_view_players">View Players</string>
     <string name="title_activity_game_statistics">View Game Statistics</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

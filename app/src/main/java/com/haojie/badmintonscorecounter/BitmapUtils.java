@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 /**
  * Created by Haojie on 1/2/2017.
+ * Class for all the utility functions for bitmaps
  */
 
 class BitmapUtils {
