@@ -78,15 +78,6 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
     }
 
 
-    public static ViewUpdatePhotoDialogFragment newInstance(String photoPath, String playerName) {
-        ViewUpdatePhotoDialogFragment fragment = new ViewUpdatePhotoDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PHOTO_PATH, photoPath);
-        args.putString(ARG_PlAYER_NAME, playerName);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

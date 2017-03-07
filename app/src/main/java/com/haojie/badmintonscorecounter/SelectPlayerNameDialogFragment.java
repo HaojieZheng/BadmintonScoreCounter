@@ -19,7 +19,6 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
         void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName);
     }
 
-    private static final String PLAYER_NAME_KEY = "player_name";
     private ListView mListView;
 
     @Override

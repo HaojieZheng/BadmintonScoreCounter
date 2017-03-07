@@ -3,6 +3,7 @@ package com.haojie.badmintonscorecounter;
 import android.os.Bundle;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,9 @@ public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
 
     private final ViewPlayersActivity mActivity;
 
+    @NonNull
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, @NonNull ViewGroup parent) {
         View row = convertView;
         if(row == null) {
             row = LayoutInflater.from(getContext()).inflate(R.layout.view_player_list_item, parent, false);
