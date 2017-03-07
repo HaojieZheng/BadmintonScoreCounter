@@ -25,4 +25,7 @@
     <string name="game_statistics_label">Game Statistics</string>
     <string name="title_activity_view_players">View Players</string>
     <string name="title_activity_game_statistics">View Game Statistics</string>
+    <string name="undo_button_label">Undo</string>
+    <string name="no_player_found_label">No Players found</string>
+
 </resources>

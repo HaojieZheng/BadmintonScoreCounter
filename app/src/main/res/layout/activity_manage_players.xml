@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No Players found"
+        android:text="@string/no_player_found_label"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
         android:id="@+id/no_players_found_label"/>
     <ListView
