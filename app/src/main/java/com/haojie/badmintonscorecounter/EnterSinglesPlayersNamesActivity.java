@@ -21,14 +21,10 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    private ImageButton mSwapButton;
-    private ImageButton mAddress1;
-    private ImageButton mAddress2;
     private ImageButton mTakePhotoButton1;
     private ImageButton mTakePhotoButton2;
     private EditText mEditPlayer1Name;
     private EditText mEditPlayer2Name;
-    private Button mStartGameButton;
     private int mPlayerSelectionShown = 0;
     private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
     private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
@@ -43,25 +39,25 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_singles_players_names);
 
-        mSwapButton = (ImageButton)findViewById(R.id.swap_button);
+        ImageButton swapButton = (ImageButton) findViewById(R.id.swap_button);
         mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
         mTakePhotoButton2 = (ImageButton)findViewById(R.id.takephoto2);
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
-        mStartGameButton = (Button)findViewById(R.id.button_start);
-        mAddress1 = (ImageButton)findViewById(R.id.addressbook1);
-        mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
+        Button startGameButton = (Button) findViewById(R.id.button_start);
+        ImageButton address1 = (ImageButton) findViewById(R.id.addressbook1);
+        ImageButton address2 = (ImageButton) findViewById(R.id.addressbook2);
 
         Database database = new Database();
         database.deserialize(EnterSinglesPlayersNamesActivity.this);
         if (database.getPlayersWithoutDefault().size() == 0)
         {
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress1, ic_action_name);
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress2, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address1, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address2, ic_action_name);
         }
 
 
-        mSwapButton.setOnClickListener(new View.OnClickListener() {
+        swapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swap();
@@ -69,7 +65,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         });
 
 
-        mStartGameButton.setOnClickListener(new View.OnClickListener()
+        startGameButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
@@ -77,7 +73,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress1.setOnClickListener(new View.OnClickListener() {
+        address1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 1;
@@ -85,7 +81,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress2.setOnClickListener(new View.OnClickListener() {
+        address2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 2;
@@ -203,7 +199,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             database.serialize(EnterSinglesPlayersNamesActivity.this);
 
         }
-        catch (IOException e)
+        catch (IOException ignored)
         {
 
         }
@@ -251,6 +247,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     }
 
 
+    @SuppressWarnings("ResultOfMethodCallIgnored") // can't do anything if the temp file cannot be deleted
     @Override
     public void onDismiss(String code) {
         // refresh the photo

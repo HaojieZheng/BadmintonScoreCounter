@@ -21,13 +21,6 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    private ImageButton mSwapTeam1Button;
-    private ImageButton mSwapTeam2Button;
-    private ImageButton mSwapTeamsButton;
-    private ImageButton mAddress1;
-    private ImageButton mAddress2;
-    private ImageButton mAddress3;
-    private ImageButton mAddress4;
     private ImageButton mTakePhotoButton1;
     private ImageButton mTakePhotoButton2;
     private ImageButton mTakePhotoButton3;
@@ -37,7 +30,6 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     private EditText mEditTeam1Player2Name;
     private EditText mEditTeam2Player1Name;
     private EditText mEditTeam2Player2Name;
-    private Button mStartGameButton;
 
     private int mPlayerSelectionShown = 0;
     private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
@@ -59,23 +51,23 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_doubles_players_names);
 
-        mSwapTeam1Button = (ImageButton)findViewById(R.id.swapteam1_button);
-        mSwapTeam2Button = (ImageButton)findViewById(R.id.swapteam2_button);
-        mSwapTeamsButton = (ImageButton)findViewById(R.id.swapteams_button);
+        ImageButton swapTeam1Button = (ImageButton) findViewById(R.id.swapteam1_button);
+        ImageButton swapTeam2Button = (ImageButton) findViewById(R.id.swapteam2_button);
+        ImageButton swapTeamsButton = (ImageButton) findViewById(R.id.swapteams_button);
 
-        mAddress1 = (ImageButton)findViewById(R.id.addressbook1);
-        mAddress2 = (ImageButton)findViewById(R.id.addressbook2);
-        mAddress3 = (ImageButton)findViewById(R.id.addressbook3);
-        mAddress4 = (ImageButton)findViewById(R.id.addressbook4);
+        ImageButton address1 = (ImageButton) findViewById(R.id.addressbook1);
+        ImageButton address2 = (ImageButton) findViewById(R.id.addressbook2);
+        ImageButton address3 = (ImageButton) findViewById(R.id.addressbook3);
+        ImageButton address4 = (ImageButton) findViewById(R.id.addressbook4);
 
         Database database = new Database();
         database.deserialize(EnterDoublesPlayersNamesActivity.this);
         if (database.getPlayersWithoutDefault().size() == 0)
         {
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress1, ic_action_name);
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress2, ic_action_name);
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress3, ic_action_name);
-            BitmapUtils.setImageButtonEnabled(this, false, mAddress4, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address1, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address2, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address3, ic_action_name);
+            BitmapUtils.setImageButtonEnabled(this, false, address4, ic_action_name);
         }
 
         mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
@@ -88,23 +80,23 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         mEditTeam2Player1Name = (EditText)findViewById(R.id.editTeam2Player1Name);
         mEditTeam2Player2Name = (EditText)findViewById(R.id.editTeam2Player2Name);
 
-        mStartGameButton = (Button)findViewById(R.id.button_start);
+        Button startGameButton = (Button) findViewById(R.id.button_start);
 
-        mSwapTeam1Button.setOnClickListener(new View.OnClickListener() {
+        swapTeam1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swapTeam1();
             }
         });
 
-        mSwapTeam2Button.setOnClickListener(new View.OnClickListener() {
+        swapTeam2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swapTeam2();
             }
         });
 
-        mSwapTeamsButton.setOnClickListener(new View.OnClickListener() {
+        swapTeamsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swapTeams();
@@ -112,7 +104,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         });
 
 
-        mStartGameButton.setOnClickListener(new View.OnClickListener()
+        startGameButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
@@ -120,7 +112,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress1.setOnClickListener(new View.OnClickListener() {
+        address1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 1;
@@ -128,7 +120,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress2.setOnClickListener(new View.OnClickListener() {
+        address2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 2;
@@ -136,7 +128,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress3.setOnClickListener(new View.OnClickListener() {
+        address3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 3;
@@ -144,7 +136,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mAddress4.setOnClickListener(new View.OnClickListener() {
+        address4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayerSelectionShown = 4;
@@ -325,7 +317,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             database.serialize(EnterDoublesPlayersNamesActivity.this);
 
         }
-        catch (IOException e)
+        catch (IOException ignored)
         {
 
         }
@@ -405,6 +397,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored") // can't do anything if the temp file cannot be deleted
     @Override
     public void onDismiss(String code) {
         // refresh the photo

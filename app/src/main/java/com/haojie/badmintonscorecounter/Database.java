@@ -101,7 +101,7 @@ class Database {
 
             stream.close();
         }
-        catch (IOException e)
+        catch (IOException ignored)
         {
         }
     }

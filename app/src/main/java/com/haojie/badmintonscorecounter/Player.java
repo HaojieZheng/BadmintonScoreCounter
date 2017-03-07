@@ -30,6 +30,7 @@ public class Player
         return mImagePath;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored") // can't do anything if the temp file cannot be deleted
     public void setImagePath(String image) {
         if (mImagePath != null) {
             // delete the old image 1st
