@@ -44,12 +44,12 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/takephoto1"
+                            android:id="@+id/take_photo1"
                             app:srcCompat="@drawable/ic_take_photo"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/addressbook1"
+                            android:id="@+id/address_book1"
                             app:srcCompat="@drawable/ic_action_name"/>
                     </LinearLayout>
 
@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/swapbutton"
+                        app:srcCompat="@drawable/swap_button"
                         android:id="@+id/swap_button"
                         android:contentDescription="@string/swap_name_access" />
 
@@ -83,12 +83,12 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/takephoto2"
+                            android:id="@+id/take_photo2"
                             app:srcCompat="@drawable/ic_take_photo"/>
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/addressbook2"
+                            android:id="@+id/address_book2"
                             app:srcCompat="@drawable/ic_action_name"/>
                     </LinearLayout>
 

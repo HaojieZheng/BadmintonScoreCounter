@@ -49,7 +49,7 @@ public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
                 ViewUpdatePhotoDialogFragment fr = new ViewUpdatePhotoDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, player.getImagePath());
-                bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, player.getName());
+                bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PLAYER_NAME, player.getName());
                 fr.setArguments(bundle);
 
                 FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();

@@ -18,7 +18,7 @@ import android.widget.ImageView;
 
 public class ViewUpdatePhotoDialogFragment extends DialogFragment {
     public static final String ARG_PHOTO_PATH = "photoPath";
-    public static final String ARG_PlAYER_NAME = "playerName";
+    public static final String ARG_PLAYER_NAME = "playerName";
 
     private String mPhotoPath;
     private String mPlayerName;
@@ -74,7 +74,7 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mPhotoPath = getArguments().getString(ARG_PHOTO_PATH);
-            mPlayerName = getArguments().getString(ARG_PlAYER_NAME);
+            mPlayerName = getArguments().getString(ARG_PLAYER_NAME);
         }
 
     }

@@ -40,13 +40,13 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         setContentView(R.layout.activity_enter_singles_players_names);
 
         ImageButton swapButton = (ImageButton) findViewById(R.id.swap_button);
-        mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
-        mTakePhotoButton2 = (ImageButton)findViewById(R.id.takephoto2);
+        mTakePhotoButton1 = (ImageButton)findViewById(R.id.take_photo1);
+        mTakePhotoButton2 = (ImageButton)findViewById(R.id.take_photo2);
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
         Button startGameButton = (Button) findViewById(R.id.button_start);
-        ImageButton address1 = (ImageButton) findViewById(R.id.addressbook1);
-        ImageButton address2 = (ImageButton) findViewById(R.id.addressbook2);
+        ImageButton address1 = (ImageButton) findViewById(R.id.address_book1);
+        ImageButton address2 = (ImageButton) findViewById(R.id.address_book2);
 
         Database database = new Database();
         database.deserialize(EnterSinglesPlayersNamesActivity.this);
@@ -113,7 +113,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             mDialogFragment = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
-            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, Integer.toString(code));
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PLAYER_NAME, Integer.toString(code));
             mDialogFragment.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

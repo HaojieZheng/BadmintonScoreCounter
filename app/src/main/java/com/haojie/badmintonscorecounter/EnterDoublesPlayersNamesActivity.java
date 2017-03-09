@@ -51,14 +51,14 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_doubles_players_names);
 
-        ImageButton swapTeam1Button = (ImageButton) findViewById(R.id.swapteam1_button);
-        ImageButton swapTeam2Button = (ImageButton) findViewById(R.id.swapteam2_button);
-        ImageButton swapTeamsButton = (ImageButton) findViewById(R.id.swapteams_button);
+        ImageButton swapTeam1Button = (ImageButton) findViewById(R.id.swap_team1_button);
+        ImageButton swapTeam2Button = (ImageButton) findViewById(R.id.swap_team2_button);
+        ImageButton swapTeamsButton = (ImageButton) findViewById(R.id.swap_teams_button);
 
-        ImageButton address1 = (ImageButton) findViewById(R.id.addressbook1);
-        ImageButton address2 = (ImageButton) findViewById(R.id.addressbook2);
-        ImageButton address3 = (ImageButton) findViewById(R.id.addressbook3);
-        ImageButton address4 = (ImageButton) findViewById(R.id.addressbook4);
+        ImageButton address1 = (ImageButton) findViewById(R.id.address_book1);
+        ImageButton address2 = (ImageButton) findViewById(R.id.address_book2);
+        ImageButton address3 = (ImageButton) findViewById(R.id.address_book3);
+        ImageButton address4 = (ImageButton) findViewById(R.id.address_book4);
 
         Database database = new Database();
         database.deserialize(EnterDoublesPlayersNamesActivity.this);
@@ -70,10 +70,10 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             BitmapUtils.setImageButtonEnabled(this, false, address4, ic_action_name);
         }
 
-        mTakePhotoButton1 = (ImageButton)findViewById(R.id.takephoto1);
-        mTakePhotoButton2 = (ImageButton)findViewById(R.id.takephoto2);
-        mTakePhotoButton3 = (ImageButton)findViewById(R.id.takephoto3);
-        mTakePhotoButton4 = (ImageButton)findViewById(R.id.takephoto4);
+        mTakePhotoButton1 = (ImageButton)findViewById(R.id.take_photo1);
+        mTakePhotoButton2 = (ImageButton)findViewById(R.id.take_photo2);
+        mTakePhotoButton3 = (ImageButton)findViewById(R.id.take_photo3);
+        mTakePhotoButton4 = (ImageButton)findViewById(R.id.take_photo4);
 
         mEditTeam1Player1Name = (EditText)findViewById(R.id.editTeam1Player1Name);
         mEditTeam1Player2Name = (EditText)findViewById(R.id.editTeam1Player2Name);
@@ -276,7 +276,7 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             mDialogFragment = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
-            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PlAYER_NAME, Integer.toString(code));
+            bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PLAYER_NAME, Integer.toString(code));
             mDialogFragment.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -2,7 +2,7 @@ Badminton Score Counter 1.2
 
 by Zheng Haojie
 
-== Introdution ==
+== Introduction ==
 This is a simple project for me to get hands on with Android application programming.
 
 The goal of this app is to make an app that serves 2 purposes. The first is for badminton umpires
@@ -24,7 +24,7 @@ The app is available on the app store at: https://play.google.com/store/apps/det
         Manage Player Screen can now change player photo
  1.2    Fix Landscape mode
         Add Manage Player screen for deleting players
- 1.1    Added player names to persistance storage
+ 1.1    Added player names to persistent storage
         Allow user to store photograph of player
  1.0    Published into Play Store with only score counting capability
 

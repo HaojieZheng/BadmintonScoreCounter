@@ -26,9 +26,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:id="@+id/swapteam1_button"
+                        android:id="@+id/swap_team1_button"
                         android:contentDescription="@string/swap_name_access"
-                        app:srcCompat="@drawable/swapbutton"/>
+                        app:srcCompat="@drawable/swap_button"/>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -63,12 +63,12 @@
                                 <ImageButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/takephoto1"
+                                    android:id="@+id/take_photo1"
                                     app:srcCompat="@drawable/ic_take_photo"/>
                                 <ImageButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/addressbook1"
+                                    android:id="@+id/address_book1"
                                     app:srcCompat="@drawable/ic_action_name"/>
                             </LinearLayout>
 
@@ -97,12 +97,12 @@
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/takephoto2"
+                                android:id="@+id/take_photo2"
                                 app:srcCompat="@drawable/ic_take_photo"/>
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/addressbook2"
+                                android:id="@+id/address_book2"
                                 app:srcCompat="@drawable/ic_action_name"/>
                         </LinearLayout>
 
@@ -115,9 +115,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:id="@+id/swapteams_button"
+                    android:id="@+id/swap_teams_button"
                     android:contentDescription="@string/swap_name_access"
-                    app:srcCompat="@drawable/swapbutton"/>
+                    app:srcCompat="@drawable/swap_button"/>
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
@@ -130,9 +130,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:id="@+id/swapteam2_button"
+                        android:id="@+id/swap_team2_button"
                         android:contentDescription="@string/swap_name_access"
-                        app:srcCompat="@drawable/swapbutton"/>
+                        app:srcCompat="@drawable/swap_button"/>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -168,12 +168,12 @@
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/takephoto3"
+                                android:id="@+id/take_photo3"
                                 app:srcCompat="@drawable/ic_take_photo"/>
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/addressbook3"
+                                android:id="@+id/address_book3"
                                 app:srcCompat="@drawable/ic_action_name"/>
                         </LinearLayout>
 
@@ -202,12 +202,12 @@
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/takephoto4"
+                                android:id="@+id/take_photo4"
                                 app:srcCompat="@drawable/ic_take_photo"/>
                             <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/addressbook4"
+                                android:id="@+id/address_book4"
                                 app:srcCompat="@drawable/ic_action_name"/>
                         </LinearLayout>
 
