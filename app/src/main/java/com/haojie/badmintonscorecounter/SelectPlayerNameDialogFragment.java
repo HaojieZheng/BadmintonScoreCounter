@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 /**
  * Created by Haojie on 12/30/2016.
+ * Fragment to select a player
  */
 
 public class SelectPlayerNameDialogFragment extends DialogFragment {

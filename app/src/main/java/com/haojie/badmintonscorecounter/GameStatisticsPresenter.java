@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * Created by Haojie on 2/23/2017.
+ * Statistic presenter logic
  */
 
 class GameStatisticsPresenter {

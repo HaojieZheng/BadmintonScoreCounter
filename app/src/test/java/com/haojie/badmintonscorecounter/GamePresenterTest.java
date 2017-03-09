@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Haojie on 2/21/2017.
+ * Tests for the GamePresenter class
  */
 public class GamePresenterTest {
     @Test

@@ -9,6 +9,7 @@ import java.io.File;
 
 /**
  * Created by Haojie on 12/28/2016.
+ * Represents a player
  */
 
 public class Player

@@ -7,6 +7,7 @@ import java.util.Stack;
 
 /**
  * Created by Haojie on 12/26/2016.
+ * Represents a single game
  */
 
 public class Game {

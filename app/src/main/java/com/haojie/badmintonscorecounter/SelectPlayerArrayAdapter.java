@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Haojie on 1/2/2017.
+ * Adapter to show players on a ListView and is selectable
  */
 
 public class SelectPlayerArrayAdapter extends ArrayAdapter<Player> {

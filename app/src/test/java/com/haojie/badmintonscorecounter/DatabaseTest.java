@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Haojie on 1/3/2017.
+ * Tests for the Database class
  */
 
 public class DatabaseTest {

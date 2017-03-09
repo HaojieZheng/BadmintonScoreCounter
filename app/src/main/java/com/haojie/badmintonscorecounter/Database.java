@@ -18,6 +18,7 @@ import java.util.Date;
 
 /**
  * Created by Haojie on 12/28/2016.
+ * Used to persist all local data (except images)
  */
 
 class Database {

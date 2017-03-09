@@ -2,6 +2,7 @@ package com.haojie.badmintonscorecounter;
 
 /**
  * Created by Haojie on 2/20/2017.
+ * Helper class for all the presentation logic
  */
 public class GamePresenter {
     static String getAnnouncementText(Game game, boolean includeServiceCalls)

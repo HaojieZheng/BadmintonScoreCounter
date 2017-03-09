@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Haojie on 1/5/2017.
+ * Adapter to list all the players in a list view
  */
 
 public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
