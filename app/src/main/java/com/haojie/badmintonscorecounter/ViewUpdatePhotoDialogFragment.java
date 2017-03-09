@@ -37,11 +37,15 @@ public class ViewUpdatePhotoDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mPlayerImageView = (ImageView)(getView().findViewById(R.id.player_image_view));
+        View view = getView();
+        if (view == null)
+            return;
+
+        mPlayerImageView = (ImageView)(view.findViewById(R.id.player_image_view));
 
         mPlayerImageView.setImageBitmap(BitmapFactory.decodeFile(mPhotoPath));
 
-        ImageButton cameraButton = (ImageButton)(getView().findViewById(R.id.button_camera));
+        ImageButton cameraButton = (ImageButton)(view.findViewById(R.id.button_camera));
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
