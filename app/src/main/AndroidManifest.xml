@@ -32,14 +32,6 @@
             android:theme="@style/FullscreenTheme"/>
         <activity android:name=".ViewPlayersActivity"
                   android:label="@string/title_activity_view_players"/>
-
-
-        <fragment
-            android:id="@+id/view_update_photo_dialog_fragment"
-            android:name=".ViewUpdatePhotoDialogFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <activity android:name=".ViewGameStatisticsActivity"
                   android:label="@string/title_activity_game_statistics"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

@@ -47,6 +47,7 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
         }
         else
         {
+            //noinspection deprecation
             mInfoTextView.setText(android.text.Html.fromHtml(displayText));
         }
     }
