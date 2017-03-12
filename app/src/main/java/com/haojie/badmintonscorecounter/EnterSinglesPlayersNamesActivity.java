@@ -23,15 +23,13 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    private ImageButton mTakePhotoButton1;
-    private ImageButton mTakePhotoButton2;
+    private ImageButton[] mTakePhotoButtons = new ImageButton[2];
+    private Bitmap playerPictures[] = new Bitmap[2];
+
     private EditText mEditPlayer1Name;
     private EditText mEditPlayer2Name;
     private int mPlayerSelectionShown = 0;
-    private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
-    private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
-    private Bitmap player1Picture = null;
-    private Bitmap player2Picture = null;
+
     private String mTempPath;
 
 
@@ -41,8 +39,10 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         setContentView(R.layout.activity_enter_singles_players_names);
 
         ImageButton swapButton = (ImageButton) findViewById(R.id.swap_button);
-        mTakePhotoButton1 = (ImageButton)findViewById(R.id.take_photo1);
-        mTakePhotoButton2 = (ImageButton)findViewById(R.id.take_photo2);
+        mTakePhotoButtons[0] = (ImageButton)findViewById(R.id.take_photo1);
+        mTakePhotoButtons[1] = (ImageButton)findViewById(R.id.take_photo2);
+
+
         mEditPlayer1Name = (EditText)findViewById(R.id.editPlayer1Name);
         mEditPlayer2Name = (EditText)findViewById(R.id.editPlayer2Name);
         Button startGameButton = (Button) findViewById(R.id.button_start);
@@ -90,23 +90,22 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
+        for (int i = 0; i < 2; i++)
+        {
+            initTakePhotoButton(mTakePhotoButtons[i], i);
+        }
+    }
+
+    private void initTakePhotoButton(final ImageButton button, final int id)
+    {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton1, player1Picture, REQUEST_IMAGE_CAPTURE_1);
+                onClickPhotoButton(button, playerPictures[id], id + 1);
             }
         });
 
-        mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton2, player2Picture, REQUEST_IMAGE_CAPTURE_2);
-            }
-        });
-
-        registerForContextMenu(mTakePhotoButton1);
-        registerForContextMenu(mTakePhotoButton2);
-
+        registerForContextMenu(button);
     }
 
     private void onClickPhotoButton(View button,Bitmap bitmap, int code)
@@ -138,47 +137,54 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         mEditPlayer1Name.setText(mEditPlayer2Name.getText().toString(), TextView.BufferType.EDITABLE);
         mEditPlayer2Name.setText(temp, TextView.BufferType.EDITABLE);
 
-        Bitmap tempPic = player1Picture;
-        player1Picture = player2Picture;
-        player2Picture = tempPic;
+        Bitmap tempPic = playerPictures[0];
+        playerPictures[0] = playerPictures[1];
+        playerPictures[1] = tempPic;
 
-        if (player1Picture != null)
+        if (playerPictures[0] != null)
         {
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+            mTakePhotoButtons[0].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[0]));
         }
         else
         {
-            mTakePhotoButton1.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
+            mTakePhotoButtons[0].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
         }
 
-        if (player2Picture != null)
+        if (playerPictures[1] != null)
         {
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+            mTakePhotoButtons[1].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[1]));
         }
         else
         {
-            mTakePhotoButton2.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
+            mTakePhotoButtons[1].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == (byte)mTakePhotoButton1.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player1Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
-        }
-        else if (requestCode == (byte)mTakePhotoButton2.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (requestCode == (TAKE_PHOTO | (byte)mTakePhotoButtons[i].getId()) && resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                playerPictures[i] = BitmapUtils.resizeAndCropPhoto(imageBitmap);
+                mTakePhotoButtons[i].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[i]));
+                return;
+            }
+            else if (requestCode == (CHOOSE_FROM_GALLERY | (byte)mTakePhotoButtons[i].getId()) && resultCode == RESULT_OK) {
+                final Bundle extras = data.getExtras();
+                if (extras != null) {
+                    playerPictures[i] = extras.getParcelable("data");
+                    mTakePhotoButtons[i].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[i]));
+                    return;
+                }
+            }
         }
     }
 
-    private static final int TAKE_PHOTO = 0;
-    private static final int CHOOSE_FROM_GALLERY = 1;
+    private static final int TAKE_PHOTO = 0x0100;
+    private static final int CHOOSE_FROM_GALLERY = 0x0200;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -193,14 +199,21 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         if(item.getItemId() == TAKE_PHOTO){
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, item.getGroupId());
+                startActivityForResult(takePictureIntent, TAKE_PHOTO | (byte)item.getGroupId());
             }
         }
         else if(item.getItemId()== CHOOSE_FROM_GALLERY){
-            Intent intent = new Intent();
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), item.getGroupId());
+            intent.putExtra("crop", "true");
+            intent.putExtra("scale", true);
+            intent.putExtra("outputX", BitmapUtils.PROFILE_DIMENSION_X);
+            intent.putExtra("outputY", BitmapUtils.PROFILE_DIMENSION_Y);
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, CHOOSE_FROM_GALLERY | (byte)item.getGroupId());
         }else{
             return false;
         }
@@ -216,10 +229,10 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         try {
             database.deserialize(EnterSinglesPlayersNamesActivity.this);
             String player1Name = mEditPlayer1Name.getText().toString();
-            database.updateOrAddPlayer(player1Name, player1Picture);
+            database.updateOrAddPlayer(player1Name, playerPictures[0]);
 
             String player2Name = mEditPlayer2Name.getText().toString();
-            database.updateOrAddPlayer(player2Name, player2Picture);
+            database.updateOrAddPlayer(player2Name, playerPictures[1]);
 
             database.serialize(EnterSinglesPlayersNamesActivity.this);
 
@@ -256,8 +269,8 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             mEditPlayer1Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null)
             {
-                player1Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+                playerPictures[0] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[0].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[0]));
             }
         }
         else if (mPlayerSelectionShown == 2)
@@ -265,8 +278,8 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             mEditPlayer2Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null)
             {
-                player2Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+                playerPictures[1] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[1].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[1]));
             }
         }
     }
@@ -279,13 +292,13 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         int playerNumber = Integer.parseInt(code);
 
         if (playerNumber == 1) {
-            player1Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+            playerPictures[0] = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButtons[0].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[0]));
         }
         else if (playerNumber == 2)
         {
-            player2Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+            playerPictures[1] = BitmapFactory.decodeFile(mTempPath);
+            mTakePhotoButtons[1].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[1]));
         }
 
         new File(mTempPath).delete();

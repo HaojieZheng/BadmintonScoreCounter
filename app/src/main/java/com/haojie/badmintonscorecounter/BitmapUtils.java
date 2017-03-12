@@ -14,6 +14,9 @@ import android.widget.ImageButton;
 
 class BitmapUtils {
 
+    public static final int PROFILE_DIMENSION_X = 96;
+    public static final int PROFILE_DIMENSION_Y = 96;
+
     public static Bitmap resizeAndCropPhoto(Bitmap original)
     {
         int width = original.getWidth();
@@ -31,7 +34,7 @@ class BitmapUtils {
 
     public static Bitmap resizePhotoToButtonSize(Bitmap original)
     {
-        return Bitmap.createScaledBitmap(original, 96, 96, true);
+        return Bitmap.createScaledBitmap(original, PROFILE_DIMENSION_X, PROFILE_DIMENSION_Y, true);
     }
 
     private static Drawable convertDrawableToGrayScale(Drawable drawable) {

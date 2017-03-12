@@ -17,6 +17,7 @@ The app is available on the app store at: https://play.google.com/store/apps/det
 
 
 == Change Log ==
+ 1.5    Added option to choose photo from gallery
  1.4    Added Game Statistics screen (work in progress)
         Added confirmation dialog when exiting game screen when game is not completed
         Fix TTS resource leak

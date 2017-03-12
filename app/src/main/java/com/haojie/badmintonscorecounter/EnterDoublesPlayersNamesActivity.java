@@ -23,10 +23,9 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    private ImageButton mTakePhotoButton1;
-    private ImageButton mTakePhotoButton2;
-    private ImageButton mTakePhotoButton3;
-    private ImageButton mTakePhotoButton4;
+    private ImageButton[] mTakePhotoButtons = new ImageButton[4];
+    private Bitmap playerPictures[] = new Bitmap[4];
+
 
     private EditText mEditTeam1Player1Name;
     private EditText mEditTeam1Player2Name;
@@ -39,10 +38,6 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     private static final int REQUEST_IMAGE_CAPTURE_3 = 3;
     private static final int REQUEST_IMAGE_CAPTURE_4 = 4;
 
-    private Bitmap player1Picture = null;
-    private Bitmap player2Picture = null;
-    private Bitmap player3Picture = null;
-    private Bitmap player4Picture = null;
 
     private String mTempPath;
 
@@ -71,10 +66,10 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             BitmapUtils.setImageButtonEnabled(this, false, address4, ic_action_name);
         }
 
-        mTakePhotoButton1 = (ImageButton)findViewById(R.id.take_photo1);
-        mTakePhotoButton2 = (ImageButton)findViewById(R.id.take_photo2);
-        mTakePhotoButton3 = (ImageButton)findViewById(R.id.take_photo3);
-        mTakePhotoButton4 = (ImageButton)findViewById(R.id.take_photo4);
+        mTakePhotoButtons[0] = (ImageButton)findViewById(R.id.take_photo1);
+        mTakePhotoButtons[1] = (ImageButton)findViewById(R.id.take_photo2);
+        mTakePhotoButtons[2] = (ImageButton)findViewById(R.id.take_photo3);
+        mTakePhotoButtons[3] = (ImageButton)findViewById(R.id.take_photo4);
 
         mEditTeam1Player1Name = (EditText)findViewById(R.id.editTeam1Player1Name);
         mEditTeam1Player2Name = (EditText)findViewById(R.id.editTeam1Player2Name);
@@ -145,78 +140,38 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             }
         });
 
-        mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton1, player1Picture, REQUEST_IMAGE_CAPTURE_1);
-            }
-        });
-
-        mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton2, player2Picture, REQUEST_IMAGE_CAPTURE_2);
-            }
-        });
-
-        mTakePhotoButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton3, player3Picture, REQUEST_IMAGE_CAPTURE_3);
-            }
-        });
-
-        mTakePhotoButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPhotoButton(mTakePhotoButton4, player4Picture, REQUEST_IMAGE_CAPTURE_4);
-            }
-        });
-
-        registerForContextMenu(mTakePhotoButton1);
-        registerForContextMenu(mTakePhotoButton2);
-        registerForContextMenu(mTakePhotoButton3);
-        registerForContextMenu(mTakePhotoButton4);
+        for (int i = 0; i < 4; i++)
+        {
+            initTakePhotoButton(mTakePhotoButtons[i], i);
+        }
 
     }
 
 
+    private void initTakePhotoButton(final ImageButton button, final int id)
+    {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickPhotoButton(button, playerPictures[id], id + 1);
+            }
+        });
+
+        registerForContextMenu(button);
+    }
+
     private void refreshButtonImage()
     {
-        if (player1Picture != null)
+        for (int i = 0; i < 4; i++)
         {
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
-        }
-        else
-        {
-            mTakePhotoButton1.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
-        }
-
-        if (player2Picture != null)
-        {
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
-        }
-        else
-        {
-            mTakePhotoButton2.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
-        }
-
-        if (player3Picture != null)
-        {
-            mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
-        }
-        else
-        {
-            mTakePhotoButton3.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
-        }
-
-        if (player4Picture != null)
-        {
-            mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
-        }
-        else
-        {
-            mTakePhotoButton4.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
+            if (playerPictures[i] != null)
+            {
+                mTakePhotoButtons[i].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[i]));
+            }
+            else
+            {
+                mTakePhotoButtons[i].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_take_photo, null));
+            }
         }
     }
 
@@ -226,9 +181,9 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         mEditTeam1Player1Name.setText(mEditTeam1Player2Name.getText().toString(), TextView.BufferType.EDITABLE);
         mEditTeam1Player2Name.setText(temp, TextView.BufferType.EDITABLE);
 
-        Bitmap tempPic = player1Picture;
-        player1Picture = player2Picture;
-        player2Picture = tempPic;
+        Bitmap tempPic = playerPictures[0];
+        playerPictures[0] = playerPictures[1];
+        playerPictures[1] = tempPic;
 
         refreshButtonImage();
     }
@@ -239,9 +194,9 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         mEditTeam2Player1Name.setText(mEditTeam2Player2Name.getText().toString(), TextView.BufferType.EDITABLE);
         mEditTeam2Player2Name.setText(temp, TextView.BufferType.EDITABLE);
 
-        Bitmap tempPic = player3Picture;
-        player3Picture = player4Picture;
-        player4Picture = tempPic;
+        Bitmap tempPic = playerPictures[2];
+        playerPictures[2] = playerPictures[3];
+        playerPictures[3] = tempPic;
 
         refreshButtonImage();
     }
@@ -250,18 +205,18 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
     {
         String temp1 = mEditTeam1Player1Name.getText().toString();
         String temp2 = mEditTeam1Player2Name.getText().toString();
-        Bitmap temp1Image = player1Picture;
-        Bitmap temp2Image = player2Picture;
+        Bitmap temp1Image = playerPictures[0];
+        Bitmap temp2Image = playerPictures[1];
 
         mEditTeam1Player1Name.setText(mEditTeam2Player1Name.getText().toString(), TextView.BufferType.EDITABLE);
         mEditTeam1Player2Name.setText(mEditTeam2Player2Name.getText().toString(), TextView.BufferType.EDITABLE);
-        player1Picture = player3Picture;
-        player2Picture = player4Picture;
+        playerPictures[0] = playerPictures[2];
+        playerPictures[1] = playerPictures[3];
 
         mEditTeam2Player1Name.setText(temp1, TextView.BufferType.EDITABLE);
         mEditTeam2Player2Name.setText(temp2, TextView.BufferType.EDITABLE);
-        player3Picture = temp1Image;
-        player4Picture = temp2Image;
+        playerPictures[2] = temp1Image;
+        playerPictures[3] = temp2Image;
 
         refreshButtonImage();
     }
@@ -295,8 +250,8 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         }
     }
 
-    private static final int TAKE_PHOTO = 0;
-    private static final int CHOOSE_FROM_GALLERY = 1;
+    private static final int TAKE_PHOTO = 0x0100;
+    private static final int CHOOSE_FROM_GALLERY = 0x0200;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -311,14 +266,21 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         if(item.getItemId() == TAKE_PHOTO){
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, item.getGroupId());
+                startActivityForResult(takePictureIntent, TAKE_PHOTO | (byte)item.getGroupId());
             }
         }
         else if(item.getItemId()== CHOOSE_FROM_GALLERY){
-            Intent intent = new Intent();
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), item.getGroupId());
+            intent.putExtra("crop", "true");
+            intent.putExtra("scale", true);
+            intent.putExtra("outputX", BitmapUtils.PROFILE_DIMENSION_X);
+            intent.putExtra("outputY", BitmapUtils.PROFILE_DIMENSION_Y);
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, CHOOSE_FROM_GALLERY | (byte)item.getGroupId());
         }else{
             return false;
         }
@@ -334,16 +296,16 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             database.deserialize(EnterDoublesPlayersNamesActivity.this);
 
             String player1Name = mEditTeam1Player1Name.getText().toString();
-            database.updateOrAddPlayer(player1Name, player1Picture);
+            database.updateOrAddPlayer(player1Name, playerPictures[0]);
 
             String player2Name = mEditTeam1Player2Name.getText().toString();
-            database.updateOrAddPlayer(player2Name, player2Picture);
+            database.updateOrAddPlayer(player2Name, playerPictures[1]);
 
             String player3Name = mEditTeam1Player2Name.getText().toString();
-            database.updateOrAddPlayer(player3Name, player3Picture);
+            database.updateOrAddPlayer(player3Name, playerPictures[2]);
 
             String player4Name = mEditTeam1Player2Name.getText().toString();
-            database.updateOrAddPlayer(player4Name, player4Picture);
+            database.updateOrAddPlayer(player4Name, playerPictures[3]);
 
             database.serialize(EnterDoublesPlayersNamesActivity.this);
 
@@ -365,30 +327,26 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         finish();
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == (byte)mTakePhotoButton1.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player1Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
-        }
-        else if (requestCode == (byte)mTakePhotoButton2.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
-        }
-        else if (requestCode == (byte)mTakePhotoButton3.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player3Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
-        }
-        else if (requestCode == (byte)mTakePhotoButton4.getId() && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            player4Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
-            mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (requestCode == (TAKE_PHOTO | (byte)mTakePhotoButtons[i].getId()) && resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                playerPictures[i] = BitmapUtils.resizeAndCropPhoto(imageBitmap);
+                mTakePhotoButtons[i].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[i]));
+                return;
+            }
+            else if (requestCode == (CHOOSE_FROM_GALLERY | (byte)mTakePhotoButtons[i].getId()) && resultCode == RESULT_OK) {
+                final Bundle extras = data.getExtras();
+                if (extras != null) {
+                    playerPictures[i] = extras.getParcelable("data");
+                    mTakePhotoButtons[i].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[i]));
+                    return;
+                }
+            }
         }
     }
 
@@ -402,26 +360,26 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         if (mPlayerSelectionShown == 1) {
             mEditTeam1Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null) {
-                player1Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
+                playerPictures[0] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[0].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[0]));
             }
         } else if (mPlayerSelectionShown == 2) {
             mEditTeam1Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null) {
-                player2Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
+                playerPictures[1] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[1].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[1]));
             }
         } else if (mPlayerSelectionShown == 3) {
             mEditTeam2Player1Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null) {
-                player3Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
+                playerPictures[2] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[2].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[2]));
             }
         } else if (mPlayerSelectionShown == 4) {
             mEditTeam2Player2Name.setText(playerName, TextView.BufferType.EDITABLE);
             if (player.getImagePath() != null) {
-                player4Picture = BitmapFactory.decodeFile(player.getImagePath());
-                mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
+                playerPictures[3] = BitmapFactory.decodeFile(player.getImagePath());
+                mTakePhotoButtons[3].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[3]));
             }
         }
     }
@@ -432,24 +390,8 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
         // refresh the photo
         int playerNumber = Integer.parseInt(code);
 
-        if (playerNumber == 1) {
-            player1Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
-        }
-        else if (playerNumber == 2)
-        {
-            player2Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
-        }
-        else if (playerNumber == 3) {
-            player3Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton3.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player3Picture));
-        }
-        else if (playerNumber == 4)
-        {
-            player4Picture = BitmapFactory.decodeFile(mTempPath);
-            mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
-        }
+        playerPictures[playerNumber - 1] = BitmapFactory.decodeFile(mTempPath);
+        mTakePhotoButtons[playerNumber - 1].setImageBitmap(BitmapUtils.resizePhotoToButtonSize(playerPictures[playerNumber - 1]));
 
         new File(mTempPath).delete();
     }
