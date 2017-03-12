@@ -175,8 +175,6 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
             player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton2.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player2Picture));
         }
-        else
-            mDialogFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 

@@ -359,8 +359,6 @@ public class EnterDoublesPlayersNamesActivity extends AppCompatActivity implemen
             player4Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton4.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player4Picture));
         }
-        else
-            mDialogFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
