@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +33,6 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     private Bitmap player1Picture = null;
     private Bitmap player2Picture = null;
     private String mTempPath;
-    private ViewUpdatePhotoDialogFragment mDialogFragment;
 
 
     @Override
@@ -92,41 +93,40 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         mTakePhotoButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPhotoButton(player1Picture, REQUEST_IMAGE_CAPTURE_1);
+                onClickPhotoButton(mTakePhotoButton1, player1Picture, REQUEST_IMAGE_CAPTURE_1);
             }
         });
 
         mTakePhotoButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickPhotoButton(player2Picture, REQUEST_IMAGE_CAPTURE_2);
+                onClickPhotoButton(mTakePhotoButton2, player2Picture, REQUEST_IMAGE_CAPTURE_2);
             }
         });
 
+        registerForContextMenu(mTakePhotoButton1);
+        registerForContextMenu(mTakePhotoButton2);
+
     }
 
-    private void onClickPhotoButton(Bitmap bitmap, int code)
+    private void onClickPhotoButton(View button,Bitmap bitmap, int code)
     {
         if (bitmap != null)
         {
             mTempPath = Database.writeBitmapToDisk(bitmap);
-            mDialogFragment = new ViewUpdatePhotoDialogFragment();
+            ViewUpdatePhotoDialogFragment dialogFragment = new ViewUpdatePhotoDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PHOTO_PATH, mTempPath);
             bundle.putString(ViewUpdatePhotoDialogFragment.ARG_PLAYER_NAME, Integer.toString(code));
-            mDialogFragment.setArguments(bundle);
+            dialogFragment.setArguments(bundle);
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(mDialogFragment, "Manage player image");
+            ft.add(dialogFragment, "Manage player image");
             ft.commit();
         }
         else
         {
-
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, code);
-            }
+            openContextMenu(button);
         }
 
     }
@@ -163,13 +163,13 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE_1 && resultCode == RESULT_OK) {
+        if (requestCode == (byte)mTakePhotoButton1.getId() && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             player1Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
             mTakePhotoButton1.setImageBitmap(BitmapUtils.resizePhotoToButtonSize(player1Picture));
         }
-        else if (requestCode == REQUEST_IMAGE_CAPTURE_2 && resultCode == RESULT_OK) {
+        else if (requestCode == (byte)mTakePhotoButton2.getId() && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             player2Picture = BitmapUtils.resizeAndCropPhoto(imageBitmap);
@@ -177,8 +177,35 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
         }
     }
 
+    private static final int TAKE_PHOTO = 0;
+    private static final int CHOOSE_FROM_GALLERY = 1;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add((byte)v.getId(), TAKE_PHOTO, 0, getString(R.string.take_photo_menu_item));
+        menu.add((byte)v.getId(), CHOOSE_FROM_GALLERY, 0, getString(R.string.choose_from_gallery_menu_item));
+    }
 
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        if(item.getItemId() == TAKE_PHOTO){
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, item.getGroupId());
+            }
+        }
+        else if(item.getItemId()== CHOOSE_FROM_GALLERY){
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), item.getGroupId());
+        }else{
+            return false;
+        }
+        return true;
+    }
 
 
     private void startGameSessionActivity()

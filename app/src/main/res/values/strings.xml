@@ -27,5 +27,7 @@
     <string name="title_activity_game_statistics">View Game Statistics</string>
     <string name="undo_button_label">Undo</string>
     <string name="no_player_found_label">No Players found</string>
+    <string name="take_photo_menu_item">Take Photo</string>
+    <string name="choose_from_gallery_menu_item">Choose From Gallery</string>
 
 </resources>
