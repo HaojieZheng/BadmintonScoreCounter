@@ -1,5 +1,6 @@
 package com.haojie.badmintonscorecounter;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,10 +21,39 @@ public class GameStatisticsPresenterTest {
     private IDatabase mockDatabase;
 
     @Mock
-    private Game mockGame;
+    private Game mockGamePlayer1Wins;
+
+    @Mock
+    private Game mockGamePlayer2Wins;
 
     private Player mPlayer1 = new Player("Test1");
     private Player mPlayer2 = new Player("Test2");
+
+
+    @Before
+    public void setUp()
+    {
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(mPlayer1);
+        players.add(mPlayer2);
+        when(mockDatabase.getPlayersWithoutDefault()).thenReturn(players);
+        when(mockDatabase.getPlayerWithName("Test1")).thenReturn(mPlayer1);
+        when(mockDatabase.getPlayerWithName("Test2")).thenReturn(mPlayer2);
+
+
+        when(mockGamePlayer1Wins.getWinner()).thenReturn(1);
+        when(mockGamePlayer1Wins.getPlayer(Game.PlayerPosition.Team1Right)).thenReturn(mPlayer1);
+        when(mockGamePlayer1Wins.getPlayer(Game.PlayerPosition.Team2Right)).thenReturn(mPlayer2);
+        when(mockGamePlayer1Wins.getTeam1Score()).thenReturn(21);
+        when(mockGamePlayer1Wins.getTeam2Score()).thenReturn(0);
+
+        when(mockGamePlayer2Wins.getWinner()).thenReturn(2);
+        when(mockGamePlayer2Wins.getPlayer(Game.PlayerPosition.Team1Right)).thenReturn(mPlayer1);
+        when(mockGamePlayer2Wins.getPlayer(Game.PlayerPosition.Team2Right)).thenReturn(mPlayer2);
+        when(mockGamePlayer2Wins.getTeam1Score()).thenReturn(0);
+        when(mockGamePlayer2Wins.getTeam2Score()).thenReturn(21);
+
+    }
 
     @Test
     public void getTopNPlayers_empty_database(){
@@ -41,13 +71,11 @@ public class GameStatisticsPresenterTest {
     @Test
     public void getTopNPlayers_get_zero(){
 
-        Database database = new Database();
-        database.addPlayer(mPlayer1);
-        database.addPlayer(mPlayer2);
+        ArrayList<Game> games = new ArrayList<>();
+        games.add(mockGamePlayer1Wins);
+        when(mockDatabase.getGames()).thenReturn(games);
 
-        database.addGame(createGameWithWinner(mPlayer1, mPlayer2, 1));
-
-        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(mockDatabase);
 
         presenter.calculate();
 
@@ -60,17 +88,9 @@ public class GameStatisticsPresenterTest {
     @Test
     public void getTopNPlayers_get_two_but_only_one_win(){
 
-
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(mPlayer1);
-        players.add(mPlayer2);
-        when(mockDatabase.getPlayersWithoutDefault()).thenReturn(players);
-
         ArrayList<Game> games = new ArrayList<>();
-        games.add(createGameWithWinner(mPlayer1, mPlayer2, 1));
+        games.add(mockGamePlayer1Wins);
         when(mockDatabase.getGames()).thenReturn(games);
-        when(mockDatabase.getPlayerWithName("Test1")).thenReturn(mPlayer1);
-        when(mockDatabase.getPlayerWithName("Test2")).thenReturn(mPlayer2);
 
         GameStatisticsPresenter presenter = new GameStatisticsPresenter(mockDatabase);
 
@@ -86,15 +106,14 @@ public class GameStatisticsPresenterTest {
     @Test
     public void getTopNPlayers_get_three_but_only_two(){
 
-        Database database = new Database();
-        database.addPlayer(mPlayer1);
-        database.addPlayer(mPlayer2);
+        ArrayList<Game> games = new ArrayList<>();
+        games.add(mockGamePlayer1Wins);
+        games.add(mockGamePlayer1Wins);
+        games.add(mockGamePlayer2Wins);
+        when(mockDatabase.getGames()).thenReturn(games);
 
-        database.addGame(createGameWithWinner(mPlayer1, mPlayer2, 1));
-        database.addGame(createGameWithWinner(mPlayer1, mPlayer2, 1));
-        database.addGame(createGameWithWinner(mPlayer1, mPlayer2, 2));
 
-        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(mockDatabase);
 
         presenter.calculate();
 
@@ -104,29 +123,6 @@ public class GameStatisticsPresenterTest {
         assertEquals(2, result.get(0).getWins());
         assertEquals(mPlayer2, result.get(1).getPlayer());
         assertEquals(1, result.get(1).getWins());
-    }
-
-
-    private Game createGameWithWinner(Player p1, Player p2, int teamWin)
-    {
-        Game game = new Game(Game.GameType.Singles, 1);
-        game.setPlayer(Game.PlayerPosition.Team1Right, p1);
-        game.setPlayer(Game.PlayerPosition.Team2Right, p2);
-        setGameWinner(game, teamWin);
-
-        return game;
-    }
-
-
-    private void setGameWinner(Game game, int team)
-    {
-        for (int  i = 0; i < 21; i++) {
-            if (team == 1)
-                game.onTeam1Score();
-            else
-                game.onTeam2Score();
-        }
-
     }
 
 }
