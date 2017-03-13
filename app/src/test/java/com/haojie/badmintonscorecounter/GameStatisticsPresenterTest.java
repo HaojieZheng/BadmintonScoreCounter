@@ -1,13 +1,19 @@
 package com.haojie.badmintonscorecounter;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import java.util.ArrayList;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Haojie on 2/25/2017.
  * Tests for the GameStatisticsPresenter class
  */
+@RunWith(MockitoJUnitRunner.class)
 public class GameStatisticsPresenterTest {
     @Test
     public void getTopNPlayers_empty_database(){
@@ -42,18 +48,26 @@ public class GameStatisticsPresenterTest {
         assertTrue(result.isEmpty());
     }
 
+    @Mock
+    IDatabase mockDatabase;
+
     @Test
     public void getTopNPlayers_get_two_but_only_one_win(){
-
-        Database database = new Database();
         Player p1 = new Player("Test1");
         Player p2 = new Player("Test2");
-        database.addPlayer(p1);
-        database.addPlayer(p2);
 
-        database.addGame(createGameWithWinner(p1, p2, 1));
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(p1);
+        players.add(p2);
+        when(mockDatabase.getPlayersWithoutDefault()).thenReturn(players);
 
-        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+        ArrayList<Game> games = new ArrayList<>();
+        games.add(createGameWithWinner(p1, p2, 1));
+        when(mockDatabase.getGames()).thenReturn(games);
+        when(mockDatabase.getPlayerWithName("Test1")).thenReturn(p1);
+        when(mockDatabase.getPlayerWithName("Test2")).thenReturn(p2);
+
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(mockDatabase);
 
         presenter.calculate();
 
@@ -62,6 +76,7 @@ public class GameStatisticsPresenterTest {
         assertEquals(p1, result.get(0).getPlayer());
         assertEquals(1, result.get(0).getWins());
     }
+
 
     @Test
     public void getTopNPlayers_get_three_but_only_two(){
