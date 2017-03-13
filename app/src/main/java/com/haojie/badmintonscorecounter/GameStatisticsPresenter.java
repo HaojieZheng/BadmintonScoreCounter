@@ -15,6 +15,9 @@ import java.util.Map;
  */
 
 class GameStatisticsPresenter {
+
+    private Map<String, Float> mPlayerWinLoseRatio;
+
     public GameStatisticsPresenter(IDatabase IDatabase)
     {
         mDatabase = IDatabase;
@@ -24,10 +27,12 @@ class GameStatisticsPresenter {
     public void calculate()
     {
         Map<String, Integer> playerWins = new HashMap<>();
+        Map<String, Integer> playerLoses = new HashMap<>();
 
         for (Player player : mDatabase.getPlayersWithoutDefault())
         {
             playerWins.put(player.getName(), 0);
+            playerLoses.put(player.getName(), 0);
         }
 
 
@@ -38,23 +43,49 @@ class GameStatisticsPresenter {
                 if (game.getWinner() == 1)
                 {
                     Player p1 = game.getPlayer(Game.PlayerPosition.Team1Left);
-                    addWin(playerWins, p1);
+                    addEntry(playerWins, p1);
                     Player p2 = game.getPlayer(Game.PlayerPosition.Team1Right);
-                    addWin(playerWins, p2);
+                    addEntry(playerWins, p2);
+
+                    Player p3 = game.getPlayer(Game.PlayerPosition.Team2Left);
+                    addEntry(playerLoses, p3);
+                    Player p4 = game.getPlayer(Game.PlayerPosition.Team2Right);
+                    addEntry(playerLoses, p4);
                 }
                 else
                 {
                     Player p1 = game.getPlayer(Game.PlayerPosition.Team2Left);
-                    addWin(playerWins, p1);
+                    addEntry(playerWins, p1);
                     Player p2 = game.getPlayer(Game.PlayerPosition.Team2Right);
-                    addWin(playerWins, p2);
+                    addEntry(playerWins, p2);
+
+                    Player p3 = game.getPlayer(Game.PlayerPosition.Team1Left);
+                    addEntry(playerLoses, p3);
+                    Player p4 = game.getPlayer(Game.PlayerPosition.Team1Right);
+                    addEntry(playerLoses, p4);
                 }
             }
         }
+
+        mPlayerWinLoseRatio = new HashMap<>();
+        for (Map.Entry<String, Integer> entry: playerWins.entrySet()) {
+            int loses = 0;
+            if (playerLoses.containsKey(entry.getKey()))
+            {
+                loses = playerLoses.get(entry.getKey());
+            }
+            float winRatio = (float)entry.getValue() / loses;
+            mPlayerWinLoseRatio.put(entry.getKey(), winRatio);
+        }
+
         mPlayersByWins = sortByValue(playerWins, true);
+        mPlayerWinLoseRatio = sortByValue(mPlayerWinLoseRatio, true);
+
+
+
     }
 
-    private void addWin(Map<String, Integer> playerWins, Player player)
+    private void addEntry(Map<String, Integer> playerWins, Player player)
     {
         if (player == null || !playerWins.containsKey(player.getName()))
             return;
