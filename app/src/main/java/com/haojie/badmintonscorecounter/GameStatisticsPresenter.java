@@ -15,9 +15,9 @@ import java.util.Map;
  */
 
 class GameStatisticsPresenter {
-    public GameStatisticsPresenter(Database database )
+    public GameStatisticsPresenter(IDatabase IDatabase)
     {
-        mDatabase = database;
+        mDatabase = IDatabase;
     }
 
 
@@ -127,7 +127,7 @@ class GameStatisticsPresenter {
 
 
 
-    private final Database mDatabase;
+    private final IDatabase mDatabase;
     private Map<String, Integer> mPlayersByWins;
 
 

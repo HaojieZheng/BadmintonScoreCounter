@@ -12,8 +12,8 @@ public class GameStatisticsPresenterTest {
     @Test
     public void getTopNPlayers_empty_database(){
 
-        Database database = new Database();
-        GameStatisticsPresenter presenter = new GameStatisticsPresenter(database);
+        IDatabase IDatabase = new Database();
+        GameStatisticsPresenter presenter = new GameStatisticsPresenter(IDatabase);
 
         presenter.calculate();
 

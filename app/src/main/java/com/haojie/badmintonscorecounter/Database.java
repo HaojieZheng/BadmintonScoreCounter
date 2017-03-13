@@ -21,7 +21,7 @@ import java.util.Date;
  * Used to persist all local data (except images)
  */
 
-class Database {
+class Database implements IDatabase {
 
     public Database()
     {
@@ -33,10 +33,12 @@ class Database {
 
 
 
+    @Override
     public ArrayList<Player> getPlayers() {
         return mPlayers;
     }
 
+    @Override
     public ArrayList<Player> getPlayersWithoutDefault() {
         ArrayList<Player> result = new ArrayList<>();
         for (Player p : mPlayers)
@@ -48,6 +50,7 @@ class Database {
     }
 
 
+    @Override
     public ArrayList<Game> getGames() {
         return mGames;
     }
@@ -59,6 +62,7 @@ class Database {
     }
 
 
+    @Override
     public Player getPlayerWithName(String name)
     {
         for (Player player : mPlayers)
