@@ -114,7 +114,6 @@ class GameStatisticsPresenter {
 
     public List<PlayerWinEntry> getTopNPlayersByTotalWins(int n)
     {
-        int count = 0;
         ArrayList<PlayerWinEntry> temp = new ArrayList<>();
 
         for (Player player : mDatabase.getPlayersWithoutDefault())
@@ -127,7 +126,7 @@ class GameStatisticsPresenter {
         }
 
         Collections.sort(temp, mWinComparator);
-        int take = n;
+        int take;
         for (take = 0; take < n && take < temp.size(); take++)
         {
             if (temp.get(take).getWins() <= 0)
@@ -139,7 +138,6 @@ class GameStatisticsPresenter {
 
     public List<PlayerWinEntry> getTopNPlayersByWinLoseRatio(int n)
     {
-        int count = 0;
         ArrayList<PlayerWinEntry> temp = new ArrayList<>();
 
         for (Player player : mDatabase.getPlayersWithoutDefault())
@@ -152,7 +150,7 @@ class GameStatisticsPresenter {
         }
 
         Collections.sort(temp, mWinLoseRatioComparator);
-        int take = n;
+        int take;
         for (take = 0; take < n && take < temp.size(); take++)
         {
             if (temp.get(take).getWins() <= 0)
