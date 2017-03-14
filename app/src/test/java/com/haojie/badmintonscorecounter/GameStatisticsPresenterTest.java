@@ -65,7 +65,7 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(1);
+        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayersByTotalWins(1);
 
         assertTrue(result.isEmpty());
     }
@@ -81,7 +81,7 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(0);
+        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayersByTotalWins(0);
 
         assertTrue(result.isEmpty());
     }
@@ -98,7 +98,7 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(2);
+        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayersByTotalWins(2);
         assertEquals(1, result.size());
         assertEquals(mPlayer1, result.get(0).getPlayer());
         assertEquals(1, result.get(0).getWins());
@@ -119,7 +119,7 @@ public class GameStatisticsPresenterTest {
 
         presenter.calculate();
 
-        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayers(2);
+        List<GameStatisticsPresenter.PlayerWinEntry> result = presenter.getTopNPlayersByTotalWins(2);
         assertEquals(2, result.size());
         assertEquals(mPlayer1, result.get(0).getPlayer());
         assertEquals(2, result.get(0).getWins());

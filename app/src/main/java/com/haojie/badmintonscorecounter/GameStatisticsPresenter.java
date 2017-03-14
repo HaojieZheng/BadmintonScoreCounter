@@ -99,12 +99,20 @@ class GameStatisticsPresenter {
         public int getWins() { return mWins; }
         public int getLoses() { return mLoses; }
 
+        public double getWinLoseRatio()
+        {
+            if (getWins() == 0 && getLoses() == 0)
+                return 0.0;
+
+            return getWins() / (getWins() + getLoses());
+        }
+
         final Player mPlayer;
         final int mWins;
         final int mLoses;
     }
 
-    public List<PlayerWinEntry> getTopNPlayers(int n)
+    public List<PlayerWinEntry> getTopNPlayersByTotalWins(int n)
     {
         int count = 0;
         ArrayList<PlayerWinEntry> temp = new ArrayList<>();
@@ -129,6 +137,31 @@ class GameStatisticsPresenter {
         return temp.subList(0, take);
     }
 
+    public List<PlayerWinEntry> getTopNPlayersByWinLoseRatio(int n)
+    {
+        int count = 0;
+        ArrayList<PlayerWinEntry> temp = new ArrayList<>();
+
+        for (Player player : mDatabase.getPlayersWithoutDefault())
+        {
+            int wins = mPlayerWins.get(player.getName());
+            int loses = mPlayerLoses.get(player.getName());
+
+            PlayerWinEntry entry = new PlayerWinEntry(player, wins, loses);
+            temp.add(entry);
+        }
+
+        Collections.sort(temp, mWinLoseRatioComparator);
+        int take = n;
+        for (take = 0; take < n && take < temp.size(); take++)
+        {
+            if (temp.get(take).getWins() <= 0)
+                break;
+        }
+
+        return temp.subList(0, take);
+    }
+
 
     private Comparator<PlayerWinEntry> mWinComparator =  new Comparator<PlayerWinEntry>() {
         @Override
@@ -136,6 +169,18 @@ class GameStatisticsPresenter {
             if (o1.getWins() > o2.getWins())
                 return -1;
             else if (o1.getWins() < o2.getWins())
+                return 1;
+            else
+                return 0;
+        }
+    };
+
+    private Comparator<PlayerWinEntry> mWinLoseRatioComparator =  new Comparator<PlayerWinEntry>() {
+        @Override
+        public int compare(PlayerWinEntry o1, PlayerWinEntry o2) {
+            if (o1.getWinLoseRatio() > o2.getWinLoseRatio())
+                return -1;
+            else if (o1.getWinLoseRatio() < o2.getWinLoseRatio())
                 return 1;
             else
                 return 0;

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViewGameStatisticsActivity extends AppCompatActivity {
@@ -30,13 +29,22 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
 
     private void loadInfoText()
     {
-        List<GameStatisticsPresenter.PlayerWinEntry> top3Players = mGameStatisticsPresenter.getTopNPlayers(3);
+        List<GameStatisticsPresenter.PlayerWinEntry> top3Players = mGameStatisticsPresenter.getTopNPlayersByTotalWins(3);
+        List<GameStatisticsPresenter.PlayerWinEntry> top3PlayersByWinLoseRatio = mGameStatisticsPresenter.getTopNPlayersByWinLoseRatio(3);
 
         String displayText = "";
         if (!top3Players.isEmpty()) {
-            displayText += "<b>Top Players:</b><br>";
+            displayText += "<b>Top Players by Wins:</b><br>";
             for (GameStatisticsPresenter.PlayerWinEntry pair : top3Players) {
                 displayText += "\t" + pair.getPlayer().getName() + " : " + pair.getWins() + " wins<br>";
+            }
+        }
+
+        if (!top3PlayersByWinLoseRatio.isEmpty()) {
+            displayText += "<b>Top Players by Win/Lose Ratio:</b><br>";
+            for (GameStatisticsPresenter.PlayerWinEntry pair : top3Players) {
+                int percentage = (int) (Math.ceil(pair.getWinLoseRatio()) * 100);
+                displayText += "\t" + pair.getPlayer().getName() + " : " + percentage + "% wins<br>";
             }
         }
 
