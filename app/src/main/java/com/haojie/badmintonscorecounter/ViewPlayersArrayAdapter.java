@@ -21,7 +21,7 @@ import java.util.List;
  * Adapter to list all the players in a list view
  */
 
-public class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
+class ViewPlayersArrayAdapter extends ArrayAdapter<Player> {
 
     public ViewPlayersArrayAdapter(Context context, List<Player> players, ViewPlayersActivity activity) {
         super(context, 0, players);

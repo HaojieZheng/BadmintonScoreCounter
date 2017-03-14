@@ -23,7 +23,7 @@ public class Player
         return mName;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         mName = name;
     }
 

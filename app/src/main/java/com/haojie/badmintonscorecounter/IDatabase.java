@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Haojie on 3/13/2017.
+ * Interface for the database reading information only
  */
 
 interface IDatabase {

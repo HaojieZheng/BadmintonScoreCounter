@@ -133,7 +133,7 @@ class GameStatisticsPresenter {
     }
 
 
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue( Map<K, V> map , boolean reverse)
+    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, boolean reverse)
     {
         List<Map.Entry<K, V>> list =
                 new LinkedList<>( map.entrySet() );

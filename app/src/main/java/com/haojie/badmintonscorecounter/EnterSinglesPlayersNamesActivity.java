@@ -23,8 +23,8 @@ import static com.haojie.badmintonscorecounter.R.drawable.ic_action_name;
 
 public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implements SelectPlayerNameDialogFragment.SelectPlayerNameClickHandler, ViewUpdatePhotoDialogFragment.OnFragmentInteractionListener{
 
-    private ImageButton[] mTakePhotoButtons = new ImageButton[2];
-    private Bitmap playerPictures[] = new Bitmap[2];
+    private final ImageButton[] mTakePhotoButtons = new ImageButton[2];
+    private final Bitmap[] playerPictures = new Bitmap[2];
 
     private EditText mEditPlayer1Name;
     private EditText mEditPlayer2Name;
@@ -258,7 +258,7 @@ public class EnterSinglesPlayersNamesActivity extends AppCompatActivity implemen
     }
 
     @Override
-    public void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName) {
+    public void onNameSelected(String playerName) {
 
         Database database = new Database();
         database.deserialize(EnterSinglesPlayersNamesActivity.this);

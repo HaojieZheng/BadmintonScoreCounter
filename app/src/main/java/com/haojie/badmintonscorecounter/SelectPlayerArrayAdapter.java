@@ -16,7 +16,7 @@ import java.util.List;
  * Adapter to show players on a ListView and is selectable
  */
 
-public class SelectPlayerArrayAdapter extends ArrayAdapter<Player> {
+class SelectPlayerArrayAdapter extends ArrayAdapter<Player> {
     public SelectPlayerArrayAdapter(Context context, List<Player> players) {
         super(context, 0, players);
     }

@@ -17,7 +17,7 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
 
     public interface SelectPlayerNameClickHandler
     {
-        void onNameSelected(SelectPlayerNameDialogFragment dialogFragment, String playerName);
+        void onNameSelected(String playerName);
     }
 
     private ListView mListView;
@@ -34,7 +34,7 @@ public class SelectPlayerNameDialogFragment extends DialogFragment {
                 Player value = (Player)adapter.getItemAtPosition(position);
 
                 SelectPlayerNameClickHandler handler = (SelectPlayerNameClickHandler)getActivity();
-                handler.onNameSelected(SelectPlayerNameDialogFragment.this, value.getName());
+                handler.onNameSelected(value.getName());
                 dismiss();
             }
         });

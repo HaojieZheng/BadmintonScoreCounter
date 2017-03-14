@@ -26,8 +26,8 @@ public class GameStatisticsPresenterTest {
     @Mock
     private Game mockGamePlayer2Wins;
 
-    private Player mPlayer1 = new Player("Test1");
-    private Player mPlayer2 = new Player("Test2");
+    private final Player mPlayer1 = new Player("Test1");
+    private final Player mPlayer2 = new Player("Test2");
 
 
     @Before

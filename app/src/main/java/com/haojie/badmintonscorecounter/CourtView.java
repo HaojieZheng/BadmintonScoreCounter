@@ -94,29 +94,24 @@ public class CourtView extends View {
         mServicePosition = position;
     }
 
-    public String getTopLeftName()
+    private String getTopLeftName()
     {
         return mTopLeftName;
     }
 
-    public String getTopRightName()
+    private String getTopRightName()
     {
         return mTopRightName;
     }
 
-    public String getBottomLeftName()
+    private String getBottomLeftName()
     {
         return mBottomLeftName;
     }
 
-    public String getBottomRightName()
+    private String getBottomRightName()
     {
         return mBottomRightName;
-    }
-
-    public Position getServicePosition()
-    {
-        return mServicePosition;
     }
 
     private final ArrayList<CourtViewTouchListener> mListeners = new ArrayList<>();
@@ -139,7 +134,7 @@ public class CourtView extends View {
     private Bitmap mBottomRightPic;
     private Orientation mOrientation = Orientation.None;
 
-    public Bitmap getTopLeftPic() {
+    private Bitmap getTopLeftPic() {
         return mTopLeftPic;
     }
 
@@ -147,7 +142,7 @@ public class CourtView extends View {
         mTopLeftPic = topLeftPic;
     }
 
-    public Bitmap getTopRightPic() {
+    private Bitmap getTopRightPic() {
         return mTopRightPic;
     }
 
@@ -155,7 +150,7 @@ public class CourtView extends View {
         mTopRightPic = topRightPic;
     }
 
-    public Bitmap getBottomLeftPic() {
+    private Bitmap getBottomLeftPic() {
         return mBottomLeftPic;
     }
 
@@ -163,7 +158,7 @@ public class CourtView extends View {
         mBottomLeftPic = bottomLeftPic;
     }
 
-    public Bitmap getBottomRightPic() {
+    private Bitmap getBottomRightPic() {
         return mBottomRightPic;
     }
 
@@ -189,8 +184,9 @@ public class CourtView extends View {
     }
 
 
-    float touched_x, touched_y;
-    boolean touched = false;
+    private float touched_x;
+    private float touched_y;
+    private boolean touched = false;
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
