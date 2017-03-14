@@ -16,7 +16,8 @@ import java.util.Map;
 
 class GameStatisticsPresenter {
 
-    private Map<String, Float> mPlayerWinLoseRatio;
+    private final Map<String, Integer> mPlayerWins = new HashMap<>();
+    private final Map<String, Integer> mPlayerLoses = new HashMap<>();
 
     public GameStatisticsPresenter(IDatabase IDatabase)
     {
@@ -26,63 +27,54 @@ class GameStatisticsPresenter {
 
     public void calculate()
     {
-        Map<String, Integer> playerWins = new HashMap<>();
-        Map<String, Integer> playerLoses = new HashMap<>();
+        mPlayerWins.clear();
+        mPlayerLoses.clear();
 
         for (Player player : mDatabase.getPlayersWithoutDefault())
         {
-            playerWins.put(player.getName(), 0);
-            playerLoses.put(player.getName(), 0);
+            mPlayerWins.put(player.getName(), 0);
+            mPlayerLoses.put(player.getName(), 0);
         }
 
 
         for (Game game : mDatabase.getGames())
         {
-            if (game.getWinner()!= 0)
-            {
-                if (game.getWinner() == 1)
-                {
-                    Player p1 = game.getPlayer(Game.PlayerPosition.Team1Left);
-                    addEntry(playerWins, p1);
-                    Player p2 = game.getPlayer(Game.PlayerPosition.Team1Right);
-                    addEntry(playerWins, p2);
-
-                    Player p3 = game.getPlayer(Game.PlayerPosition.Team2Left);
-                    addEntry(playerLoses, p3);
-                    Player p4 = game.getPlayer(Game.PlayerPosition.Team2Right);
-                    addEntry(playerLoses, p4);
-                }
-                else
-                {
-                    Player p1 = game.getPlayer(Game.PlayerPosition.Team2Left);
-                    addEntry(playerWins, p1);
-                    Player p2 = game.getPlayer(Game.PlayerPosition.Team2Right);
-                    addEntry(playerWins, p2);
-
-                    Player p3 = game.getPlayer(Game.PlayerPosition.Team1Left);
-                    addEntry(playerLoses, p3);
-                    Player p4 = game.getPlayer(Game.PlayerPosition.Team1Right);
-                    addEntry(playerLoses, p4);
-                }
-            }
+            updateWinLoseTable(game, mPlayerWins, mPlayerLoses);
         }
 
-        mPlayerWinLoseRatio = new HashMap<>();
-        for (Map.Entry<String, Integer> entry: playerWins.entrySet()) {
-            int loses = 0;
-            if (playerLoses.containsKey(entry.getKey()))
+    }
+
+
+
+    private void updateWinLoseTable(Game game, Map<String, Integer> playerWins, Map<String, Integer> playerLoses)
+    {
+        if (game.getWinner()!= 0)
+        {
+            if (game.getWinner() == 1)
             {
-                loses = playerLoses.get(entry.getKey());
+                Player p1 = game.getPlayer(Game.PlayerPosition.Team1Left);
+                addEntry(playerWins, p1);
+                Player p2 = game.getPlayer(Game.PlayerPosition.Team1Right);
+                addEntry(playerWins, p2);
+
+                Player p3 = game.getPlayer(Game.PlayerPosition.Team2Left);
+                addEntry(playerLoses, p3);
+                Player p4 = game.getPlayer(Game.PlayerPosition.Team2Right);
+                addEntry(playerLoses, p4);
             }
-            float winRatio = (float)entry.getValue() / loses;
-            mPlayerWinLoseRatio.put(entry.getKey(), winRatio);
+            else
+            {
+                Player p1 = game.getPlayer(Game.PlayerPosition.Team2Left);
+                addEntry(playerWins, p1);
+                Player p2 = game.getPlayer(Game.PlayerPosition.Team2Right);
+                addEntry(playerWins, p2);
+
+                Player p3 = game.getPlayer(Game.PlayerPosition.Team1Left);
+                addEntry(playerLoses, p3);
+                Player p4 = game.getPlayer(Game.PlayerPosition.Team1Right);
+                addEntry(playerLoses, p4);
+            }
         }
-
-        mPlayersByWins = sortByValue(playerWins, true);
-        mPlayerWinLoseRatio = sortByValue(mPlayerWinLoseRatio, true);
-
-
-
     }
 
     private void addEntry(Map<String, Integer> playerWins, Player player)
@@ -96,71 +88,59 @@ class GameStatisticsPresenter {
 
     public class PlayerWinEntry
     {
-        public PlayerWinEntry(Player player, int wins)
+        public PlayerWinEntry(Player player, int wins, int loses)
         {
             mPlayer = player;
             mWins = wins;
+            mLoses = loses;
         }
 
         public Player getPlayer() { return mPlayer; }
-        public int getWins() { return mWins;}
+        public int getWins() { return mWins; }
+        public int getLoses() { return mLoses; }
 
         final Player mPlayer;
         final int mWins;
+        final int mLoses;
     }
 
-    public ArrayList<PlayerWinEntry> getTopNPlayers(int n)
+    public List<PlayerWinEntry> getTopNPlayers(int n)
     {
         int count = 0;
-        ArrayList<PlayerWinEntry> result = new ArrayList<>();
+        ArrayList<PlayerWinEntry> temp = new ArrayList<>();
 
-        for(Map.Entry<String, Integer> entry : mPlayersByWins.entrySet()) {
-            if (count >= n)
+        for (Player player : mDatabase.getPlayersWithoutDefault())
+        {
+            int wins = mPlayerWins.get(player.getName());
+            int loses = mPlayerLoses.get(player.getName());
+
+            PlayerWinEntry entry = new PlayerWinEntry(player, wins, loses);
+            temp.add(entry);
+        }
+
+        Collections.sort(temp, mWinComparator);
+        int take = n;
+        for (take = 0; take < n && take < temp.size(); take++)
+        {
+            if (temp.get(take).getWins() <= 0)
                 break;
+        }
 
-            Player player = mDatabase.getPlayerWithName(entry.getKey());
-            int wins = entry.getValue();
-            if (wins > 0) {
-                PlayerWinEntry playerWinEntry = new PlayerWinEntry(player, wins);
-                result.add(playerWinEntry);
-                count++;
-            }
+        return temp.subList(0, take);
+    }
+
+
+    private Comparator<PlayerWinEntry> mWinComparator =  new Comparator<PlayerWinEntry>() {
+        @Override
+        public int compare(PlayerWinEntry o1, PlayerWinEntry o2) {
+            if (o1.getWins() > o2.getWins())
+                return -1;
+            else if (o1.getWins() < o2.getWins())
+                return 1;
             else
-                break;
+                return 0;
         }
-
-        return result;
-    }
-
-
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, boolean reverse)
-    {
-        List<Map.Entry<K, V>> list =
-                new LinkedList<>( map.entrySet() );
-        Collections.sort( list, new Comparator<Map.Entry<K, V>>()
-        {
-            @Override
-            public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 )
-            {
-                return ( o1.getValue() ).compareTo( o2.getValue() );
-            }
-        } );
-
-        if (reverse)
-            Collections.reverse(list);
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Map.Entry<K, V> entry : list)
-        {
-            result.put( entry.getKey(), entry.getValue() );
-        }
-        return result;
-    }
-
-
+    };
 
     private final IDatabase mDatabase;
-    private Map<String, Integer> mPlayersByWins;
-
-
-
 }

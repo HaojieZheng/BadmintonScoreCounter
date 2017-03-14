@@ -223,7 +223,9 @@ public class Game {
         int teamScore = (team == 1) ? getTeam1Score() : getTeam2Score();
         int opposingTeamScore = (team == 1) ? getTeam2Score() : getTeam1Score();
 
-        return teamScore == 20 && opposingTeamScore <= 19 || (teamScore == 1 + opposingTeamScore) && ((opposingTeamScore >= 20) || (teamScore == 29 && opposingTeamScore == 29));
+        return (teamScore == 20 && opposingTeamScore <= 19) ||
+                ((teamScore == 1 + opposingTeamScore) && ((opposingTeamScore >= 20))) ||
+                (teamScore == 29 && opposingTeamScore == 29);
 
     }
 

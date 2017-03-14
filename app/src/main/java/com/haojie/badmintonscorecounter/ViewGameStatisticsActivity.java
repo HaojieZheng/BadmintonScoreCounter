@@ -6,6 +6,7 @@ import android.text.Html;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewGameStatisticsActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class ViewGameStatisticsActivity extends AppCompatActivity {
 
     private void loadInfoText()
     {
-        ArrayList<GameStatisticsPresenter.PlayerWinEntry> top3Players = mGameStatisticsPresenter.getTopNPlayers(3);
+        List<GameStatisticsPresenter.PlayerWinEntry> top3Players = mGameStatisticsPresenter.getTopNPlayers(3);
 
         String displayText = "";
         if (!top3Players.isEmpty()) {
